@@ -145,6 +145,9 @@
   <ItemGroup>
     <ClInclude Include="employeeInfo.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="input_20_20.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
