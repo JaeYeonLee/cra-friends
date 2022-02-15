@@ -1,3 +1,5 @@
+#pragma once
+
 #include "employeeinfo.h"
 #include <iostream>
 #include <vector>
@@ -21,40 +23,23 @@ struct KeyInfo {
 
 class CommandParser {
 public:
-	int loadData(const char* filename) {
-		return -1;
-	}
-
-	int getDataLineCount() {
-		return 0;
-	}
-
-	CommandType parseData(int lineIndex) {
+	CommandType parseData(string readLine) {
 		return CommandType::INVALID;
 	}
 
-	EmployeeInfo* parseAddCommand() {
-		addInfo = new EmployeeInfo();
-		return addInfo;
+	int parseAddCommand(EmployeeInfo* addInfo) {
+		return 0;
 	}
 
-	KeyInfo* parseModifyCommand() {
-		keyInfo = new KeyInfo();
-		return keyInfo;
+	int parseModifyCommand(KeyInfo* keyInfo) {
+		return 0;
 	}
 
-	KeyInfo* parseDeleteCommand() {
-		keyInfo = new KeyInfo();
-		return keyInfo;
+	int parseDeleteCommand(KeyInfo* keyInfo) {
+		return 0;
 	}
 
-	KeyInfo* parseSearchCommand() {
-		keyInfo = new KeyInfo();
-		return keyInfo;
+	int parseSearchCommand(KeyInfo* keyInfo) {
+		return 0;
 	}
-
-private:
-	EmployeeInfo* addInfo;
-	KeyInfo* keyInfo;
-	FILE* fin;
 };
