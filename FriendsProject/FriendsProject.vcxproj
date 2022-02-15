@@ -146,7 +146,6 @@
   <ItemGroup>
     <ClInclude Include="CommandParser.h" />
     <ClInclude Include="employeeInfo.h" />
-    <ClInclude Include="search.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input_20_20.txt" />
