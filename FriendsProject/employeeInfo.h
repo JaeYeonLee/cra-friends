@@ -1,8 +1,16 @@
 #include <string>
+#include <unordered_map>
 
 using namespace std;
 
-enum CERTI {
+enum class CareerLevel {
+	CL1,
+	CL2,
+	CL3,
+	CL4
+};
+
+enum class CERTI {
 	NONE = 0,
 	ADV,
 	PRO,
