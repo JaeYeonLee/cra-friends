@@ -35,6 +35,9 @@
     <ClInclude Include="CommandParser.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="employeeManagement.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="dataManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

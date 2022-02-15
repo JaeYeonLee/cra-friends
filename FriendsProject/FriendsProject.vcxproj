@@ -148,6 +148,7 @@
     <ClInclude Include="CommandParser.h" />
     <ClInclude Include="dataManager.h" />
     <ClInclude Include="employeeInfo.h" />
+    <ClInclude Include="employeeManagement.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input_20_20.txt" />
