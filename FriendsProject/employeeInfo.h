@@ -10,6 +10,7 @@ enum CERTI {
 };
 
 class EmployeeInfo {
+public:
 	int employeeNum;
 	string givenName;
 	string familyName;
