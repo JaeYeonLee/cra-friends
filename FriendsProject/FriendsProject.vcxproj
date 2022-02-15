@@ -139,14 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="dataManager.cpp" />
     <ClCompile Include="del.cpp" />
     <ClCompile Include="employeeInfo.cpp" />
     <ClCompile Include="employeeManagement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandParser.h" />
+    <ClInclude Include="dataManager.h" />
     <ClInclude Include="employeeInfo.h" />
     <ClInclude Include="search.h" />
+    <ClInclude Include="employeeManagement.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input_20_20.txt" />

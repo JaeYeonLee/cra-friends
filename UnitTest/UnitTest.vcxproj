@@ -37,6 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CommandParser_test.cpp" />
+    <ClCompile Include="employeeManagement_test.cpp" />
+    <ClCompile Include="dataManager_test.cpp" />
     <ClCompile Include="del_test.cpp" />
     <ClCompile Include="search_test.cpp" />
     <ClCompile Include="test.cpp" />

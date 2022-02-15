@@ -1,54 +1,50 @@
 #include "pch.h"
 #include "../FriendsProject/CommandParser.h"
-
-
-TEST(CommandParserTest, load_data) {
-	CommandParser* cp = new CommandParser();
-
-	EXPECT_EQ(cp->loadData("../FriendsProject/not_exist_file.txt"), -1);
-	EXPECT_EQ(cp->loadData("../FriendsProject/input_20_20.txt"), 0);
-	EXPECT_EQ(cp->getDataLineCount(), 41);
-}
+#include "../FriendsProject/employeeManagement.h"
 
 TEST(CommandParserTest, parse_data) {
+	EmployeeManagement* em = new EmployeeManagement();
 	CommandParser* cp = new CommandParser();
-	cp->loadData("../FriendsProject/input_20_20.txt");
 
-	EXPECT_EQ(cp->parseData(0), CommandType::ADD);
-	EXPECT_EQ(cp->parseData(21), CommandType::MOD);
-	EXPECT_EQ(cp->parseData(22), CommandType::SCH);
-	EXPECT_EQ(cp->parseData(23), CommandType::DEL);
-	EXPECT_EQ(cp->parseData(40), CommandType::INVALID);
+	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
+	EXPECT_EQ(cp->parseData(em->readLine[0]), CommandType::ADD);
+	EXPECT_EQ(cp->parseData(em->readLine[21]), CommandType::MOD);
+	EXPECT_EQ(cp->parseData(em->readLine[22]), CommandType::SCH);
+	EXPECT_EQ(cp->parseData(em->readLine[23]), CommandType::DEL);
 }
 
 TEST(CommandParserTest, parse_add) {
+	EmployeeManagement* em = new EmployeeManagement();
 	CommandParser* cp = new CommandParser();
-	cp->loadData("../FriendsProject/input_20_20.txt");
+	EmployeeInfo* addInfo = new EmployeeInfo();
 
-	cp->parseData(0);
+	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
 
-	EmployeeInfo* info = cp->parseAddCommand();
+	cp->parseData(em->readLine[0]);
+	cp->parseAddCommand(addInfo);
 
 	// ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV
-	EXPECT_EQ(info->employeeNum, 15123099);
-	EXPECT_EQ(info->givenName, "VXIHXOTH");
-	EXPECT_EQ(info->familyName, "JHOP");
-	EXPECT_EQ(info->cl, 3);
-	EXPECT_EQ(info->phoneNumMid, 3112);
-	EXPECT_EQ(info->phoneNumEnd, 2609);
-	EXPECT_EQ(info->birthYear, 1977);
-	EXPECT_EQ(info->birthMonth, 12);
-	EXPECT_EQ(info->birthDay, 11);
-	EXPECT_EQ(info->certi, ADV);
+	EXPECT_EQ(addInfo->employeeNum, 15123099);
+	EXPECT_EQ(addInfo->givenName, "VXIHXOTH");
+	EXPECT_EQ(addInfo->familyName, "JHOP");
+	EXPECT_EQ(addInfo->cl, CareerLevel::CL3);
+	EXPECT_EQ(addInfo->phoneNumMid, 3112);
+	EXPECT_EQ(addInfo->phoneNumEnd, 2609);
+	EXPECT_EQ(addInfo->birthYear, 1977);
+	EXPECT_EQ(addInfo->birthMonth, 12);
+	EXPECT_EQ(addInfo->birthDay, 11);
+	EXPECT_EQ(addInfo->certi, CERTI::ADV);
 }
 
 TEST(CommandParserTest, parse_mod) {
+	EmployeeManagement* em = new EmployeeManagement();
 	CommandParser* cp = new CommandParser();
-	cp->loadData("../FriendsProject/input_20_20.txt");
+	KeyInfo* keyInfo = new KeyInfo();
 
-	cp->parseData(21);
+	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
 
-	KeyInfo* keyInfo = cp->parseModifyCommand();
+	cp->parseData(em->readLine[21]);
+	cp->parseModifyCommand(keyInfo);
 
 	// MOD,-p, , ,name,FB NTAWR,birthday,20050520
 	EXPECT_EQ(keyInfo->searchKey, "name");
@@ -57,14 +53,15 @@ TEST(CommandParserTest, parse_mod) {
 	EXPECT_EQ(keyInfo->modifyKeyword, "20050520");
 }
 
-
 TEST(CommandParserTest, parse_del) {
+	EmployeeManagement* em = new EmployeeManagement();
 	CommandParser* cp = new CommandParser();
-	cp->loadData("../FriendsProject/input_20_20.txt");
+	KeyInfo* keyInfo = new KeyInfo();
 
-	cp->parseData(22);
+	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
 
-	KeyInfo* keyInfo = cp->parseSearchCommand();
+	cp->parseData(em->readLine[22]);
+	cp->parseSearchCommand(keyInfo);
 
 	// SCH, , , ,employeeNum,79110836
 	EXPECT_EQ(keyInfo->searchKey, "employeeNum");
@@ -72,12 +69,14 @@ TEST(CommandParserTest, parse_del) {
 }
 
 TEST(CommandParserTest, parse_sch) {
+	EmployeeManagement* em = new EmployeeManagement();
 	CommandParser* cp = new CommandParser();
-	cp->loadData("../FriendsProject/input_20_20.txt");
+	KeyInfo* keyInfo = new KeyInfo();
 
-	cp->parseData(23);
+	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
 
-	KeyInfo* keyInfo = cp->parseDeleteCommand();
+	cp->parseData(em->readLine[23]);
+	cp->parseDeleteCommand(keyInfo);
 
 	// DEL, , , ,employeeNum,18115040
 	EXPECT_EQ(keyInfo->searchKey, "employeeNum");
