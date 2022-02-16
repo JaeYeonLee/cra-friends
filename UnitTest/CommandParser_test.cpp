@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../FriendsProject/CommandParser.h"
 #include "../FriendsProject/employeeManagement.h"
+#include "../FriendsProject/dataManager.h"
 
 TEST(CommandParserTest, parse_data) {
 	EmployeeManagement* em = new EmployeeManagement();
@@ -162,4 +163,36 @@ TEST(CommandParserTest, parse_option) {
 	// SCH, ,-f, ,name,LDEXRI
 	EXPECT_EQ(keyInfo->searchKey, "givenName");
 	EXPECT_EQ(keyInfo->searchKeyword, "LDEXRI");
+}
+
+TEST(CommandParserTest, parse_addmodule) {
+	EmployeeManagement* em = new EmployeeManagement();
+	CommandParser* cp = new CommandParser();
+	EmployeeInfo* addInfo = new EmployeeInfo();
+	OptionInfo* optionInfo = new OptionInfo();
+	DataManager* dm = new DataManager();
+
+	ASSERT_EQ(em->openFile("../FriendsProject/input_20_20.txt", ""), 0);
+	ASSERT_EQ(em->loadData(), 40);
+
+	cp->parseData(em->readLine[0]);
+	cp->parseAddCommand(addInfo);
+	dm->addEmployee(*addInfo);
+
+	// ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV
+	EmployeeInfo* employee = *(dm->employeeNumMap[15123099].begin());
+	
+	EXPECT_EQ(employee->employeeNum, 15123099);
+	EXPECT_EQ(employee->givenName, "VXIHXOTH");
+	EXPECT_EQ(employee->familyName, "JHOP");
+	EXPECT_EQ(employee->cl, CareerLevel::CL3);
+	EXPECT_EQ(employee->phoneNumMid, 3112);
+	EXPECT_EQ(employee->phoneNumEnd, 2609);
+	EXPECT_EQ(employee->birthYear, 1977);
+	EXPECT_EQ(employee->birthMonth, 12);
+	EXPECT_EQ(employee->birthDay, 11);
+	EXPECT_EQ(employee->certi, CERTI::ADV);
+	EXPECT_EQ(employee->name, "VXIHXOTH JHOP");
+	EXPECT_EQ(employee->phoneNum, "010-3112-2609");
+	EXPECT_EQ(employee->birth, 19771211);
 }

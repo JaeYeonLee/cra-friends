@@ -53,7 +53,7 @@ bool DataManager::addEmployee(EmployeeInfo employee) {
 	employeePool[employeeCnt] = employee;
 	auto iter = employeeNumMap.find(employee.employeeNum);
 	if (iter == employeeNumMap.end())
-		employeeNumMap.insert({ employeeCnt,	list<EmployeeInfo*> { &(employeePool[employeeCnt])} }); //employ number는 무조건 하나
+		employeeNumMap.insert({ employee.employeeNum,	list<EmployeeInfo*> { &(employeePool[employeeCnt])} }); //employ number는 무조건 하나
 	else
 		return false;
 

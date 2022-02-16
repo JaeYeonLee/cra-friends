@@ -2,6 +2,7 @@
 #include <string>
 #include "employeeInfo.h"
 #include "CommandParser.h"
+#include "dataManager.h"
 #include <iostream>
 
 #define MAX_READ_BUFFER_SIZE	(512)
@@ -52,9 +53,9 @@ public:
 
 	int prepareCommand(int lineIndex) {
 		CommandParser* cp = new CommandParser();
-		EmployeeInfo* addInfo = new EmployeeInfo();
-		KeyInfo* keyInfo = new KeyInfo();
-		OptionInfo* optionInfo = new OptionInfo();
+		addInfo = new EmployeeInfo();
+		keyInfo = new KeyInfo();
+		optionInfo = new OptionInfo();
 
 		commandType = cp->parseData(readLine[lineIndex]);
 		cp->parseOption(optionInfo);
@@ -75,12 +76,11 @@ public:
 
 	int runCommand() {
 
-		//DataManager* dm = new DataManager();
-
-		//switch (commandType) {
-		//case CommandType::ADD:
-		//	result = dm->runAdd(addInfo);
-		//	break;
+		bool result;
+		switch (commandType) {
+		case CommandType::ADD:
+			result = dm->addEmployee(*addInfo);
+			break;
 		//case CommandType::MOD:
 		//	result = dm->runModify(keyInfo);
 		//	break;
@@ -90,9 +90,9 @@ public:
 		//case CommandType::DEL:
 		//	result = dm->runDelete(keyInfo);
 		//	break;
-		//default:
-		//	result = -1;
-		//}
+		default:
+			result = true;
+		}
 
 		return 0;
 	}
@@ -102,6 +102,7 @@ public:
 		return 0;
 	}
 
+	DataManager* dm = new DataManager();
 	CommandType commandType;
 	EmployeeInfo* addInfo;
 	KeyInfo* keyInfo;
