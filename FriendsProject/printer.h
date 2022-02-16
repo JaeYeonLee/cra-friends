@@ -3,8 +3,18 @@
 
 class Printer {
 private:
-	string getFullDataString(list<EmployeeInfo*> dataList);
+	void setCommandString(string& dataString);
+	void addCommaData(string& dataString, string addString);
+	string generateString(EmployeeInfo* dataList);
+	void generateFullString(list<EmployeeInfo*>* dataList);
+	void generateFullString(int num);
+	void generateFullString();
 public:
-	string printResultwithOption(CommandType cmd, list<EmployeeInfo*>* dataList);
-	string printResultwithoutOption(CommandType cmd, int num);
+	string getResultString() { return resultString; }
+	void printResult() { cout << resultString; }
+	int setResultData(CommandType cmd, list<EmployeeInfo*>* dataList, Option op);
+private:
+	CommandType command;
+	Option option;
+	string resultString;
 };

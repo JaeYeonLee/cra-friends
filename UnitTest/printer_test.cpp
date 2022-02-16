@@ -9,6 +9,40 @@ DataManager* data_manager;
 
 extern void input_test_data(DataManager* data_manager);
 
+TEST(PrintTest, StringFunctionTestwithInvalidData) {
+	EXPECT_EQ(-1, printer.setResultData(CommandType::ADD, nullptr, Option::NONE));
+	EXPECT_EQ("", printer.getResultString());
+
+	EXPECT_EQ(0, printer.setResultData(CommandType::MOD, nullptr, Option::NONE));
+	EXPECT_EQ("MOD,NONE\n", printer.getResultString());
+	EXPECT_EQ(0, printer.setResultData(CommandType::MOD, nullptr, Option::PRINT));
+	EXPECT_EQ("MOD,NONE\n", printer.getResultString());
+}
+
+TEST(PrintTest, StringFunctionTestwithValidData) {
+	data_manager = new DataManager();
+	input_test_data(data_manager);
+
+	list<EmployeeInfo*> testList;
+	testList.push_back(&data_manager->employeePool[0]);
+	
+	EXPECT_EQ(1, printer.setResultData(CommandType::DEL, &testList, Option::NONE));
+	EXPECT_EQ("DEL,1\n", printer.getResultString());
+
+	string printResult = "DEL,00000000,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\n";
+	EXPECT_EQ(1, printer.setResultData(CommandType::DEL, &testList, Option::PRINT));
+	EXPECT_EQ(printResult, printer.getResultString());
+
+	testList.push_back(&data_manager->employeePool[1]);
+	testList.push_back(&data_manager->employeePool[2]);
+
+	EXPECT_EQ(3, printer.setResultData(CommandType::SCH, &testList, Option::NONE));
+	EXPECT_EQ("SCH,3\n", printer.getResultString());
+
+	printResult = "SCH,00000000,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\nSCH,00000001,DONGKIL KIM,CL2,010-8765-4321,20000101,PRO\nSCH,00000002,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\n";
+	EXPECT_EQ(3, printer.setResultData(CommandType::SCH, &testList, Option::PRINT));
+	EXPECT_EQ(printResult, printer.getResultString());
+}
 TEST(PrintTest, DELwithoutOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
@@ -16,14 +50,15 @@ TEST(PrintTest, DELwithoutOption) {
 	list<EmployeeInfo*>* result = nullptr;
 	//result =  data_manager->schEmployee({ "employeeNum", "00000000" }); 
 
-	string resultString = "DEL,1";
-	cout << resultString + "\n";
+	string resultString = "DEL,1\n";
+	cout << resultString;
+	printer.setResultData(CommandType::DEL, result, Option::NONE);
 
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithoutOption(CommandType::DEL, result->size()));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo";
+		cout << "failed to get employeeInfo\n";
 	}
 }
 
@@ -34,14 +69,16 @@ TEST(PrintTest, DELwithOption) {
 	list<EmployeeInfo*>* result = nullptr;
 	//result =  data_manager->schEmployee({ "employeeNum", "00000000" }); 
 
-	string resultString = "DEL,00000000,HONG KILDONG,CL1,010-1234-5678,19991231,ADV";
-	cout << resultString + "\n";
+	string resultString = "DEL,00000000,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\n";
+	cout << resultString;
+
+	printer.setResultData(CommandType::DEL, result, Option::PRINT);
 
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithOption(CommandType::DEL, result));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo";
+		cout << "failed to get employeeInfo\n";
 	}
 }
 
@@ -52,14 +89,16 @@ TEST(PrintTest, DELwithOptionNoResult) {
 	list<EmployeeInfo*>* result = nullptr;
 	//result =  data_manager->schEmployee({ "employeeNum", "99999999" }); 
 
-	string resultString = "DEL,NONE";
-	cout << resultString + "\n";
+	string resultString = "DEL,NONE\n";
+	cout << resultString;
+
+	printer.setResultData(CommandType::DEL, result, Option::PRINT);
 
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithOption(CommandType::DEL, result));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo";
+		cout << "failed to get employeeInfo\n";
 	}
 }
 
@@ -70,14 +109,16 @@ TEST(PrintTest, MODwithoutOption) {
 	list<EmployeeInfo*>* result = nullptr;
 	//result =  data_manager->schEmployee({ "cl", "1" }); 
 
-	string resultString = "MOD,3";
-	cout << resultString + "\n";
+	string resultString = "MOD,3\n";
+	cout << resultString;
+
+	printer.setResultData(CommandType::MOD, result, Option::NONE);
 
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithoutOption(CommandType::MOD, result->size()));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo";
+		cout << "failed to get employeeInfo\n";
 	}
 }
 
@@ -88,16 +129,16 @@ TEST(PrintTest, MODwithOption) {
 	list<EmployeeInfo*>* result = nullptr;
 	//result =  data_manager->schEmployee({ "cl", "1" }); 
 
-	string resultString = "MOD,00000000,HONG KILDONG,CL1,010-1234-5678,19991231,ADV\n \
-							MOD,00000002,HONG KILDONG,CL1,010-1234-5678,19991231,ADV\n \
-							MOD,00000004,HONG KILDONG,CL1,010-1234-5678,19991231,ADV";
-	cout << resultString + "\n";
+	string resultString = "MOD,00000000,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\nMOD,00000002,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\nMOD,00000004,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\n";
+	cout << resultString;
+
+	printer.setResultData(CommandType::MOD, result, Option::PRINT);
 
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithOption(CommandType::MOD, result));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo";
+		cout << "failed to get employeeInfo\n";
 	}
 }
 
@@ -108,14 +149,16 @@ TEST(PrintTest, MODwithOptionNoResult) {
 	list<EmployeeInfo*>* result = nullptr;
 	//result =  data_manager->schEmployee({ "cl", "4" }); 
 
-	string resultString = "MOD,NONE";
-	cout << resultString + "\n";
+	string resultString = "MOD,NONE\n";
+	cout << resultString;
+
+	printer.setResultData(CommandType::MOD, result, Option::PRINT);
 
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithOption(CommandType::MOD, result));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo";
+		cout << "failed to get employeeInfo\n";
 	}
 }
 
@@ -126,14 +169,16 @@ TEST(PrintTest, SCHwithoutOption) {
 	list<EmployeeInfo*>* result = nullptr;
 	//result =  data_manager->schEmployee({ "familyname", "KIM" }); 
 
-	string resultString = "SCH,2";
-	cout << resultString + "\n";
+	string resultString = "SCH,2\n";
+	cout << resultString;
+
+	printer.setResultData(CommandType::SCH, result, Option::NONE);
 
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithoutOption(CommandType::SCH, result->size()));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo";
+		cout << "failed to get employeeInfo\n";
 	}
 }
 
@@ -144,15 +189,16 @@ TEST(PrintTest, SCHwithOption) {
 	list<EmployeeInfo*>* result = nullptr;
 	//result =  data_manager->schEmployee({ "familyname", "KIM" }); 
 
-	string resultString = "SCH,00000001,KIM DONGKIL,CL2,010-8765-4321,20000101,ADV\n \
-							SCH,00000001,KIM DONGKIL,CL2,010-8765-4321,20000101,ADV";
-	cout << resultString + "\n";
+	string resultString = "SCH,00000001,DONGKIL KIM,CL2,010-8765-4321,20000101,ADV\nSCH,00000001,DONGKIL KIM,CL2,010-8765-4321,20000101,ADV\n";
+	cout << resultString;
+
+	printer.setResultData(CommandType::SCH, result, Option::PRINT);
 
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithOption(CommandType::SCH, result));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo";
+		cout << "failed to get employeeInfo\n";
 	}
 }
 
@@ -163,13 +209,15 @@ TEST(PrintTest, SCHwithoutOptionNoResult) {
 	list<EmployeeInfo*>* result = nullptr;
 	//result =  data_manager->schEmployee({ "familyname", "LEE" }); 
 
-	string resultString = "SCH,NONE";
-	cout << resultString + "\n";
+	string resultString = "SCH,NONE\n";
+	cout << resultString;
+
+	printer.setResultData(CommandType::SCH, result, Option::NONE);
 
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithoutOption(CommandType::MOD, result->size()));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo";
+		cout << "failed to get employeeInfo\n";
 	}
 }
