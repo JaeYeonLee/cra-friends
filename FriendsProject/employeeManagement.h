@@ -10,10 +10,31 @@ using namespace std;
 
 class EmployeeManagement {
 public:
-	int loadData(const char* filename) {
+	int openFile(string inputfile, string outputfile) {
+		if (inputfile.empty())
+			return -1;
+
 		fin = nullptr;
 		fin = new FILE();
-		freopen_s(&fin, filename, "r", stdin);
+		freopen_s(&fin, inputfile.c_str(), "r", stdin);
+		if (nullptr == fin)
+			return -1;
+
+		if (!outputfile.empty()) {
+			fout = nullptr;
+			fout = new FILE();
+			freopen_s(&fout, outputfile.c_str(), "w", stdout);
+			if (nullptr == fout)
+				return -1;
+		}
+		else {
+			cout << "debug output mode" << endl;
+		}
+
+		return 0;
+	}
+
+	int loadData() {
 		if (nullptr == fin)
 			return -1;
 
@@ -90,6 +111,7 @@ public:
 	}
 
 	int printResult() {
+
 		return 0;
 	}
 
@@ -97,6 +119,7 @@ public:
 	KeyInfo* keyInfo;
 	OptionInfo* optionInfo;
 	FILE* fin;
+	FILE* fout;
 	vector<string> readLine;
 };
 
