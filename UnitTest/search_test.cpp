@@ -1,13 +1,15 @@
 #include "pch.h"
-#include "../FriendsProject/search.h"
-
+#include "../FriendsProject/search.cpp"
 
 EmployeeInfo employees[1000];
 SearchEngine searchEngine;
 unordered_map<int, list<EmployeeInfo*>> hashTableInt;
 unordered_map<string, list<EmployeeInfo*>> hashTableStr;
 unordered_map<CERTI, list<EmployeeInfo*>> hashTableCerti;
+
 TEST(SearchTest, SearchCareerLevel_NoResult) {
+	hashTableInt.clear();
+
 	EXPECT_EQ(nullptr, searchEngine.search(3, hashTableInt));
 	EXPECT_EQ(nullptr, searchEngine.search(4, hashTableInt));
 	
@@ -17,6 +19,8 @@ TEST(SearchTest, SearchCareerLevel_NoResult) {
 }
 
 TEST(SearchTest, SearchCareerLevel_Result) {
+	hashTableInt.clear();
+
 	hashTableInt[3].push_back(&employees[0]);
 	hashTableInt[3].push_back(&employees[1]);
 	hashTableInt[3].push_back(&employees[2]);
@@ -41,6 +45,8 @@ TEST(SearchTest, SearchCareerLevel_Result) {
 }
 
 TEST(SearchTest, SearchCerti_NoResult) {
+	hashTableCerti.clear();
+
 	EXPECT_EQ(nullptr, searchEngine.search(CERTI::ADV, hashTableCerti));
 	EXPECT_EQ(nullptr, searchEngine.search(CERTI::PRO, hashTableCerti));
 
@@ -50,6 +56,8 @@ TEST(SearchTest, SearchCerti_NoResult) {
 }
 
 TEST(SearchTest, SearchCerti_Result) {
+	hashTableCerti.clear();
+
 	hashTableCerti[CERTI::ADV].push_back(&employees[0]);
 	hashTableCerti[CERTI::ADV].push_back(&employees[1]);
 	hashTableCerti[CERTI::ADV].push_back(&employees[2]);
@@ -83,6 +91,8 @@ TEST(SearchTest, SearchFullName_NoResult) {
 }
 
 TEST(SearchTest, SearchFullName_Result) {
+	hashTableStr.clear();
+
 	hashTableStr["Kim Samsung"].push_back(&employees[0]);
 	hashTableStr["Lee Jaeyeon"].push_back(&employees[1]);
 	hashTableStr["Kim Samsung"].push_back(&employees[2]);
@@ -102,35 +112,40 @@ TEST(SearchTest, SearchFullName_Result) {
 }
 
 TEST(SearchTest, SearchGivenName_NoResult) {
-	EXPECT_EQ(nullptr, searchEngine.search("Kim Samsung", hashTableStr));
-	EXPECT_EQ(nullptr, searchEngine.search("Lee Jaeyeon", hashTableStr));
+	hashTableStr.clear();
 
-	hashTableStr["Kim Samsung"].push_back(&employees[0]);
+	EXPECT_EQ(nullptr, searchEngine.search("Samsung", hashTableStr));
 
-	EXPECT_EQ(nullptr, searchEngine.search("Lee Jaeyeon", hashTableStr));
+	hashTableStr["Samsung"].push_back(&employees[0]);
+
+	EXPECT_EQ(nullptr, searchEngine.search("Jaeyeon", hashTableStr));
 
 }
 
 TEST(SearchTest, SearchGivenName_Result) {
-	hashTableStr["Kim Samsung"].push_back(&employees[0]);
-	hashTableStr["Lee Jaeyeon"].push_back(&employees[1]);
-	hashTableStr["Kim Samsung"].push_back(&employees[2]);
-	hashTableStr["Choi King"].push_back(&employees[3]);
+	hashTableStr.clear();
 
-	auto result = searchEngine.search("Kim Samsung", hashTableStr);
+	hashTableStr["Samsung"].push_back(&employees[0]);
+	hashTableStr["Jaeyeon"].push_back(&employees[1]);
+	hashTableStr["Samsung"].push_back(&employees[2]);
+	hashTableStr["King"].push_back(&employees[3]);
+
+	auto result = searchEngine.search("Samsung", hashTableStr);
 	EXPECT_NE(nullptr, result);
 	if (result != nullptr) EXPECT_EQ(2, result->size());
 
-	result = searchEngine.search("Lee Jaeyeon", hashTableStr);
+	result = searchEngine.search("Jaeyeon", hashTableStr);
 	EXPECT_NE(nullptr, result);
 	if (result != nullptr) EXPECT_EQ(1, result->size());
 
-	result = searchEngine.search("Choi King", hashTableStr);
+	result = searchEngine.search("King", hashTableStr);
 	EXPECT_NE(nullptr, result);
 	if (result != nullptr) EXPECT_EQ(1, result->size());
 }
 
 TEST(SearchTest, SearchPhoneNumFull_NoResult) {
+	hashTableInt.clear();
+
 	EXPECT_EQ(nullptr, searchEngine.search(12345678, hashTableInt));
 
 	hashTableInt[12345678].push_back(&employees[0]);
@@ -139,6 +154,8 @@ TEST(SearchTest, SearchPhoneNumFull_NoResult) {
 }
 
 TEST(SearchTest, SearchPhoneNumFull_Result) {
+	hashTableInt.clear();
+
 	hashTableInt[12345678].push_back(&employees[0]);
 	hashTableInt[00000000].push_back(&employees[1]);
 	hashTableInt[99999999].push_back(&employees[2]);
@@ -158,6 +175,8 @@ TEST(SearchTest, SearchPhoneNumFull_Result) {
 }
 
 TEST(SearchTest, SearchPhoneNumMiddle_NoResult) {
+	hashTableInt.clear();
+
 	EXPECT_EQ(nullptr, searchEngine.search(1234, hashTableInt));
 
 	hashTableInt[1234].push_back(&employees[0]);
@@ -166,6 +185,8 @@ TEST(SearchTest, SearchPhoneNumMiddle_NoResult) {
 }
 
 TEST(SearchTest, SearchPhoneNumMiddle_Result) {
+	hashTableInt.clear();
+
 	hashTableInt[1234].push_back(&employees[0]);
 	hashTableInt[0000].push_back(&employees[1]);
 	hashTableInt[9999].push_back(&employees[2]);
@@ -185,6 +206,8 @@ TEST(SearchTest, SearchPhoneNumMiddle_Result) {
 }
 
 TEST(SearchTest, SearchBirthFull_NoResult) {
+	hashTableInt.clear();
+
 	EXPECT_EQ(nullptr, searchEngine.search(19900101, hashTableInt));
 
 	hashTableInt[19900101].push_back(&employees[0]);
@@ -193,12 +216,14 @@ TEST(SearchTest, SearchBirthFull_NoResult) {
 }
 
 TEST(SearchTest, SearchBirthFull_Result) {
+	hashTableInt.clear();
+
 	hashTableInt[19000101].push_back(&employees[0]);
 	hashTableInt[20021231].push_back(&employees[1]);
 	hashTableInt[20021231].push_back(&employees[2]);
 	hashTableInt[19950505].push_back(&employees[3]);
 
-	auto result = searchEngine.search(19900101, hashTableInt);
+	auto result = searchEngine.search(19000101, hashTableInt);
 	EXPECT_NE(nullptr, result);
 	if (result != nullptr) EXPECT_EQ(1, result->size());
 
@@ -212,6 +237,8 @@ TEST(SearchTest, SearchBirthFull_Result) {
 }
 
 TEST(SearchTest, SearchBirthDay_NoResult) {
+	hashTableInt.clear();
+
 	EXPECT_EQ(nullptr, searchEngine.search(01, hashTableInt));
 
 	hashTableInt[01].push_back(&employees[0]);
@@ -220,6 +247,8 @@ TEST(SearchTest, SearchBirthDay_NoResult) {
 }
 
 TEST(SearchTest, SearchBirthDay_Result) {
+	hashTableInt.clear();
+
 	hashTableInt[01].push_back(&employees[0]);
 	hashTableInt[20].push_back(&employees[1]);
 	hashTableInt[20].push_back(&employees[2]);

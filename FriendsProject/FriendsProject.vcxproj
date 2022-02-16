@@ -143,6 +143,7 @@
     <ClCompile Include="del.cpp" />
     <ClCompile Include="employeeInfo.cpp" />
     <ClCompile Include="employeeManagement.cpp" />
+    <ClCompile Include="search.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandParser.h" />
