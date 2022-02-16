@@ -41,14 +41,17 @@ public:
 	unordered_map<int, list<EmployeeInfo*>> employeeNumMap;
 	unordered_map<string, list<EmployeeInfo*>> givenNameMap;
 	unordered_map<string, list<EmployeeInfo*>> familyNameMap;
+	unordered_map<string, list<EmployeeInfo*>> nameMap;
 	unordered_map<CareerLevel, list<EmployeeInfo*>> clMap;
 	unordered_map<int, list<EmployeeInfo*>> phoneNumMidMap;
 	unordered_map<int, list<EmployeeInfo*>> phoneNumEndMap;
+	unordered_map<string, list<EmployeeInfo*>> phoneNumMap;
 	unordered_map<int, list<EmployeeInfo*>> birthYearMap;
 	unordered_map<int, list<EmployeeInfo*>> birthMonthMap;
 	unordered_map<int, list<EmployeeInfo*>> birthDayMap;
+	unordered_map<int, list<EmployeeInfo*>> birthMap;
 	unordered_map<CERTI, list<EmployeeInfo*>> certiMap;
-	
+
 	bool addEmployee(EmployeeInfo employee);
 
 	int delEmployee(KeyInfo keyinfo) {
