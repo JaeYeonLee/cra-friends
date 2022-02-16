@@ -28,7 +28,7 @@ public:
 		return (int)readLine.size();
 	}
 
-	int parseCommand(int lineIndex) {
+	int prepareCommand(int lineIndex) {
 		CommandParser* cp = new CommandParser();
 		CommandType commandType = cp->parseData(readLine[lineIndex]);
 		int result = 0;
@@ -38,18 +38,21 @@ public:
 		else
 			KeyInfo* keyInfo = new KeyInfo();
 
+		OptionInfo* optionInfo = new OptionInfo();
+		cp->parseOption(optionInfo);
+
 		switch (commandType) {
 		case CommandType::ADD:
 			result = cp->parseAddCommand(addInfo);
 			break;
 		case CommandType::MOD:
-			result = cp->parseModifyCommand(keyInfo);
+			result = cp->parseModifyCommand(keyInfo, optionInfo);
 			break;
 		case CommandType::SCH:
-			result = cp->parseSearchCommand(keyInfo);
+			result = cp->parseSearchCommand(keyInfo, optionInfo);
 			break;
 		case CommandType::DEL:
-			result = cp->parseDeleteCommand(keyInfo);
+			result = cp->parseDeleteCommand(keyInfo, optionInfo);
 			break;
 		default:
 			result = -1;
@@ -58,7 +61,7 @@ public:
 		return result;
 	}
 
-	int runCommand(int lineIndex) {
+	int runCommand() {
 
 		//DataManager* dm = new DataManager();
 
@@ -82,12 +85,13 @@ public:
 		return 0;
 	}
 
-	int printResult(int lineIndex) {
+	int printResult() {
 		return 0;
 	}
 
 	EmployeeInfo* addInfo;
 	KeyInfo* keyInfo;
+	OptionInfo* optionInfo;
 	FILE* fin;
 	vector<string> readLine;
 };
