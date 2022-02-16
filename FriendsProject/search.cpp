@@ -15,3 +15,8 @@ const list<EmployeeInfo*>* SearchEngine::search(CERTI key, unordered_map<CERTI, 
 	if (result == hashTable.end()) return nullptr;
 	return &result->second;
 }
+const list<EmployeeInfo*>* SearchEngine::search(CareerLevel key, unordered_map<CareerLevel, list<EmployeeInfo*>>& hashTable) {
+	auto result = hashTable.find(key);
+	if (result == hashTable.end()) return nullptr;
+	return &result->second;
+}
