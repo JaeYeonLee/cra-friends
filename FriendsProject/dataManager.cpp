@@ -57,13 +57,18 @@ bool DataManager::addEmployee(EmployeeInfo employee) {
 
 	stringmapAdd(givenNameMap, employee.givenName, employeeCnt);
 	stringmapAdd(familyNameMap, employee.familyName, employeeCnt);
+	stringmapAdd(nameMap, employee.name, employeeCnt);
 
 	carriergmapAdd(clMap, employee.cl, employeeCnt);
 	intmapAdd(phoneNumMidMap, employee.phoneNumMid, employeeCnt);
 	intmapAdd(phoneNumEndMap, employee.phoneNumEnd, employeeCnt);
+	stringmapAdd(phoneNumMap, employee.phoneNum, employeeCnt);
+
 	intmapAdd(birthYearMap, employee.birthYear, employeeCnt);
 	intmapAdd(birthMonthMap, employee.birthMonth, employeeCnt);
 	intmapAdd(birthDayMap, employee.birthDay, employeeCnt);
+	intmapAdd(birthMap, employee.birth, employeeCnt);
+
 	certimapAdd(certiMap, employee.certi, employeeCnt);
 
 	employeeCnt++;
