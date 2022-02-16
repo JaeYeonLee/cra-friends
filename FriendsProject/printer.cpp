@@ -34,9 +34,11 @@ string Printer::generateString(EmployeeInfo* data) {
 }
 
 void Printer::generateFullString(list<EmployeeInfo*>* dataList) {
+	int num = MAX_PRINT;
 	for (auto data : *dataList) {
 		resultString += generateString(data);
 		resultString += "\n";
+		if (--num == 0) break;
 	}
 }
 

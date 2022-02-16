@@ -84,9 +84,9 @@ public:
 		//case CommandType::MOD:
 		//	result = dm->runModify(keyInfo);
 		//	break;
-		//case CommandType::SCH:
-		//	result = dm->runSearch(keyInfo);
-		//	break;
+		case CommandType::SCH:
+			result = dm->schEmployee(*keyInfo, *optionInfo);
+			break;
 		//case CommandType::DEL:
 		//	result = dm->runDelete(keyInfo);
 		//	break;
@@ -98,11 +98,13 @@ public:
 	}
 
 	int printResult() {
-
+		if (printer.hasValidValue(commandType, optionInfo->enablePrint))
+			printer.printResult();
 		return 0;
 	}
 
-	DataManager* dm = new DataManager();
+	Printer printer;
+	DataManager* dm = new DataManager(&printer);
 	CommandType commandType;
 	EmployeeInfo* addInfo;
 	KeyInfo* keyInfo;

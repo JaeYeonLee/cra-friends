@@ -1,15 +1,33 @@
 #pragma once
 #include <string>
 #include <unordered_map>
-#include "employeeInfo.h"
 #include "CommandParser.h"
 #include <list>
+#include "search.h"
+#include "printer.h"
+
 using namespace std;
 #define MAX_EMPLOYEE 100000
 
+enum class SearchKey {
+	EMPLOYEENUM = 0,
+	NAME,
+	GIVENNAME,
+	FAMILYNAME,
+	CL,
+	PHONENUM,
+	PHONENUMMID,
+	PHONENUMEND,
+	BIRTH,
+	BIRTHYEAR,
+	BIRTHMOHTH,
+	BIRTHDAY,
+	CERTI
+};
+
 class DataManager {
 public:
-	DataManager() {
+	DataManager(Printer* p) {
 		employeeCnt = 0;
 
 		employeeNumMap.clear();
@@ -39,6 +57,9 @@ public:
 		certiMap.clear();
 		certiMap.reserve(MAX_EMPLOYEE);
 		
+		printer = p;
+		searchEngine = new SearchEngine();
+		initSearchKeyValues();
 	}
 
 	static EmployeeInfo employeePool[MAX_EMPLOYEE];
@@ -58,6 +79,9 @@ public:
 	unordered_map<int, list<EmployeeInfo*>> birthMap;
 	unordered_map<CERTI, list<EmployeeInfo*>> certiMap;
 
+	unordered_map<string, SearchKey> keyTable;
+	void initSearchKeyValues();
+
 	bool addEmployee(EmployeeInfo employee);
 
 	int delEmployee(KeyInfo keyinfo) {
@@ -66,11 +90,11 @@ public:
 	int modEmployee(KeyInfo keyinfo) {
 		return 0;
 	}
-	int schEmployee(KeyInfo keyinfo) {
-		return 0;
-	}
+	int schEmployee(KeyInfo keyinfo, OptionInfo optionInfo);
 	void cmdCheck(CommandType cmd, EmployeeInfo& employeeinfo, KeyInfo& keyinfo) {
 
 	}
 
+	Printer* printer;
+	SearchEngine* searchEngine;
 };
