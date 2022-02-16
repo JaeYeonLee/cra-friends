@@ -34,6 +34,9 @@ TEST(CommandParserTest, parse_add) {
 	EXPECT_EQ(addInfo->birthMonth, 12);
 	EXPECT_EQ(addInfo->birthDay, 11);
 	EXPECT_EQ(addInfo->certi, CERTI::ADV);
+	EXPECT_EQ(addInfo->name, "VXIHXOTH JHOP");
+	EXPECT_EQ(addInfo->phoneNum, "010-3112-2609");
+	EXPECT_EQ(addInfo->birth, 19771211);
 }
 
 TEST(CommandParserTest, parse_mod) {

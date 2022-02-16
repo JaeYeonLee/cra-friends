@@ -30,4 +30,7 @@ public:
 	int birthMonth;
 	int birthDay;
 	CERTI certi;
+	string name;
+	string phoneNum;
+	int birth;
 };

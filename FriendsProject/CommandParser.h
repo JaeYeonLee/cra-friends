@@ -45,6 +45,7 @@ public:
 		if (2 != name_split.size())
 			return -1;
 
+		addInfo->name = parseLine[5];
 		addInfo->givenName = name_split[0];
 		addInfo->familyName = name_split[1];
 
@@ -56,10 +57,12 @@ public:
 		if (3 != phone_split.size())
 			return -1;
 
+		addInfo->phoneNum = parseLine[7];
 		addInfo->phoneNumMid = atoi(phone_split[1].c_str());
 		addInfo->phoneNumEnd = atoi(phone_split[2].c_str());
 
 		// TODO: add birth invalid condition
+		addInfo->birth = atoi(parseLine[8].c_str());
 		addInfo->birthYear = atoi(parseLine[8].substr(0, 4).c_str());
 		addInfo->birthMonth = atoi(parseLine[8].substr(4, 2).c_str());
 		addInfo->birthDay = atoi(parseLine[8].substr(6, 2).c_str());
