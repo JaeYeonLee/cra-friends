@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include "employeeInfo.h"
+#include "CommandParser.h"
 #include <list>
 using namespace std;
 #define MAX_EMPLOYEE 100000
@@ -48,5 +49,22 @@ public:
 	unordered_map<int, list<EmployeeInfo*>> birthDayMap;
 	unordered_map<CERTI, list<EmployeeInfo*>> certiMap;
 	
-	bool addEmployee(EmployeeInfo employee);
+	bool addEmployee(EmployeeInfo employee) {
+		return true;
+	}
+	int delEmployee(KeyInfo keyinfo) {
+		return 0;
+	}
+	int modEmployee(KeyInfo keyinfo) {
+		return 0;
+	}
+	int schEmployee(KeyInfo keyinfo) {
+		return 0;
+	}
+	void cmdCheck(CommandType cmd, EmployeeInfo& employeeinfo, KeyInfo& keyinfo) {
+
+	}
+
 };
+
+EmployeeInfo DataManager::employeePool[MAX_EMPLOYEE];
