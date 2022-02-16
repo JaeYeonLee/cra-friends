@@ -18,9 +18,10 @@ TEST(PrintTest, DELwithoutOption) {
 
 	string resultString = "DEL,1";
 	cout << resultString + "\n";
+	printer.setResultData(CommandType::DEL, result, Option::NONE);
 
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithoutOption(CommandType::DEL, result->size()));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
 		cout << "failed to get employeeInfo";
@@ -37,8 +38,10 @@ TEST(PrintTest, DELwithOption) {
 	string resultString = "DEL,00000000,HONG KILDONG,CL1,010-1234-5678,19991231,ADV";
 	cout << resultString + "\n";
 
+	printer.setResultData(CommandType::DEL, result, Option::PRINT);
+
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithOption(CommandType::DEL, result));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
 		cout << "failed to get employeeInfo";
@@ -55,8 +58,10 @@ TEST(PrintTest, DELwithOptionNoResult) {
 	string resultString = "DEL,NONE";
 	cout << resultString + "\n";
 
+	printer.setResultData(CommandType::DEL, result, Option::PRINT);
+
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithOption(CommandType::DEL, result));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
 		cout << "failed to get employeeInfo";
@@ -73,8 +78,10 @@ TEST(PrintTest, MODwithoutOption) {
 	string resultString = "MOD,3";
 	cout << resultString + "\n";
 
+	printer.setResultData(CommandType::MOD, result, Option::NONE);
+
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithoutOption(CommandType::MOD, result->size()));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
 		cout << "failed to get employeeInfo";
@@ -93,8 +100,10 @@ TEST(PrintTest, MODwithOption) {
 							MOD,00000004,HONG KILDONG,CL1,010-1234-5678,19991231,ADV";
 	cout << resultString + "\n";
 
+	printer.setResultData(CommandType::MOD, result, Option::PRINT);
+
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithOption(CommandType::MOD, result));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
 		cout << "failed to get employeeInfo";
@@ -111,8 +120,10 @@ TEST(PrintTest, MODwithOptionNoResult) {
 	string resultString = "MOD,NONE";
 	cout << resultString + "\n";
 
+	printer.setResultData(CommandType::MOD, result, Option::PRINT);
+
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithOption(CommandType::MOD, result));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
 		cout << "failed to get employeeInfo";
@@ -129,8 +140,10 @@ TEST(PrintTest, SCHwithoutOption) {
 	string resultString = "SCH,2";
 	cout << resultString + "\n";
 
+	printer.setResultData(CommandType::SCH, result, Option::NONE);
+
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithoutOption(CommandType::SCH, result->size()));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
 		cout << "failed to get employeeInfo";
@@ -148,8 +161,10 @@ TEST(PrintTest, SCHwithOption) {
 							SCH,00000001,KIM DONGKIL,CL2,010-8765-4321,20000101,ADV";
 	cout << resultString + "\n";
 
+	printer.setResultData(CommandType::SCH, result, Option::PRINT);
+
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithOption(CommandType::SCH, result));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
 		cout << "failed to get employeeInfo";
@@ -166,8 +181,10 @@ TEST(PrintTest, SCHwithoutOptionNoResult) {
 	string resultString = "SCH,NONE";
 	cout << resultString + "\n";
 
+	printer.setResultData(CommandType::SCH, result, Option::NONE);
+
 	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.printResultwithoutOption(CommandType::MOD, result->size()));
+		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
 		cout << "failed to get employeeInfo";

@@ -3,8 +3,13 @@
 
 class Printer {
 private:
-	string getFullDataString(list<EmployeeInfo*> dataList);
+	string getFullDataString(EmployeeInfo* dataList);
 public:
-	string printResultwithOption(CommandType cmd, list<EmployeeInfo*>* dataList);
-	string printResultwithoutOption(CommandType cmd, int num);
+	string getResultString() { return resultString; }
+	void printResult() { cout << resultString; }
+	int setResultData(CommandType cmd, list<EmployeeInfo*>* dataList, Option op);
+private:
+	CommandType command;
+	Option option;
+	string resultString;
 };
