@@ -24,6 +24,9 @@
     <ClCompile Include="del.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="search.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="dataManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
