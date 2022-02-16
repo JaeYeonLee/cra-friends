@@ -41,6 +41,7 @@
     <ClCompile Include="employeeManagement_test.cpp" />
     <ClCompile Include="dataManager_test.cpp" />
     <ClCompile Include="del_test.cpp" />
+    <ClCompile Include="printer_test.cpp" />
     <ClCompile Include="search_test.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">

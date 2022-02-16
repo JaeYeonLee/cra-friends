@@ -143,12 +143,14 @@
     <ClCompile Include="del.cpp" />
     <ClCompile Include="employeeInfo.cpp" />
     <ClCompile Include="employeeManagement.cpp" />
+    <ClCompile Include="printer.cpp" />
     <ClCompile Include="search.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandParser.h" />
     <ClInclude Include="dataManager.h" />
     <ClInclude Include="employeeInfo.h" />
+    <ClInclude Include="printer.h" />
     <ClInclude Include="search.h" />
     <ClInclude Include="employeeManagement.h" />
   </ItemGroup>

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../FriendsProject/employeeInfo.h"
+//#include "../FriendsProject/employeeInfo.h"
 #include "../FriendsProject/dataManager.h"
 
 void input_test_data(DataManager* data_manager) { // test iuput data for cmd run
