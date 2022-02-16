@@ -18,18 +18,24 @@ public:
 		givenNameMap.reserve(MAX_EMPLOYEE);
 		familyNameMap.clear();
 		familyNameMap.reserve(MAX_EMPLOYEE);
+		nameMap.clear();
+		nameMap.reserve(MAX_EMPLOYEE);
 		clMap.clear();
 		clMap.reserve(MAX_EMPLOYEE);
 		phoneNumMidMap.clear();
 		phoneNumMidMap.reserve(MAX_EMPLOYEE);
 		phoneNumEndMap.clear();
 		phoneNumEndMap.reserve(MAX_EMPLOYEE);
+		phoneNumMap.clear();
+		phoneNumMap.reserve(MAX_EMPLOYEE);
 		birthYearMap.clear();
 		birthYearMap.reserve(MAX_EMPLOYEE);
 		birthMonthMap.clear();
 		birthMonthMap.reserve(MAX_EMPLOYEE);
 		birthDayMap.clear();
 		birthDayMap.reserve(MAX_EMPLOYEE);
+		birthMap.clear();
+		birthMap.reserve(MAX_EMPLOYEE);
 		certiMap.clear();
 		certiMap.reserve(MAX_EMPLOYEE);
 		
