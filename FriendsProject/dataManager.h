@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <unordered_map>
 #include "employeeInfo.h"
@@ -9,16 +10,29 @@ using namespace std;
 class DataManager {
 public:
 	DataManager() {
+		employeeCnt = 0;
+
 		employeeNumMap.clear();
+		employeeNumMap.reserve(MAX_EMPLOYEE);
 		givenNameMap.clear();
+		givenNameMap.reserve(MAX_EMPLOYEE);
 		familyNameMap.clear();
+		familyNameMap.reserve(MAX_EMPLOYEE);
 		clMap.clear();
+		clMap.reserve(MAX_EMPLOYEE);
 		phoneNumMidMap.clear();
+		phoneNumMidMap.reserve(MAX_EMPLOYEE);
 		phoneNumEndMap.clear();
+		phoneNumEndMap.reserve(MAX_EMPLOYEE);
 		birthYearMap.clear();
+		birthYearMap.reserve(MAX_EMPLOYEE);
 		birthMonthMap.clear();
+		birthMonthMap.reserve(MAX_EMPLOYEE);
 		birthDayMap.clear();
+		birthDayMap.reserve(MAX_EMPLOYEE);
 		certiMap.clear();
+		certiMap.reserve(MAX_EMPLOYEE);
+		
 	}
 
 	static EmployeeInfo employeePool[MAX_EMPLOYEE];
@@ -35,9 +49,8 @@ public:
 	unordered_map<int, list<EmployeeInfo*>> birthDayMap;
 	unordered_map<CERTI, list<EmployeeInfo*>> certiMap;
 	
-	bool addEmployee(EmployeeInfo employee) {
-		return true;
-	}
+	bool addEmployee(EmployeeInfo employee);
+
 	int delEmployee(KeyInfo keyinfo) {
 		return 0;
 	}
@@ -52,5 +65,3 @@ public:
 	}
 
 };
-
-EmployeeInfo DataManager::employeePool[MAX_EMPLOYEE];
