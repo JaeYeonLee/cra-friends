@@ -103,6 +103,13 @@ CERTI getCerti(string certiString) {
 	return CERTI::NONE;
 }
 
+CareerLevel getCL(string clString) {
+	if (clString.size() == 3 && clString.substr(0, 2) == "CL") {
+		int level = stoi(clString.substr(2, 1)) - 1;
+		return CAST_CL(level);
+	}
+}
+
 int DataManager::schEmployee(KeyInfo keyinfo, OptionInfo optionInfo) {
 	list<EmployeeInfo*>* searchResult = nullptr;
 
@@ -120,7 +127,7 @@ int DataManager::schEmployee(KeyInfo keyinfo, OptionInfo optionInfo) {
 		searchResult = searchEngine->search(keyinfo.searchKeyword, familyNameMap);
 		break;
 	case CAST_INT(SearchKey::CL):
-		searchResult = searchEngine->search(CAST_CL(stoi(keyinfo.searchKeyword) - 1), clMap);
+		searchResult = searchEngine->search(getCL(keyinfo.searchKeyword), clMap);
 		break;
 	case CAST_INT(SearchKey::PHONENUM):
 		searchResult = searchEngine->search(keyinfo.searchKeyword, phoneNumMap);
