@@ -2,6 +2,7 @@
 #include <string>
 #include "employeeInfo.h"
 #include "CommandParser.h"
+#include <iostream>
 
 #define MAX_READ_BUFFER_SIZE	(512)
 
@@ -32,13 +33,10 @@ public:
 		CommandParser* cp = new CommandParser();
 		CommandType commandType = cp->parseData(readLine[lineIndex]);
 		int result = 0;
-
-		if (commandType == CommandType::ADD)
-			EmployeeInfo* addInfo = new EmployeeInfo();
-		else
-			KeyInfo* keyInfo = new KeyInfo();
-
+		EmployeeInfo* addInfo = new EmployeeInfo();
+		KeyInfo* keyInfo = new KeyInfo();
 		OptionInfo* optionInfo = new OptionInfo();
+
 		cp->parseOption(optionInfo);
 
 		switch (commandType) {
@@ -57,6 +55,12 @@ public:
 		default:
 			result = -1;
 		}
+
+		//cout << "[debug] line_index=" << lineIndex \
+		//	<< ", command=" << (int)commandType \
+		//	<< ", option1=" << (int)optionInfo->enablePrint \
+		//	<< ", option2=" << (int)optionInfo->searchOption \
+		//	<< ", result=" << result << endl;
 
 		return result;
 	}
