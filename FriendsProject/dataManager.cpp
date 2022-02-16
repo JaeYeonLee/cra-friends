@@ -49,29 +49,33 @@ void carriergmapAdd(unordered_map<CareerLevel, list<EmployeeInfo*>>& hash, Caree
 
 
 bool DataManager::addEmployee(EmployeeInfo employee) {
-		
+
 	employeePool[employeeCnt] = employee;
-	auto iter = employeeNumMap.find(employee.employeeNum);
-	if (iter == employeeNumMap.end())
-		employeeNumMap.insert({ employee.employeeNum,	list<EmployeeInfo*> { &(employeePool[employeeCnt])} }); //employ number는 무조건 하나
-	else
+	int employeenumber = employee.employeeNum;
+	if (employee.employeeNum >= 0 && employee.employeeNum < 22000000) {
+		employeenumber = employee.employeeNum + 100000000;
+	}
+
+	auto iter = employeeInfoMap.find(employeenumber);
+	if (iter != employeeInfoMap.end()) {
 		return false;
+	}
 
-	stringmapAdd(givenNameMap, employee.givenName, employeeCnt);
-	stringmapAdd(familyNameMap, employee.familyName, employeeCnt);
-	stringmapAdd(nameMap, employee.name, employeeCnt);
+	employeeInfoMap.insert({ employeenumber, &employeePool[employeeCnt] });
 
-	carriergmapAdd(clMap, employee.cl, employeeCnt);
-	intmapAdd(phoneNumMidMap, employee.phoneNumMid, employeeCnt);
-	intmapAdd(phoneNumEndMap, employee.phoneNumEnd, employeeCnt);
-	stringmapAdd(phoneNumMap, employee.phoneNum, employeeCnt);
-
-	intmapAdd(birthYearMap, employee.birthYear, employeeCnt);
-	intmapAdd(birthMonthMap, employee.birthMonth, employeeCnt);
-	intmapAdd(birthDayMap, employee.birthDay, employeeCnt);
-	intmapAdd(birthMap, employee.birth, employeeCnt);
-
-	certimapAdd(certiMap, employee.certi, employeeCnt);
+	employeeNumMap.insert({ employee.employeeNum, employeenumber });
+	givenNameMap.insert({ employee.givenName, employeenumber });
+	familyNameMap.insert({ employee.familyName, employeenumber });
+	nameMap.insert({ employee.name, employeenumber });
+	clMap.insert({ employee.cl , employeenumber });
+	phoneNumMidMap.insert({ employee.phoneNumMid, employeenumber });
+	phoneNumEndMap.insert({ employee.phoneNumEnd, employeenumber });
+	phoneNumMap.insert({ employee.phoneNum, employeenumber });
+	birthYearMap.insert({ employee.birthYear, employeenumber });
+	birthMonthMap.insert({ employee.birthMonth, employeenumber });
+	birthDayMap.insert({ employee.birthDay, employeenumber });
+	birthMap.insert({ employee.birth, employeenumber });
+	certiMap.insert({ employee.certi, employeenumber });
 
 	employeeCnt++;
 	return true;

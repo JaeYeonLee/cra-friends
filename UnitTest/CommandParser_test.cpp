@@ -180,7 +180,9 @@ TEST(CommandParserTest, parse_addmodule) {
 	dm->addEmployee(*addInfo);
 
 	// ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV
-	EmployeeInfo* employee = *(dm->employeeNumMap[15123099].begin());
+	auto it = dm->employeeNumMap.find(15123099);
+	ASSERT_TRUE(it != dm->employeeNumMap.end());
+	EmployeeInfo* employee = dm->employeeInfoMap.find(it->second)->second;
 	
 	EXPECT_EQ(employee->employeeNum, 15123099);
 	EXPECT_EQ(employee->givenName, "VXIHXOTH");
@@ -195,4 +197,47 @@ TEST(CommandParserTest, parse_addmodule) {
 	EXPECT_EQ(employee->name, "VXIHXOTH JHOP");
 	EXPECT_EQ(employee->phoneNum, "010-3112-2609");
 	EXPECT_EQ(employee->birth, 19771211);
+}
+
+TEST(CommandParserTest, parse_delmodule) {
+	EmployeeManagement* em = new EmployeeManagement();
+	CommandParser* cp = new CommandParser();
+	EmployeeInfo* addInfo = new EmployeeInfo();
+	KeyInfo* keyinfo = new KeyInfo();
+	OptionInfo* optionInfo = new OptionInfo();
+	DataManager* dm = new DataManager();
+
+	dm->addEmployee({ 18115040, "TTETHU", "HBO" ,CareerLevel::CL3, 4581, 2050, 2008, 07, 18, CERTI::ADV, "TTETHU HBO", "010-4581-2050", 20080718 });
+
+	// DEL, , , ,employeeNum,18115040
+	ASSERT_EQ(em->openFile("../FriendsProject/input_20_20.txt", ""), 0);
+	ASSERT_EQ(em->loadData(), 40);
+
+	cp->parseData(em->readLine[23]);
+	cp->parseDeleteCommand(keyinfo, optionInfo);
+	dm->delEmployee(*keyinfo, *optionInfo);
+
+	auto it = dm->employeeNumMap.find(18115040);
+	ASSERT_TRUE(it == dm->employeeNumMap.end());
+}
+TEST(CommandParserTest, parse_modmodule) {
+	EmployeeManagement* em = new EmployeeManagement();
+	CommandParser* cp = new CommandParser();
+	EmployeeInfo* addInfo = new EmployeeInfo();
+	KeyInfo* keyinfo = new KeyInfo();
+	OptionInfo* optionInfo = new OptionInfo();
+	DataManager* dm = new DataManager();
+
+	dm->addEmployee({ 5101762, "VCUHLE", "HMU" ,CareerLevel::CL4, 3988, 9289, 2003, 8, 19, CERTI::PRO, "VCUHLE HMU", "010-3988-9289", 20030819 });
+
+	// MOD, , , , name, VCUHLE HMU, birthday, 19910808
+	ASSERT_EQ(em->openFile("../FriendsProject/input_20_20.txt", ""), 0);
+	ASSERT_EQ(em->loadData(), 40);
+
+	cp->parseData(em->readLine[38]);
+	cp->parseModifyCommand(keyinfo, optionInfo);
+	dm->modEmployee(*keyinfo, *optionInfo);
+
+	auto it = dm->birthMap.find(19910808);
+	ASSERT_FALSE(it == dm->birthMap.end());
 }
