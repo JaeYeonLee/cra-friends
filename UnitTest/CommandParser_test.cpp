@@ -6,7 +6,8 @@ TEST(CommandParserTest, parse_data) {
 	EmployeeManagement* em = new EmployeeManagement();
 	CommandParser* cp = new CommandParser();
 
-	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
+	ASSERT_EQ(em->openFile("../FriendsProject/input_20_20.txt", ""), 0);
+	ASSERT_EQ(em->loadData(), 40);
 	EXPECT_EQ(cp->parseData(em->readLine[0]), CommandType::ADD);
 	EXPECT_EQ(cp->parseData(em->readLine[21]), CommandType::MOD);
 	EXPECT_EQ(cp->parseData(em->readLine[22]), CommandType::SCH);
@@ -19,7 +20,8 @@ TEST(CommandParserTest, parse_add) {
 	EmployeeInfo* addInfo = new EmployeeInfo();
 	OptionInfo* optionInfo = new OptionInfo();
 
-	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
+	ASSERT_EQ(em->openFile("../FriendsProject/input_20_20.txt", ""), 0);
+	ASSERT_EQ(em->loadData(), 40);
 
 	cp->parseData(em->readLine[0]);
 	cp->parseAddCommand(addInfo);
@@ -46,7 +48,8 @@ TEST(CommandParserTest, parse_mod) {
 	KeyInfo* keyInfo = new KeyInfo();
 	OptionInfo* optionInfo = new OptionInfo();
 
-	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
+	ASSERT_EQ(em->openFile("../FriendsProject/input_20_20.txt", ""), 0);
+	ASSERT_EQ(em->loadData(), 40);
 
 	cp->parseData(em->readLine[21]);
 	cp->parseOption(optionInfo);
@@ -65,7 +68,8 @@ TEST(CommandParserTest, parse_del) {
 	KeyInfo* keyInfo = new KeyInfo();
 	OptionInfo* optionInfo = new OptionInfo();
 
-	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
+	ASSERT_EQ(em->openFile("../FriendsProject/input_20_20.txt", ""), 0);
+	ASSERT_EQ(em->loadData(), 40);
 
 	cp->parseData(em->readLine[22]);
 	cp->parseOption(optionInfo);
@@ -82,7 +86,8 @@ TEST(CommandParserTest, parse_sch) {
 	KeyInfo* keyInfo = new KeyInfo();
 	OptionInfo* optionInfo = new OptionInfo();
 
-	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
+	ASSERT_EQ(em->openFile("../FriendsProject/input_20_20.txt", ""), 0);
+	ASSERT_EQ(em->loadData(), 40);
 
 	cp->parseData(em->readLine[23]);
 	cp->parseOption(optionInfo);
@@ -99,7 +104,8 @@ TEST(CommandParserTest, parse_option) {
 	KeyInfo* keyInfo = new KeyInfo();
 	OptionInfo* optionInfo = new OptionInfo();
 
-	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
+	ASSERT_EQ(em->openFile("../FriendsProject/input_20_20.txt", ""), 0);
+	ASSERT_EQ(em->loadData(), 40);
 
 	cp->parseData(em->readLine[20]);
 	cp->parseOption(optionInfo);

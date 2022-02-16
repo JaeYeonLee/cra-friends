@@ -2,6 +2,7 @@
 #include <string>
 #include "employeeInfo.h"
 #include "CommandParser.h"
+#include <iostream>
 
 #define MAX_READ_BUFFER_SIZE	(512)
 
@@ -9,10 +10,31 @@ using namespace std;
 
 class EmployeeManagement {
 public:
-	int loadData(const char* filename) {
+	int openFile(string inputfile, string outputfile) {
+		if (inputfile.empty())
+			return -1;
+
 		fin = nullptr;
 		fin = new FILE();
-		freopen_s(&fin, filename, "r", stdin);
+		freopen_s(&fin, inputfile.c_str(), "r", stdin);
+		if (nullptr == fin)
+			return -1;
+
+		if (!outputfile.empty()) {
+			fout = nullptr;
+			fout = new FILE();
+			freopen_s(&fout, outputfile.c_str(), "w", stdout);
+			if (nullptr == fout)
+				return -1;
+		}
+		else {
+			cout << "debug output mode" << endl;
+		}
+
+		return 0;
+	}
+
+	int loadData() {
 		if (nullptr == fin)
 			return -1;
 
@@ -32,13 +54,10 @@ public:
 		CommandParser* cp = new CommandParser();
 		CommandType commandType = cp->parseData(readLine[lineIndex]);
 		int result = 0;
-
-		if (commandType == CommandType::ADD)
-			EmployeeInfo* addInfo = new EmployeeInfo();
-		else
-			KeyInfo* keyInfo = new KeyInfo();
-
+		EmployeeInfo* addInfo = new EmployeeInfo();
+		KeyInfo* keyInfo = new KeyInfo();
 		OptionInfo* optionInfo = new OptionInfo();
+
 		cp->parseOption(optionInfo);
 
 		switch (commandType) {
@@ -57,6 +76,12 @@ public:
 		default:
 			result = -1;
 		}
+
+		//cout << "[debug] line_index=" << lineIndex \
+		//	<< ", command=" << (int)commandType \
+		//	<< ", option1=" << (int)optionInfo->enablePrint \
+		//	<< ", option2=" << (int)optionInfo->searchOption \
+		//	<< ", result=" << result << endl;
 
 		return result;
 	}
@@ -86,6 +111,7 @@ public:
 	}
 
 	int printResult() {
+
 		return 0;
 	}
 
@@ -93,6 +119,7 @@ public:
 	KeyInfo* keyInfo;
 	OptionInfo* optionInfo;
 	FILE* fin;
+	FILE* fout;
 	vector<string> readLine;
 };
 
