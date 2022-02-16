@@ -49,9 +49,8 @@ public:
 	unordered_map<int, list<EmployeeInfo*>> birthDayMap;
 	unordered_map<CERTI, list<EmployeeInfo*>> certiMap;
 	
-	bool addEmployee(EmployeeInfo employee) {
-		return true;
-	}
+	bool addEmployee(EmployeeInfo employee);
+
 	int delEmployee(KeyInfo keyinfo) {
 		return 0;
 	}
@@ -66,5 +65,3 @@ public:
 	}
 
 };
-
-EmployeeInfo DataManager::employeePool[MAX_EMPLOYEE];
