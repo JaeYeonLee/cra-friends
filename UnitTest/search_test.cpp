@@ -6,40 +6,41 @@ SearchEngine searchEngine;
 unordered_map<int, list<EmployeeInfo*>> hashTableInt;
 unordered_map<string, list<EmployeeInfo*>> hashTableStr;
 unordered_map<CERTI, list<EmployeeInfo*>> hashTableCerti;
+unordered_map<CareerLevel, list<EmployeeInfo*>> hashTableCL;
 
 TEST(SearchTest, SearchCareerLevel_NoResult) {
 	hashTableInt.clear();
 
-	EXPECT_EQ(nullptr, searchEngine.search(3, hashTableInt));
-	EXPECT_EQ(nullptr, searchEngine.search(4, hashTableInt));
+	EXPECT_EQ(nullptr, searchEngine.search(CareerLevel::CL2, hashTableCL));
+	EXPECT_EQ(nullptr, searchEngine.search(CareerLevel::CL4, hashTableCL));
 	
-	hashTableInt[3].push_back(&employees[0]);
-
-	EXPECT_EQ(nullptr, searchEngine.search(1, hashTableInt));
+	hashTableCL[CareerLevel::CL3].push_back(&employees[0]);
+	
+	EXPECT_EQ(nullptr, searchEngine.search(CareerLevel::CL1, hashTableCL));
 }
 
 TEST(SearchTest, SearchCareerLevel_Result) {
-	hashTableInt.clear();
+	hashTableCL.clear();
 
-	hashTableInt[3].push_back(&employees[0]);
-	hashTableInt[3].push_back(&employees[1]);
-	hashTableInt[3].push_back(&employees[2]);
-	hashTableInt[4].push_back(&employees[3]);
-	hashTableInt[4].push_back(&employees[4]);
-	hashTableInt[2].push_back(&employees[5]);
-	hashTableInt[2].push_back(&employees[6]);
-	hashTableInt[2].push_back(&employees[7]);
-	hashTableInt[2].push_back(&employees[8]);
+	hashTableCL[CareerLevel::CL3].push_back(&employees[0]);
+	hashTableCL[CareerLevel::CL3].push_back(&employees[1]);
+	hashTableCL[CareerLevel::CL3].push_back(&employees[2]);
+	hashTableCL[CareerLevel::CL4].push_back(&employees[3]);
+	hashTableCL[CareerLevel::CL4].push_back(&employees[4]);
+	hashTableCL[CareerLevel::CL2].push_back(&employees[5]);
+	hashTableCL[CareerLevel::CL2].push_back(&employees[6]);
+	hashTableCL[CareerLevel::CL2].push_back(&employees[7]);
+	hashTableCL[CareerLevel::CL2].push_back(&employees[8]);
 
-	auto result = searchEngine.search(3, hashTableInt);
+	auto result = searchEngine.search(CareerLevel::CL3, hashTableCL);
 	EXPECT_NE(nullptr, result);
 	if (result != nullptr) EXPECT_EQ(3, result->size());
 
-	result = searchEngine.search(4, hashTableInt);
+	result = searchEngine.search(CareerLevel::CL4, hashTableCL);
 	EXPECT_NE(nullptr, result);
 	if (result != nullptr) EXPECT_EQ(2, result->size());
 
-	result = searchEngine.search(2, hashTableInt);
+	result = searchEngine.search(CareerLevel::CL2, hashTableCL);
 	EXPECT_NE(nullptr, result);
 	if (result != nullptr) EXPECT_EQ(4, result->size());
 }
