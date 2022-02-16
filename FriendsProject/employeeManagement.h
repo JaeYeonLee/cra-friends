@@ -52,38 +52,25 @@ public:
 
 	int prepareCommand(int lineIndex) {
 		CommandParser* cp = new CommandParser();
-		CommandType commandType = cp->parseData(readLine[lineIndex]);
-		int result = 0;
 		EmployeeInfo* addInfo = new EmployeeInfo();
 		KeyInfo* keyInfo = new KeyInfo();
 		OptionInfo* optionInfo = new OptionInfo();
 
+		commandType = cp->parseData(readLine[lineIndex]);
 		cp->parseOption(optionInfo);
 
 		switch (commandType) {
 		case CommandType::ADD:
-			result = cp->parseAddCommand(addInfo);
-			break;
+			return cp->parseAddCommand(addInfo);
 		case CommandType::MOD:
-			result = cp->parseModifyCommand(keyInfo, optionInfo);
-			break;
+			return cp->parseModifyCommand(keyInfo, optionInfo);
 		case CommandType::SCH:
-			result = cp->parseSearchCommand(keyInfo, optionInfo);
-			break;
+			return cp->parseSearchCommand(keyInfo, optionInfo);
 		case CommandType::DEL:
-			result = cp->parseDeleteCommand(keyInfo, optionInfo);
-			break;
+			return cp->parseDeleteCommand(keyInfo, optionInfo);
 		default:
-			result = -1;
+			return -1;
 		}
-
-		//cout << "[debug] line_index=" << lineIndex \
-		//	<< ", command=" << (int)commandType \
-		//	<< ", option1=" << (int)optionInfo->enablePrint \
-		//	<< ", option2=" << (int)optionInfo->searchOption \
-		//	<< ", result=" << result << endl;
-
-		return result;
 	}
 
 	int runCommand() {
@@ -115,6 +102,7 @@ public:
 		return 0;
 	}
 
+	CommandType commandType;
 	EmployeeInfo* addInfo;
 	KeyInfo* keyInfo;
 	OptionInfo* optionInfo;
