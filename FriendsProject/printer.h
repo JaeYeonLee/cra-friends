@@ -3,7 +3,12 @@
 
 class Printer {
 private:
-	string getFullDataString(EmployeeInfo* dataList);
+	void setCommandString(string& dataString);
+	void addCommaData(string& dataString, string addString);
+	string generateString(EmployeeInfo* dataList);
+	void generateFullString(list<EmployeeInfo*>* dataList);
+	void generateFullString(int num);
+	void generateFullString();
 public:
 	string getResultString() { return resultString; }
 	void printResult() { cout << resultString; }
