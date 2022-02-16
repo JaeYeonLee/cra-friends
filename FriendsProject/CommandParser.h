@@ -14,11 +14,24 @@ enum class CommandType {
 	INVALID = 4,
 };
 
+enum class Option {
+	NONE = 0,
+	FIRST_YEAR = 1,
+	MIDDLE_MONTH = 2,
+	LAST_DAY = 3,
+	PRINT = 4,
+};
+
 struct KeyInfo {
 	string searchKey;
 	string searchKeyword;
 	string modifyKey;
 	string modifyKeyword;
+};
+
+struct OptionInfo {
+	Option enablePrint;
+	Option searchOption;
 };
 
 class CommandParser {
@@ -33,6 +46,23 @@ public:
 		else commandType = CommandType::INVALID;
 
 		return commandType;
+	}
+
+	int parseOption(OptionInfo* option) {
+		if (parseLine[1] == "-p")
+			option->enablePrint = Option::PRINT;
+		else
+			option->enablePrint = Option::NONE;
+
+		if (parseLine[2] == "-f") option->searchOption = Option::FIRST_YEAR;
+		else if (parseLine[2] == "-l") option->searchOption = Option::LAST_DAY;
+		else if (parseLine[2] == "-m") option->searchOption = Option::MIDDLE_MONTH;
+		else if (parseLine[2] == "-y") option->searchOption = Option::FIRST_YEAR;
+		else if (parseLine[2] == "-m") option->searchOption = Option::MIDDLE_MONTH;
+		else if (parseLine[2] == "-d") option->searchOption = Option::LAST_DAY;
+		else option->searchOption = Option::NONE;
+
+		return 0;
 	}
 
 	int parseAddCommand(EmployeeInfo* addInfo) {
@@ -76,11 +106,33 @@ public:
 		return 0;
 	}
 
-	int parseModifyCommand(KeyInfo* keyInfo) {
+	const string searchOptionKeyStr[3][4] = {
+		{"name","givenName","name","familyName"},
+		{"phoneNum","phoneNum","phoneNumMid","phoneNumEnd"},
+		{"birthday","birthYear","birthMonth","birthDay"}
+	};
+
+	string getSearchKeyStr(string key, OptionInfo* optionInfo) {
+		if ((optionInfo->searchOption < Option::NONE) || (optionInfo->searchOption >= Option::PRINT))
+			return key;
+
+		string searchKeyStr = key;
+		if (key == "name")
+			searchKeyStr = searchOptionKeyStr[0][(int)optionInfo->searchOption];
+		else if (key == "phoneNum")
+			searchKeyStr = searchOptionKeyStr[1][(int)optionInfo->searchOption];
+		else if (key == "birthday")
+			searchKeyStr = searchOptionKeyStr[2][(int)optionInfo->searchOption];
+
+		return searchKeyStr;
+	}
+
+	int parseModifyCommand(KeyInfo* keyInfo, OptionInfo* optionInfo) {
 		if (commandType != CommandType::MOD)
 			return -1;
 
-		keyInfo->searchKey = parseLine[4];
+
+		keyInfo->searchKey = getSearchKeyStr(parseLine[4], optionInfo);
 		keyInfo->searchKeyword = parseLine[5];
 		keyInfo->modifyKey = parseLine[6];
 
@@ -90,11 +142,11 @@ public:
 		return 0;
 	}
 
-	int parseDeleteCommand(KeyInfo* keyInfo) {
+	int parseDeleteCommand(KeyInfo* keyInfo, OptionInfo* optionInfo) {
 		if (commandType != CommandType::DEL)
 			return -1;
 
-		keyInfo->searchKey = parseLine[4];
+		keyInfo->searchKey = getSearchKeyStr(parseLine[4], optionInfo);
 
 		string lastStr = parseLine[5].substr(0, (parseLine[5].length() - 1));
 		keyInfo->searchKeyword = lastStr;
@@ -102,11 +154,11 @@ public:
 		return 0;
 	}
 
-	int parseSearchCommand(KeyInfo* keyInfo) {
+	int parseSearchCommand(KeyInfo* keyInfo, OptionInfo* optionInfo) {
 		if (commandType != CommandType::SCH)
 			return -1;
 
-		keyInfo->searchKey = parseLine[4];
+		keyInfo->searchKey = getSearchKeyStr(parseLine[4], optionInfo);
 
 		string lastStr = parseLine[5].substr(0, (parseLine[5].length() - 1));
 		keyInfo->searchKeyword = lastStr;

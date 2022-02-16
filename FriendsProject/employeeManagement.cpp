@@ -14,13 +14,13 @@ int main(void) {
 
 	int result = 0;
 	for (int i = 0; i < data_size; i++) {
-		result = em->parseCommand(i);
+		result = em->prepareCommand(i);
 		if (result < 0) continue;
 
-		result = em->runCommand(i);
+		result = em->runCommand();
 		if (result < 0) continue;
 
-		result = em->printResult(i);
+		result = em->printResult();
 		if (result < 0) continue;
 	}
 

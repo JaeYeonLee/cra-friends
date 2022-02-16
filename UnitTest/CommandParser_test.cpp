@@ -17,6 +17,7 @@ TEST(CommandParserTest, parse_add) {
 	EmployeeManagement* em = new EmployeeManagement();
 	CommandParser* cp = new CommandParser();
 	EmployeeInfo* addInfo = new EmployeeInfo();
+	OptionInfo* optionInfo = new OptionInfo();
 
 	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
 
@@ -43,11 +44,13 @@ TEST(CommandParserTest, parse_mod) {
 	EmployeeManagement* em = new EmployeeManagement();
 	CommandParser* cp = new CommandParser();
 	KeyInfo* keyInfo = new KeyInfo();
+	OptionInfo* optionInfo = new OptionInfo();
 
 	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
 
 	cp->parseData(em->readLine[21]);
-	cp->parseModifyCommand(keyInfo);
+	cp->parseOption(optionInfo);
+	cp->parseModifyCommand(keyInfo, optionInfo);
 
 	// MOD,-p, , ,name,FB NTAWR,birthday,20050520
 	EXPECT_EQ(keyInfo->searchKey, "name");
@@ -60,11 +63,13 @@ TEST(CommandParserTest, parse_del) {
 	EmployeeManagement* em = new EmployeeManagement();
 	CommandParser* cp = new CommandParser();
 	KeyInfo* keyInfo = new KeyInfo();
+	OptionInfo* optionInfo = new OptionInfo();
 
 	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
 
 	cp->parseData(em->readLine[22]);
-	cp->parseSearchCommand(keyInfo);
+	cp->parseOption(optionInfo);
+	cp->parseSearchCommand(keyInfo, optionInfo);
 
 	// SCH, , , ,employeeNum,79110836
 	EXPECT_EQ(keyInfo->searchKey, "employeeNum");
@@ -75,13 +80,80 @@ TEST(CommandParserTest, parse_sch) {
 	EmployeeManagement* em = new EmployeeManagement();
 	CommandParser* cp = new CommandParser();
 	KeyInfo* keyInfo = new KeyInfo();
+	OptionInfo* optionInfo = new OptionInfo();
 
 	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
 
 	cp->parseData(em->readLine[23]);
-	cp->parseDeleteCommand(keyInfo);
+	cp->parseOption(optionInfo);
+	cp->parseDeleteCommand(keyInfo, optionInfo);
 
 	// DEL, , , ,employeeNum,18115040
 	EXPECT_EQ(keyInfo->searchKey, "employeeNum");
 	EXPECT_EQ(keyInfo->searchKeyword, "18115040");
+}
+
+TEST(CommandParserTest, parse_option) {
+	EmployeeManagement* em = new EmployeeManagement();
+	CommandParser* cp = new CommandParser();
+	KeyInfo* keyInfo = new KeyInfo();
+	OptionInfo* optionInfo = new OptionInfo();
+
+	ASSERT_EQ(em->loadData("../FriendsProject/input_20_20.txt"), 40);
+
+	cp->parseData(em->readLine[20]);
+	cp->parseOption(optionInfo);
+	cp->parseSearchCommand(keyInfo, optionInfo);
+
+	// SCH,-p,-d, ,birthday,04
+	EXPECT_EQ(keyInfo->searchKey, "birthDay");
+	EXPECT_EQ(keyInfo->searchKeyword, "04");
+
+	cp->parseData(em->readLine[24]);
+	cp->parseOption(optionInfo);
+	cp->parseDeleteCommand(keyInfo, optionInfo);
+
+	// DEL,-p,-l, ,name,MPOSXU
+	EXPECT_EQ(keyInfo->searchKey, "familyName");
+	EXPECT_EQ(keyInfo->searchKeyword, "MPOSXU");
+
+	cp->parseData(em->readLine[28]);
+	cp->parseOption(optionInfo);
+	cp->parseSearchCommand(keyInfo, optionInfo);
+
+	// SCH, ,-m, ,birthday,09
+	EXPECT_EQ(keyInfo->searchKey, "birthMonth");
+	EXPECT_EQ(keyInfo->searchKeyword, "09");
+
+	cp->parseData(em->readLine[31]);
+	cp->parseOption(optionInfo);
+	cp->parseSearchCommand(keyInfo, optionInfo);
+
+	// SCH,-p,-y, ,birthday,2003
+	EXPECT_EQ(keyInfo->searchKey, "birthYear");
+	EXPECT_EQ(keyInfo->searchKeyword, "2003");
+
+	cp->parseData(em->readLine[33]);
+	cp->parseOption(optionInfo);
+	cp->parseSearchCommand(keyInfo, optionInfo);
+
+	// SCH,-p,-m, ,phoneNum,3112
+	EXPECT_EQ(keyInfo->searchKey, "phoneNumMid");
+	EXPECT_EQ(keyInfo->searchKeyword, "3112");
+
+	cp->parseData(em->readLine[34]);
+	cp->parseOption(optionInfo);
+	cp->parseSearchCommand(keyInfo, optionInfo);
+
+	// SCH,-p,-l, ,phoneNum,4605
+	EXPECT_EQ(keyInfo->searchKey, "phoneNumEnd");
+	EXPECT_EQ(keyInfo->searchKeyword, "4605");
+
+	cp->parseData(em->readLine[37]);
+	cp->parseOption(optionInfo);
+	cp->parseSearchCommand(keyInfo, optionInfo);
+
+	// SCH, ,-f, ,name,LDEXRI
+	EXPECT_EQ(keyInfo->searchKey, "givenName");
+	EXPECT_EQ(keyInfo->searchKeyword, "LDEXRI");
 }
