@@ -311,3 +311,38 @@ TEST(dataManagerTest, ModEmployeeTest_Certi) {
 	EXPECT_TRUE(data_manager->modEmployee({ "certi", "EX", "birthday", "20010615" }, { Option::NONE, Option::NONE }));
 }
 
+
+TEST(dataManagerTest, DelPhone_Test) {
+	Printer* p = new Printer();
+	DataManager* data_manager = new DataManager(p);
+	input_test_data(data_manager);
+
+
+	EXPECT_TRUE(data_manager->delEmployee({ "phoneNum_Mid", "1234" }, { Option::NONE, Option::MIDDLE_MONTH }));
+
+	auto it = data_manager->phoneNumMidMap.find(1234);
+	EXPECT_TRUE(it == data_manager->phoneNumMidMap.end());
+
+	EXPECT_TRUE(data_manager->schEmployee({ "phoneNum_End", "5678" }, { Option::NONE, Option::LAST_DAY }));
+
+	it = data_manager->phoneNumMidMap.find(8765);
+	EXPECT_FALSE(it == data_manager->phoneNumMidMap.end());
+
+}
+
+TEST(dataManagerTest, Delname_Test) {
+	Printer* p = new Printer();
+	DataManager* data_manager = new DataManager(p);
+	input_test_data(data_manager);
+
+
+	EXPECT_TRUE(data_manager->delEmployee({ "name_First", "KILDONG" }, { Option::NONE, Option::NONE }));
+	auto it = data_manager->phoneNumMidMap.find(1234);
+	EXPECT_TRUE(it == data_manager->phoneNumMidMap.end());
+
+	EXPECT_TRUE(data_manager->schEmployee({ "name", "KILDONG HONG" }, { Option::NONE, Option::NONE }));
+
+	it = data_manager->phoneNumMidMap.find(8765);
+	EXPECT_FALSE(it == data_manager->phoneNumMidMap.end());
+
+}

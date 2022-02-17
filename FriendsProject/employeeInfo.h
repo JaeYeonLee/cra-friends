@@ -51,4 +51,5 @@ public:
 	string name;
 	string phoneNum;
 	int birthday;
+	bool isDelete = false;
 };

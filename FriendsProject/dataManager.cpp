@@ -278,7 +278,12 @@ void DataManager::editHashMap(CommandType cmd, KeyInfo keyinfo) {
 			for (auto it = range.first; it != range.second; it++) {
 				auto iter = employeeInfoMap.find(it->second);
 				if (iter != employeeInfoMap.end()) {
-					if (cmd == CommandType::DEL) employeeInfoMap.erase(it->second);
+					if (cmd == CommandType::DEL)
+					{
+						iter->second->isDelete = true;
+						//employeeInfoMap.erase(it->second);
+
+					}
 					else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
 				}
 			}
@@ -293,7 +298,11 @@ void DataManager::editHashMap(CommandType cmd, KeyInfo keyinfo) {
 			for (auto it = range.first; it != range.second; it++) {
 				auto iter = employeeInfoMap.find(it->second);
 				if (iter != employeeInfoMap.end()) {
-					if (cmd == CommandType::DEL) employeeInfoMap.erase(it->second);
+					if (cmd == CommandType::DEL)
+					{
+						iter->second->isDelete = true;
+
+					}
 					else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
 				}
 			}
@@ -307,7 +316,11 @@ void DataManager::editHashMap(CommandType cmd, KeyInfo keyinfo) {
 		for (auto it = range.first; it != range.second; it++) {
 			auto iter = employeeInfoMap.find(it->second);
 			if (iter != employeeInfoMap.end()) {
-				if (cmd == CommandType::DEL) employeeInfoMap.erase(it->second);
+				if (cmd == CommandType::DEL)
+				{
+					iter->second->isDelete = true;
+
+				}
 				else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
 			}
 		}
@@ -322,7 +335,11 @@ void DataManager::editHashMap(CommandType cmd, KeyInfo keyinfo) {
 		for (auto it = certiMap.equal_range(getCerti(keyinfo.searchKeyword)).first; it != certiMap.equal_range(getCerti(keyinfo.searchKeyword)).second; it++) {
 			auto iter = employeeInfoMap.find(it->second);
 			if (iter != employeeInfoMap.end()) {
-				if (cmd == CommandType::DEL) employeeInfoMap.erase(it->second);
+				if (cmd == CommandType::DEL)
+				{
+						iter->second->isDelete = true;
+
+				}
 				else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
 			}
 		}

@@ -8,6 +8,11 @@ map<int, EmployeeInfo*> SearchEngine::search(string key, unordered_multimap<stri
 	auto range = hashTable->equal_range(key);
 	for (auto it = range.first; it != range.second;) {
 		if (employeeInfoMap.find(it->second) != employeeInfoMap.end()) {
+			if (employeeInfoMap.find(it->second)->second->isDelete)
+			{
+				hashTable->erase(it++);
+				continue;
+			}
 			switch (key_type)
 			{
 			case SearchKey::NAME:
@@ -52,6 +57,12 @@ map<int, EmployeeInfo*> SearchEngine::search(int key, unordered_multimap<int, in
 	auto range = hashTable->equal_range(key);
 	for (auto it = range.first; it != range.second;) {
 		if (employeeInfoMap.find(it->second) != employeeInfoMap.end()) {
+			if (employeeInfoMap.find(it->second)->second->isDelete)
+			{
+				hashTable->erase(it++);
+				continue;
+			}
+
 			switch (key_type)
 			{
 			case SearchKey::EMPLOYEENUM:
@@ -117,6 +128,11 @@ map<int, EmployeeInfo*> SearchEngine::search(CERTI key, unordered_multimap<CERTI
 	auto range = hashTable->equal_range(key);
 	for (auto it = range.first; it != range.second;) {
 		if (employeeInfoMap.find(it->second) != employeeInfoMap.end()) {
+			if (employeeInfoMap.find(it->second)->second->isDelete)
+			{
+				hashTable->erase(it++);
+				continue;
+			}
 			if (employeeInfoMap.find(it->second)->second->certi != key) {
 				hashTable->erase(it++);
 				continue;
@@ -133,6 +149,11 @@ map<int, EmployeeInfo*> SearchEngine::search(CareerLevel key, unordered_multimap
 	auto range = hashTable->equal_range(key);
 	for (auto it = range.first; it != range.second;) {
 		if (employeeInfoMap.find(it->second) != employeeInfoMap.end()) {
+			if (employeeInfoMap.find(it->second)->second->isDelete)
+			{
+				hashTable->erase(it++);
+				continue;
+			}
 			if (employeeInfoMap.find(it->second)->second->cl != key) {
 				hashTable->erase(it++);
 				continue;
