@@ -3,9 +3,7 @@
 
 using namespace std;
 
-int EmployeeManagement::testEM() {
-	return 0;
-}
+#define MAX_READ_BUFFER_SIZE	(512)
 
 int EmployeeManagement::openFile(string inputfile, string outputfile) {
 	if (inputfile.empty())

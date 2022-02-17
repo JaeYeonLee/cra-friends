@@ -4,13 +4,10 @@
 #include "CommandParser.h"
 #include "dataManager.h"
 
-#define MAX_READ_BUFFER_SIZE	(512)
-
 using namespace std;
 
 class EmployeeManagement {
 public:
-	int testEM();
 	int openFile(string inputfile, string outputfile);
 	int loadData();
 	int prepareCommand(int lineIndex);
