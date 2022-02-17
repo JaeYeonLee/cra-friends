@@ -81,15 +81,15 @@ public:
 		case CommandType::ADD:
 			result = dm->addEmployee(*addInfo);
 			break;
-		//case CommandType::MOD:
-		//	result = dm->runModify(keyInfo);
-		//	break;
+		case CommandType::MOD:
+			result = dm->modEmployee(*keyInfo, *optionInfo);
+			break;
 		case CommandType::SCH:
 			result = dm->schEmployee(*keyInfo, *optionInfo);
 			break;
-		//case CommandType::DEL:
-		//	result = dm->runDelete(keyInfo);
-		//	break;
+		case CommandType::DEL:
+			result = dm->delEmployee(*keyInfo, *optionInfo);
+			break;
 		default:
 			result = true;
 		}
