@@ -13,6 +13,7 @@ public:
 	int prepareCommand(int lineIndex);
 	int runCommand();
 	int printResult();
+	string debugResult();
 
 	vector<string> readLine;
 
