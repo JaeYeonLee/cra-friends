@@ -35,6 +35,8 @@ private:
 		{"phoneNum","phoneNum","phoneNum_Mid","phoneNum_End"},
 		{"birthday","birthday_Year","birthday_Month","birthday_Day"}
 	};
+
+	const int requiredParamCount[4] = { 10,8,6,6 };
 	CommandType commandType;
 	vector<string> parseLine;
 };

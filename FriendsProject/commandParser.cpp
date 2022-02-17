@@ -36,6 +36,8 @@ CommandType CommandParser::parseData(string readLine) {
 	else if (parseLine[CP_COMMAND_INDEX] == "DEL") commandType = CommandType::DEL;
 	else commandType = CommandType::INVALID;
 
+	if(parseLine.size() != requiredParamCount[(int)commandType]) commandType = CommandType::INVALID;
+
 	return commandType;
 }
 
