@@ -27,8 +27,8 @@ TEST(dataManagerTest, givenNameMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
 	{
-		auto iter = data_manager.givenNameMap.find(to_string(i));
-		EXPECT_NE(iter, data_manager.givenNameMap.end());
+		auto iter = data_manager.NameFisrtMap.find(to_string(i));
+		EXPECT_NE(iter, data_manager.NameFisrtMap.end());
 	}
 }
 
@@ -43,8 +43,8 @@ TEST(dataManagerTest, familyNameMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
 	{
-		auto iter = data_manager.familyNameMap.find(to_string(i));
-		EXPECT_NE(iter, data_manager.familyNameMap.end());
+		auto iter = data_manager.NameLastMap.find(to_string(i));
+		EXPECT_NE(iter, data_manager.NameLastMap.end());
 	}
 }
 

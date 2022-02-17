@@ -18,6 +18,24 @@ enum class CareerLevel {
 	CL4,
 };
 
+enum class SearchKey {
+	EMPLOYEENUM = 0,
+	NAME,
+	NAME_FIRST,
+	NAME_LAST,
+	CL,
+	PHONENUM,
+	PHONENUM_MID,
+	PHONENUM_END,
+	BIRTH,
+	BIRTH_YEAR,
+	BIRTH_MOHTH,
+	BIRTH_DAY,
+	CERTI,
+	ERROR
+};
+
+
 class EmployeeInfo {
 public:
 	int employeeNum;
