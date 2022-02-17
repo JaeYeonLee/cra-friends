@@ -2,7 +2,9 @@
 
 const list<EmployeeInfo*> SearchEngine::search(string key, unordered_multimap<string, int>& hashTable, unordered_map<int, EmployeeInfo*>& employeeInfoMap, string hash_name) {
 	list<EmployeeInfo*> result;
+ 
 	if (hashTable.find(key) == hashTable.end()) return result;
+	
 	auto range = hashTable.equal_range(key);
 	for (auto it = range.first; it != range.second;) {
 		if (employeeInfoMap.find(it->second) != employeeInfoMap.end()) {
@@ -132,22 +134,22 @@ const list<EmployeeInfo*> SearchEngine::search(CareerLevel key, unordered_multim
 	return result;
 }
 
-list<EmployeeInfo*>* SearchEngine::search(string key, unordered_map<string, list<EmployeeInfo*>>& hashTable) {
+const list<EmployeeInfo*>* SearchEngine::search(string key, unordered_map<string, list<EmployeeInfo*>>& hashTable) {
 	auto result = hashTable.find(key);
 	if (result == hashTable.end()) return nullptr;
 	return &result->second;
 }
-list<EmployeeInfo*>* SearchEngine::search(int key, unordered_map<int, list<EmployeeInfo*>>& hashTable) {
+const list<EmployeeInfo*>* SearchEngine::search(int key, unordered_map<int, list<EmployeeInfo*>>& hashTable) {
 	auto result = hashTable.find(key);
 	if (result == hashTable.end()) return nullptr;
 	return &result->second;
 }
-list<EmployeeInfo*>* SearchEngine::search(CERTI key, unordered_map<CERTI, list<EmployeeInfo*>>& hashTable) {
+const list<EmployeeInfo*>* SearchEngine::search(CERTI key, unordered_map<CERTI, list<EmployeeInfo*>>& hashTable) {
 	auto result = hashTable.find(key);
 	if (result == hashTable.end()) return nullptr;
 	return &result->second;
 }
-list<EmployeeInfo*>* SearchEngine::search(CareerLevel key, unordered_map<CareerLevel, list<EmployeeInfo*>>& hashTable) {
+const list<EmployeeInfo*>* SearchEngine::search(CareerLevel key, unordered_map<CareerLevel, list<EmployeeInfo*>>& hashTable) {
 	auto result = hashTable.find(key);
 	if (result == hashTable.end()) return nullptr;
 	return &result->second;
