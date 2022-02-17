@@ -29,8 +29,6 @@ int main(int argc, char* argv[]) {
 	int data_size = em->loadData();
 	if (data_size < 0) return -1;
 
-	cout << "data_size = " << data_size << endl;
-
 	int result = 0;
 	for (int i = 0; i < data_size; i++) {
 		result = em->prepareCommand(i);
