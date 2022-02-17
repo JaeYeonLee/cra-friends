@@ -12,7 +12,7 @@ public:
 	int loadData();
 	int prepareCommand(int lineIndex);
 	int runCommand();
-	int printResult();
+	void printResult();
 	string debugResult();
 
 	vector<string> readLine;

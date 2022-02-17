@@ -6,7 +6,7 @@ TEST(dataManagerTest, employeeNumMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ i, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211});  //사원번호가 i인 사람 생성
+		int ret = data_manager.addEmployee({ i, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211});  //사원번호가 i인 사람 생성
 	};  
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -22,7 +22,7 @@ TEST(dataManagerTest, givenNameMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, to_string(i), "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //givenname이 i인 사람 생성
+		int ret = data_manager.addEmployee({ 15123099, to_string(i), "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //givenname이 i인 사람 생성
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -38,7 +38,7 @@ TEST(dataManagerTest, familyNameMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", to_string(i), static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //familyname이 i인 사람 생성
+		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", to_string(i), static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //familyname이 i인 사람 생성
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -54,7 +54,7 @@ TEST(dataManagerTest, clMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>((i % 3) + 1), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //cl이 i%3+1인 사람 생성
+		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>((i % 3) + 1), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //cl이 i%3+1인 사람 생성
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -70,7 +70,7 @@ TEST(dataManagerTest, phoneNumMidMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), i, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //사원번호가 i인 사람 생성
+		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), i, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //사원번호가 i인 사람 생성
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -86,7 +86,7 @@ TEST(dataManagerTest, phoneNumEndMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, i, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
+		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, i, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -103,7 +103,7 @@ TEST(dataManagerTest, birthYearMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, i, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
+		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, i, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -120,7 +120,7 @@ TEST(dataManagerTest, birthMonthMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, i, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
+		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, i, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -136,7 +136,7 @@ TEST(dataManagerTest, birthDayMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, i, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
+		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, i, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -152,7 +152,7 @@ TEST(dataManagerTest,certiMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, static_cast<CERTI>(i%4), "VXIHXOTH JHOP", "010-3112-2609", 771211 });
+		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, static_cast<CERTI>(i%4), "VXIHXOTH JHOP", "010-3112-2609", 771211 });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -168,7 +168,7 @@ TEST(dataManagerTest, nameMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, to_string(i), "010-3112-2609", 771211 });
+		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, to_string(i), "010-3112-2609", 771211 });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -184,7 +184,7 @@ TEST(dataManagerTest, phoneNumMap) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", to_string(i), 771211 });
+		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", to_string(i), 771211 });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test
@@ -200,7 +200,7 @@ TEST(dataManagerTest, birthMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		bool ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", i });
+		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", i });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)  //Hash에 잘 저장되었는지 test

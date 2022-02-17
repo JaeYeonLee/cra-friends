@@ -104,7 +104,7 @@ public:
 	unordered_map<string, SearchKey> keyTable;
 	void initSearchKeyValues();
 
-	bool addEmployee(EmployeeInfo employee);
+	int addEmployee(EmployeeInfo employee);
 	CareerLevel getCL(string key);
 	CERTI getCerti(string key);
 	DataType getDataType(SearchKey key_type);
@@ -114,9 +114,9 @@ public:
 	map<int, EmployeeInfo*> GetResult(KeyInfo keyinfo);
 	void modifyEmployeeInfo(EmployeeInfo* employeeinfo, KeyInfo keyinfo, int employeeNum);
 	void editHashMap(CommandType cmd, KeyInfo keyinfo);
-	bool delEmployee(KeyInfo keyinfo, OptionInfo optioninfo);
-	bool modEmployee(KeyInfo keyinfo, OptionInfo optioninfo);
-	bool schEmployee(KeyInfo keyinfo, OptionInfo optioninfo);
+	int delEmployee(KeyInfo keyinfo, OptionInfo optioninfo);
+	int modEmployee(KeyInfo keyinfo, OptionInfo optioninfo);
+	int schEmployee(KeyInfo keyinfo, OptionInfo optioninfo);
 
 	Printer* printer;
 	SearchEngine* searchEngine;

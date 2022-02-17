@@ -47,7 +47,7 @@ void carriergmapAdd(unordered_map<CareerLevel, list<EmployeeInfo*>>& hash, Caree
 
 
 
-bool DataManager::addEmployee(EmployeeInfo employee) {
+int DataManager::addEmployee(EmployeeInfo employee) {
 
 	employeePool[employeeCnt] = employee;
 	int employeenumber = employee.employeeNum;
@@ -57,7 +57,7 @@ bool DataManager::addEmployee(EmployeeInfo employee) {
 
 	auto iter = employeeInfoMap.find(employeenumber);
 	if (iter != employeeInfoMap.end()) {
-		return false;
+		return -1;
 	}
 
 	employeeInfoMap.insert({ employeenumber, &employeePool[employeeCnt] });
@@ -77,7 +77,7 @@ bool DataManager::addEmployee(EmployeeInfo employee) {
 	certiMap.insert({ employee.certi, employeenumber });
 
 	employeeCnt++;
-	return true;
+	return 0;
 }
 
 SearchKey DataManager::getSearchKey(string key) {
@@ -350,20 +350,31 @@ void DataManager::editHashMap(CommandType cmd, KeyInfo keyinfo) {
 		break;
 	}
 }
-bool DataManager::delEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
+
+int DataManager::delEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
-	printer->setResultData(CommandType::DEL, &search_result, optioninfo.enablePrint);
+	if (printer->setResultData(CommandType::DEL, &search_result, optioninfo.enablePrint) < 0)
+		return -1;
+
 	editHashMap(CommandType::DEL, keyinfo);
-	return true;
+
+	return 0;
 }
-bool DataManager::modEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
+
+int DataManager::modEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
-	printer->setResultData(CommandType::MOD, &search_result, optioninfo.enablePrint);
+	if (printer->setResultData(CommandType::MOD, &search_result, optioninfo.enablePrint) < 0)
+		return -1;
+
 	editHashMap(CommandType::MOD, keyinfo);
-	return true;
+
+	return 0;
 }
-bool DataManager::schEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
+
+int DataManager::schEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
-	printer->setResultData(CommandType::SCH, &search_result, optioninfo.enablePrint);
-	return true;
+	if (printer->setResultData(CommandType::SCH, &search_result, optioninfo.enablePrint) < 0)
+		return -1;
+
+	return 0;
 }
