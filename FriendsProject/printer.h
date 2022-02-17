@@ -9,7 +9,7 @@ private:
 	void setCommandString(string& dataString);
 	void addCommaData(string& dataString, string addString);
 	string generateString(EmployeeInfo* dataList);
-	void generateFullString(list<EmployeeInfo*>* dataList);
+	void generateFullString(const list<EmployeeInfo*>* dataList);
 	void generateFullString(int num);
 	void generateFullString();
 public:
@@ -18,7 +18,7 @@ public:
 	bool hasValidValue(CommandType cmd, Option opt) { return command == cmd && option == opt && !(resultString == ""); }
 	string getResultString() { return resultString; }
 	void printResult() { cout << resultString; }
-	int setResultData(CommandType cmd, list<EmployeeInfo*>* dataList, Option op);
+	int setResultData(CommandType cmd, const list<EmployeeInfo*>* dataList, Option op);
 private:
 	CommandType command;
 	Option option;

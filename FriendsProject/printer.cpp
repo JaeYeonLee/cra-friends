@@ -33,7 +33,7 @@ string Printer::generateString(EmployeeInfo* data) {
 	return dataString;
 }
 
-void Printer::generateFullString(list<EmployeeInfo*>* dataList) {
+void Printer::generateFullString(const list<EmployeeInfo*>* dataList) {
 	int num = MAX_PRINT;
 	for (auto data : *dataList) {
 		resultString += generateString(data);
@@ -52,7 +52,7 @@ void Printer::generateFullString() {
 	addCommaData(resultString, "NONE\n");
 }
 
-int Printer::setResultData(CommandType cmd, list<EmployeeInfo*>* dataList, Option op) {
+int Printer::setResultData(CommandType cmd, const list<EmployeeInfo*>* dataList, Option op) {
 	if (cmd == CommandType::ADD) return -1;
 
 	command = cmd;

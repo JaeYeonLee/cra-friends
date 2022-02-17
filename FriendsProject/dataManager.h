@@ -429,15 +429,18 @@ public:
 	bool delEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 		const list<EmployeeInfo*> search_result = GetResult(keyinfo, optioninfo.searchOption);
 		editHashMap(CommandType::DEL, keyinfo, optioninfo.searchOption);
+		printer->setResultData(CommandType::DEL, &search_result, optioninfo.enablePrint);
 		return true;
 	}
 	bool modEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 		const list<EmployeeInfo*> search_result = GetResult(keyinfo, optioninfo.searchOption);
 		editHashMap(CommandType::MOD, keyinfo, optioninfo.searchOption);
+		printer->setResultData(CommandType::MOD, &search_result, optioninfo.enablePrint);
 		return true;
 	}
 	bool schEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 		const list<EmployeeInfo*> search_result = GetResult(keyinfo, optioninfo.searchOption);
+		printer->setResultData(CommandType::SCH, &search_result, optioninfo.enablePrint);
 		return true;
 	}
 
