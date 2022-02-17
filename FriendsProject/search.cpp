@@ -7,14 +7,14 @@ const list<EmployeeInfo*> SearchEngine::search(string key, unordered_multimap<st
 	for (auto it = range.first; it != range.second;) {
 		if (employeeInfoMap.find(it->second) != employeeInfoMap.end()) {
 			if (hash_name == "givenNameMap") {
-				if (employeeInfoMap.find(it->second)->second->givenName != key) {
+				if (employeeInfoMap.find(it->second)->second->name_First != key) {
 					hashTable.erase(it++);
 					continue;
 				}
 				result.push_back(employeeInfoMap[it->second]);
 			}
 			else if (hash_name == "familyNameMap") {
-				if (employeeInfoMap.find(it->second)->second->familyName != key) {
+				if (employeeInfoMap.find(it->second)->second->name_Last != key) {
 					hashTable.erase(it++);
 					continue;
 				}
@@ -53,42 +53,42 @@ const list<EmployeeInfo*> SearchEngine::search(int key, unordered_multimap<int, 
 				result.push_back(employeeInfoMap[it->second]);
 			}
 			else if (hash_name == "phoneNumMidMap") {
-				if (employeeInfoMap.find(it->second)->second->phoneNumMid != key) {
+				if (employeeInfoMap.find(it->second)->second->phoneNum_Mid != key) {
 					hashTable.erase(it++);
 					continue;
 				}
 				result.push_back(employeeInfoMap[it->second]);
 			}
 			else if (hash_name == "phoneNumEndMap") {
-				if (employeeInfoMap.find(it->second)->second->phoneNumEnd != key) {
+				if (employeeInfoMap.find(it->second)->second->phoneNum_End != key) {
 					hashTable.erase(it++);
 					continue;
 				}
 				result.push_back(employeeInfoMap[it->second]);
 			}
 			else if (hash_name == "birthYearMap") {
-				if (employeeInfoMap.find(it->second)->second->birthYear != key) {
+				if (employeeInfoMap.find(it->second)->second->birthday_Year != key) {
 					hashTable.erase(it++);
 					continue;
 				}
 				result.push_back(employeeInfoMap[it->second]);
 			}
 			else if (hash_name == "birthMonthMap") {
-				if (employeeInfoMap.find(it->second)->second->birthMonth != key) {
+				if (employeeInfoMap.find(it->second)->second->birthday_Month != key) {
 					hashTable.erase(it++);
 					continue;
 				}
 				result.push_back(employeeInfoMap[it->second]);
 			}
 			else if (hash_name == "birthDayMap") {
-				if (employeeInfoMap.find(it->second)->second->birthDay != key) {
+				if (employeeInfoMap.find(it->second)->second->birthday_Day != key) {
 					hashTable.erase(it++);
 					continue;
 				}
 				result.push_back(employeeInfoMap[it->second]);
 			}
 			else if (hash_name == "birthMap") {
-				if (employeeInfoMap.find(it->second)->second->birth != key) {
+				if (employeeInfoMap.find(it->second)->second->birthday != key) {
 					hashTable.erase(it++);
 					continue;
 				}

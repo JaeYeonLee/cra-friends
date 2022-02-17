@@ -76,8 +76,8 @@ public:
 			return -1;
 
 		addInfo->name = parseLine[5];
-		addInfo->givenName = name_split[0];
-		addInfo->familyName = name_split[1];
+		addInfo->name_First = name_split[0];
+		addInfo->name_Last = name_split[1];
 
 		addInfo->cl = (CareerLevel)(atoi(parseLine[6].substr(2, 1).c_str()) - 1);
 		if ((addInfo->cl < CareerLevel::CL1) || (addInfo->cl > CareerLevel::CL4))
@@ -88,14 +88,14 @@ public:
 			return -1;
 
 		addInfo->phoneNum = parseLine[7];
-		addInfo->phoneNumMid = atoi(phone_split[1].c_str());
-		addInfo->phoneNumEnd = atoi(phone_split[2].c_str());
+		addInfo->phoneNum_Mid = atoi(phone_split[1].c_str());
+		addInfo->phoneNum_End = atoi(phone_split[2].c_str());
 
 		// TODO: add birth invalid condition
-		addInfo->birth = atoi(parseLine[8].c_str());
-		addInfo->birthYear = atoi(parseLine[8].substr(0, 4).c_str());
-		addInfo->birthMonth = atoi(parseLine[8].substr(4, 2).c_str());
-		addInfo->birthDay = atoi(parseLine[8].substr(6, 2).c_str());
+		addInfo->birthday = atoi(parseLine[8].c_str());
+		addInfo->birthday_Year = atoi(parseLine[8].substr(0, 4).c_str());
+		addInfo->birthday_Month = atoi(parseLine[8].substr(4, 2).c_str());
+		addInfo->birthday_Day = atoi(parseLine[8].substr(6, 2).c_str());
 
 		string lastStr = parseLine[9].substr(0, (parseLine[9].length() - 1));
 		if (lastStr == "ADV") addInfo->certi = CERTI::ADV;
@@ -107,9 +107,9 @@ public:
 	}
 
 	const string searchOptionKeyStr[3][4] = {
-		{"name","givenName","name","familyName"},
-		{"phoneNum","phoneNum","phoneNumMid","phoneNumEnd"},
-		{"birthday","birthYear","birthMonth","birthDay"}
+		{"name","name_First","name","name_Last"},
+		{"phoneNum","phoneNum","phoneNum_Mid","phoneNum_End"},
+		{"birthday","birthday_Year","birthday_Month","birthday_Day"}
 	};
 
 	string getSearchKeyStr(string key, OptionInfo* optionInfo) {
