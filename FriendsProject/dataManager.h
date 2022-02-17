@@ -111,7 +111,7 @@ public:
 	SearchKey getSearchKey(string key);
 	unordered_multimap<int, int>* getIntHashMap(SearchKey key_type);
 	unordered_multimap<string, int>* getStringHashMap(SearchKey key_type);
-	const list<EmployeeInfo*> GetResult(KeyInfo keyinfo);
+	map<int, EmployeeInfo*> GetResult(KeyInfo keyinfo);
 	void modifyEmployeeInfo(EmployeeInfo* employeeinfo, KeyInfo keyinfo, int employeeNum);
 	void editHashMap(CommandType cmd, KeyInfo keyinfo);
 	bool delEmployee(KeyInfo keyinfo, OptionInfo optioninfo);
