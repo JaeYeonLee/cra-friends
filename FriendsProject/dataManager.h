@@ -423,7 +423,7 @@ public:
 		editHashMap(CommandType::MOD, keyinfo, optioninfo.searchOption);
 		return true;
 	}
-	bool schEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
+	bool chEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 		const list<EmployeeInfo*> search_result = GetResult(keyinfo, optioninfo.searchOption);
 		return true;
 	}
