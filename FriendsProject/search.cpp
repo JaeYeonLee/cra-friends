@@ -3,7 +3,8 @@
 const list<EmployeeInfo*> SearchEngine::search(string key, unordered_multimap<string, int>& hashTable, unordered_map<int, EmployeeInfo*>& employeeInfoMap, string hash_name) {
 	list<EmployeeInfo*> result;
 	if (hashTable.find(key) == hashTable.end()) return result;
-	for (auto it = hashTable.lower_bound(key); it != hashTable.upper_bound(key);) {
+	auto range = hashTable.equal_range(key);
+	for (auto it = range.first; it != range.second;) {
 		if (employeeInfoMap.find(it->second) != employeeInfoMap.end()) {
 			if (hash_name == "givenNameMap") {
 				if (employeeInfoMap.find(it->second)->second->givenName != key) {
@@ -41,7 +42,8 @@ const list<EmployeeInfo*> SearchEngine::search(string key, unordered_multimap<st
 const list<EmployeeInfo*> SearchEngine::search(int key, unordered_multimap<int, int>& hashTable, unordered_map<int, EmployeeInfo*>& employeeInfoMap, string hash_name) {
 	list<EmployeeInfo*> result;
 	if (hashTable.find(key) == hashTable.end()) return result;
-	for (auto it = hashTable.lower_bound(key); it != hashTable.upper_bound(key);) {
+	auto range = hashTable.equal_range(key);
+	for (auto it = range.first; it != range.second;) {
 		if (employeeInfoMap.find(it->second) != employeeInfoMap.end()) {
 			if (hash_name == "employeeNumMap") {
 				if (employeeInfoMap.find(it->second)->second->employeeNum != key) {
@@ -100,7 +102,8 @@ const list<EmployeeInfo*> SearchEngine::search(int key, unordered_multimap<int, 
 const list<EmployeeInfo*> SearchEngine::search(CERTI key, unordered_multimap<CERTI, int>& hashTable, unordered_map<int, EmployeeInfo*>& employeeInfoMap) {
 	list<EmployeeInfo*> result;
 	if (hashTable.find(key) == hashTable.end()) return result;
-	for (auto it = hashTable.lower_bound(key); it != hashTable.upper_bound(key);) {
+	auto range = hashTable.equal_range(key);
+	for (auto it = range.first; it != range.second;) {
 		if (employeeInfoMap.find(it->second) != employeeInfoMap.end()) {
 			if (employeeInfoMap.find(it->second)->second->certi != key) {
 				hashTable.erase(it++);
@@ -115,7 +118,8 @@ const list<EmployeeInfo*> SearchEngine::search(CERTI key, unordered_multimap<CER
 const list<EmployeeInfo*> SearchEngine::search(CareerLevel key, unordered_multimap<CareerLevel, int>& hashTable, unordered_map<int, EmployeeInfo*>& employeeInfoMap) {
 	list<EmployeeInfo*> result;
 	if (hashTable.find(key) == hashTable.end()) return result;
-	for (auto it = hashTable.lower_bound(key); it != hashTable.upper_bound(key);) {
+	auto range = hashTable.equal_range(key);
+	for (auto it = range.first; it != range.second;) {
 		if (employeeInfoMap.find(it->second) != employeeInfoMap.end()) {
 			if (employeeInfoMap.find(it->second)->second->cl != key) {
 				hashTable.erase(it++);
