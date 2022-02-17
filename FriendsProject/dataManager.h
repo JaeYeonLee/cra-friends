@@ -73,7 +73,7 @@ public:
 		birthDayMap.reserve(MAX_EMPLOYEE);
 		certiMap.clear();
 		certiMap.reserve(MAX_EMPLOYEE);
-		
+
 		searchEngine = new SearchEngine();
 		initSearchKeyValues();
 	}
@@ -100,7 +100,7 @@ public:
 		birthDayMap.reserve(MAX_EMPLOYEE);
 		certiMap.clear();
 		certiMap.reserve(MAX_EMPLOYEE);
-		
+
 		printer = p;
 		searchEngine = new SearchEngine();
 		initSearchKeyValues();
@@ -127,8 +127,8 @@ public:
 
 	SearchEngine* search_engine = new SearchEngine();
 
-	unordered_multimap<int, int> *select_hash_int;
-	unordered_multimap<string, int> *select_hash_string;
+	unordered_multimap<int, int>* select_hash_int;
+	unordered_multimap<string, int>* select_hash_string;
 	string select_hash_name;
 
 	unordered_map<string, SearchKey> keyTable;
@@ -365,30 +365,38 @@ public:
 		{
 		case DataType::INT:
 			select_hash_int = &getIntHashMap(keyinfo.searchKey, option);
-			for (auto it = select_hash_int->lower_bound(stoi(keyinfo.searchKeyword)); it != select_hash_int->upper_bound(stoi(keyinfo.searchKeyword)); it++) {
-				auto iter = employeeInfoMap.find(it->second);
-				if (iter != employeeInfoMap.end()) {
-					if (cmd == CommandType::DEL) employeeInfoMap.erase(it->second);
-					else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
+			{
+				auto range = select_hash_int->equal_range(stoi(keyinfo.searchKeyword));
+				for (auto it = range.first; it != range.second; it++) {
+					auto iter = employeeInfoMap.find(it->second);
+					if (iter != employeeInfoMap.end()) {
+						if (cmd == CommandType::DEL) employeeInfoMap.erase(it->second);
+						else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
+					}
 				}
+				if (cmd == CommandType::DEL)
+					select_hash_int->erase(stoi(keyinfo.searchKeyword));
 			}
-			if (cmd == CommandType::DEL) 
-				select_hash_int->erase(stoi(keyinfo.searchKeyword));
 			break;
 		case DataType::STRING:
 			select_hash_string = &getStringHashMap(keyinfo.searchKey, option);
-			for (auto it = select_hash_string->lower_bound(keyinfo.searchKeyword); it != select_hash_string->upper_bound(keyinfo.searchKeyword); it++) {
-				auto iter = employeeInfoMap.find(it->second);
-				if (iter != employeeInfoMap.end()) {
-					if (cmd == CommandType::DEL) employeeInfoMap.erase(it->second);
-					else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
+			{
+				auto range = select_hash_string->equal_range(keyinfo.searchKeyword);
+				for (auto it = range.first; it != range.second; it++) {
+					auto iter = employeeInfoMap.find(it->second);
+					if (iter != employeeInfoMap.end()) {
+						if (cmd == CommandType::DEL) employeeInfoMap.erase(it->second);
+						else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
+					}
 				}
+				if (cmd == CommandType::DEL)
+					select_hash_string->erase(keyinfo.searchKeyword);
 			}
-			if (cmd == CommandType::DEL)
-				select_hash_string->erase(keyinfo.searchKeyword);
 			break;
 		case DataType::CL:
-			for (auto it = clMap.lower_bound(getCL(keyinfo.searchKeyword)); it != clMap.upper_bound(getCL(keyinfo.searchKeyword)); it++) {
+		{
+			auto range = clMap.equal_range(getCL(keyinfo.searchKeyword));
+			for (auto it = range.first; it != range.second; it++) {
 				auto iter = employeeInfoMap.find(it->second);
 				if (iter != employeeInfoMap.end()) {
 					if (cmd == CommandType::DEL) employeeInfoMap.erase(it->second);
@@ -397,9 +405,13 @@ public:
 			}
 			if (cmd == CommandType::DEL)
 				clMap.erase(getCL(keyinfo.searchKeyword));
-			break;
+		}
+		break;
 		case DataType::CERTI:
-			for (auto it = certiMap.lower_bound(getCerti(keyinfo.searchKeyword)); it != certiMap.upper_bound(getCerti(keyinfo.searchKeyword)); it++) {
+		{
+			auto range = certiMap.equal_range(getCerti(keyinfo.searchKeyword));
+
+			for (auto it = certiMap.equal_range(getCerti(keyinfo.searchKeyword)).first; it != certiMap.equal_range(getCerti(keyinfo.searchKeyword)).second; it++) {
 				auto iter = employeeInfoMap.find(it->second);
 				if (iter != employeeInfoMap.end()) {
 					if (cmd == CommandType::DEL) employeeInfoMap.erase(it->second);
@@ -408,7 +420,8 @@ public:
 			}
 			if (cmd == CommandType::DEL)
 				certiMap.erase(getCerti(keyinfo.searchKeyword));
-			break;
+		}
+		break;
 		default:
 			break;
 		}
@@ -423,7 +436,7 @@ public:
 		editHashMap(CommandType::MOD, keyinfo, optioninfo.searchOption);
 		return true;
 	}
-	bool chEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
+	bool schEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 		const list<EmployeeInfo*> search_result = GetResult(keyinfo, optioninfo.searchOption);
 		return true;
 	}
