@@ -29,18 +29,18 @@ TEST(CommandParserTest, parse_add) {
 
 	// ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV
 	EXPECT_EQ(addInfo->employeeNum, 15123099);
-	EXPECT_EQ(addInfo->givenName, "VXIHXOTH");
-	EXPECT_EQ(addInfo->familyName, "JHOP");
+	EXPECT_EQ(addInfo->name_First, "VXIHXOTH");
+	EXPECT_EQ(addInfo->name_Last, "JHOP");
 	EXPECT_EQ(addInfo->cl, CareerLevel::CL3);
-	EXPECT_EQ(addInfo->phoneNumMid, 3112);
-	EXPECT_EQ(addInfo->phoneNumEnd, 2609);
-	EXPECT_EQ(addInfo->birthYear, 1977);
-	EXPECT_EQ(addInfo->birthMonth, 12);
-	EXPECT_EQ(addInfo->birthDay, 11);
+	EXPECT_EQ(addInfo->phoneNum_Mid, 3112);
+	EXPECT_EQ(addInfo->phoneNum_End, 2609);
+	EXPECT_EQ(addInfo->birthday_Year, 1977);
+	EXPECT_EQ(addInfo->birthday_Month, 12);
+	EXPECT_EQ(addInfo->birthday_Day, 11);
 	EXPECT_EQ(addInfo->certi, CERTI::ADV);
 	EXPECT_EQ(addInfo->name, "VXIHXOTH JHOP");
 	EXPECT_EQ(addInfo->phoneNum, "010-3112-2609");
-	EXPECT_EQ(addInfo->birth, 19771211);
+	EXPECT_EQ(addInfo->birthday, 19771211);
 }
 
 TEST(CommandParserTest, parse_mod) {
@@ -99,6 +99,7 @@ TEST(CommandParserTest, parse_sch) {
 	EXPECT_EQ(keyInfo->searchKeyword, "18115040");
 }
 
+
 TEST(CommandParserTest, parse_option) {
 	EmployeeManagement* em = new EmployeeManagement();
 	CommandParser* cp = new CommandParser();
@@ -113,7 +114,7 @@ TEST(CommandParserTest, parse_option) {
 	cp->parseSearchCommand(keyInfo, optionInfo);
 
 	// SCH,-p,-d, ,birthday,04
-	EXPECT_EQ(keyInfo->searchKey, "birthDay");
+	EXPECT_EQ(keyInfo->searchKey, "birthday_Day");
 	EXPECT_EQ(keyInfo->searchKeyword, "04");
 
 	cp->parseData(em->readLine[24]);
@@ -121,7 +122,7 @@ TEST(CommandParserTest, parse_option) {
 	cp->parseDeleteCommand(keyInfo, optionInfo);
 
 	// DEL,-p,-l, ,name,MPOSXU
-	EXPECT_EQ(keyInfo->searchKey, "familyName");
+	EXPECT_EQ(keyInfo->searchKey, "name_Last");
 	EXPECT_EQ(keyInfo->searchKeyword, "MPOSXU");
 
 	cp->parseData(em->readLine[28]);
@@ -129,7 +130,7 @@ TEST(CommandParserTest, parse_option) {
 	cp->parseSearchCommand(keyInfo, optionInfo);
 
 	// SCH, ,-m, ,birthday,09
-	EXPECT_EQ(keyInfo->searchKey, "birthMonth");
+	EXPECT_EQ(keyInfo->searchKey, "birthday_Month");
 	EXPECT_EQ(keyInfo->searchKeyword, "09");
 
 	cp->parseData(em->readLine[31]);
@@ -137,7 +138,7 @@ TEST(CommandParserTest, parse_option) {
 	cp->parseSearchCommand(keyInfo, optionInfo);
 
 	// SCH,-p,-y, ,birthday,2003
-	EXPECT_EQ(keyInfo->searchKey, "birthYear");
+	EXPECT_EQ(keyInfo->searchKey, "birthday_Year");
 	EXPECT_EQ(keyInfo->searchKeyword, "2003");
 
 	cp->parseData(em->readLine[33]);
@@ -145,7 +146,7 @@ TEST(CommandParserTest, parse_option) {
 	cp->parseSearchCommand(keyInfo, optionInfo);
 
 	// SCH,-p,-m, ,phoneNum,3112
-	EXPECT_EQ(keyInfo->searchKey, "phoneNumMid");
+	EXPECT_EQ(keyInfo->searchKey, "phoneNum_Mid");
 	EXPECT_EQ(keyInfo->searchKeyword, "3112");
 
 	cp->parseData(em->readLine[34]);
@@ -153,7 +154,7 @@ TEST(CommandParserTest, parse_option) {
 	cp->parseSearchCommand(keyInfo, optionInfo);
 
 	// SCH,-p,-l, ,phoneNum,4605
-	EXPECT_EQ(keyInfo->searchKey, "phoneNumEnd");
+	EXPECT_EQ(keyInfo->searchKey, "phoneNum_End");
 	EXPECT_EQ(keyInfo->searchKeyword, "4605");
 
 	cp->parseData(em->readLine[37]);
@@ -161,7 +162,7 @@ TEST(CommandParserTest, parse_option) {
 	cp->parseSearchCommand(keyInfo, optionInfo);
 
 	// SCH, ,-f, ,name,LDEXRI
-	EXPECT_EQ(keyInfo->searchKey, "givenName");
+	EXPECT_EQ(keyInfo->searchKey, "name_First");
 	EXPECT_EQ(keyInfo->searchKeyword, "LDEXRI");
 }
 
@@ -185,18 +186,18 @@ TEST(CommandParserTest, parse_addmodule) {
 	EmployeeInfo* employee = dm->employeeInfoMap.find(it->second)->second;
 	
 	EXPECT_EQ(employee->employeeNum, 15123099);
-	EXPECT_EQ(employee->givenName, "VXIHXOTH");
-	EXPECT_EQ(employee->familyName, "JHOP");
+	EXPECT_EQ(employee->name_First, "VXIHXOTH");
+	EXPECT_EQ(employee->name_Last, "JHOP");
 	EXPECT_EQ(employee->cl, CareerLevel::CL3);
-	EXPECT_EQ(employee->phoneNumMid, 3112);
-	EXPECT_EQ(employee->phoneNumEnd, 2609);
-	EXPECT_EQ(employee->birthYear, 1977);
-	EXPECT_EQ(employee->birthMonth, 12);
-	EXPECT_EQ(employee->birthDay, 11);
+	EXPECT_EQ(employee->phoneNum_Mid, 3112);
+	EXPECT_EQ(employee->phoneNum_End, 2609);
+	EXPECT_EQ(employee->birthday_Year, 1977);
+	EXPECT_EQ(employee->birthday_Month, 12);
+	EXPECT_EQ(employee->birthday_Day, 11);
 	EXPECT_EQ(employee->certi, CERTI::ADV);
 	EXPECT_EQ(employee->name, "VXIHXOTH JHOP");
 	EXPECT_EQ(employee->phoneNum, "010-3112-2609");
-	EXPECT_EQ(employee->birth, 19771211);
+	EXPECT_EQ(employee->birthday, 19771211);
 }
 
 TEST(CommandParserTest, parse_delmodule) {

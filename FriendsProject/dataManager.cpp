@@ -63,17 +63,17 @@ bool DataManager::addEmployee(EmployeeInfo employee) {
 	employeeInfoMap.insert({ employeenumber, &employeePool[employeeCnt] });
 
 	employeeNumMap.insert({ employee.employeeNum, employeenumber });
-	givenNameMap.insert({ employee.givenName, employeenumber });
-	familyNameMap.insert({ employee.familyName, employeenumber });
+	givenNameMap.insert({ employee.name_First, employeenumber });
+	familyNameMap.insert({ employee.name_Last, employeenumber });
 	nameMap.insert({ employee.name, employeenumber });
 	clMap.insert({ employee.cl , employeenumber });
-	phoneNumMidMap.insert({ employee.phoneNumMid, employeenumber });
-	phoneNumEndMap.insert({ employee.phoneNumEnd, employeenumber });
+	phoneNumMidMap.insert({ employee.phoneNum_Mid, employeenumber });
+	phoneNumEndMap.insert({ employee.phoneNum_End, employeenumber });
 	phoneNumMap.insert({ employee.phoneNum, employeenumber });
-	birthYearMap.insert({ employee.birthYear, employeenumber });
-	birthMonthMap.insert({ employee.birthMonth, employeenumber });
-	birthDayMap.insert({ employee.birthDay, employeenumber });
-	birthMap.insert({ employee.birth, employeenumber });
+	birthYearMap.insert({ employee.birthday_Year, employeenumber });
+	birthMonthMap.insert({ employee.birthday_Month, employeenumber });
+	birthDayMap.insert({ employee.birthday_Day, employeenumber });
+	birthMap.insert({ employee.birthday, employeenumber });
 	certiMap.insert({ employee.certi, employeenumber });
 
 	employeeCnt++;

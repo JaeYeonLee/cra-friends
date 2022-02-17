@@ -21,16 +21,16 @@ enum class CareerLevel {
 class EmployeeInfo {
 public:
 	int employeeNum;
-	string givenName;
-	string familyName;
+	string name_First;
+	string name_Last;
 	CareerLevel cl;
-	int phoneNumMid;
-	int phoneNumEnd;
-	int birthYear;
-	int birthMonth;
-	int birthDay;
+	int phoneNum_Mid;
+	int phoneNum_End;
+	int birthday_Year;
+	int birthday_Month;
+	int birthday_Day;
 	CERTI certi;
 	string name;
 	string phoneNum;
-	int birth;
+	int birthday;
 };

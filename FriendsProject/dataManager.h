@@ -320,12 +320,12 @@ public:
 		if (keyinfo.modifyKey == "name") {
 			employeeinfo->name = keyinfo.modifyKeyword;
 			int idx = keyinfo.modifyKeyword.find(' ');
-			employeeinfo->givenName = keyinfo.modifyKeyword.substr(0, idx);
-			employeeinfo->familyName = keyinfo.modifyKeyword.substr(idx + 1);
+			employeeinfo->name_First = keyinfo.modifyKeyword.substr(0, idx);
+			employeeinfo->name_Last = keyinfo.modifyKeyword.substr(idx + 1);
 
 			nameMap.insert({ employeeinfo->name, employeeNum });
-			givenNameMap.insert({ employeeinfo->givenName, employeeNum });
-			familyNameMap.insert({ employeeinfo->familyName, employeeNum });
+			givenNameMap.insert({ employeeinfo->name_First, employeeNum });
+			familyNameMap.insert({ employeeinfo->name_Last, employeeNum });
 		}
 		else if (keyinfo.modifyKey == "cl") {
 			employeeinfo->cl = getCL(keyinfo.modifyKeyword);
@@ -336,23 +336,23 @@ public:
 			employeeinfo->phoneNum = keyinfo.modifyKeyword;
 			int idx1 = keyinfo.modifyKeyword.find('-', 0);
 			int idx2 = keyinfo.modifyKeyword.find('-', idx1 + 1);
-			employeeinfo->phoneNumMid = stoi(keyinfo.modifyKeyword.substr(idx1 + 1, idx2 - idx1));
-			employeeinfo->phoneNumEnd = stoi(keyinfo.modifyKeyword.substr(idx2 + 1));
+			employeeinfo->phoneNum_Mid = stoi(keyinfo.modifyKeyword.substr(idx1 + 1, idx2 - idx1));
+			employeeinfo->phoneNum_End = stoi(keyinfo.modifyKeyword.substr(idx2 + 1));
 
 			phoneNumMap.insert({ employeeinfo->phoneNum, employeeNum });
-			phoneNumMidMap.insert({ employeeinfo->phoneNumMid, employeeNum });
-			phoneNumEndMap.insert({ employeeinfo->phoneNumEnd, employeeNum });
+			phoneNumMidMap.insert({ employeeinfo->phoneNum_Mid, employeeNum });
+			phoneNumEndMap.insert({ employeeinfo->phoneNum_End, employeeNum });
 		}
 		else if (keyinfo.modifyKey == "birthday") {
-			employeeinfo->birth = stoi(keyinfo.modifyKeyword);
-			employeeinfo->birthYear = stoi(keyinfo.modifyKeyword.substr(0, 4));
-			employeeinfo->birthMonth = stoi(keyinfo.modifyKeyword.substr(4, 2));
-			employeeinfo->birthDay = stoi(keyinfo.modifyKeyword.substr(6, 2));
+			employeeinfo->birthday = stoi(keyinfo.modifyKeyword);
+			employeeinfo->birthday_Year = stoi(keyinfo.modifyKeyword.substr(0, 4));
+			employeeinfo->birthday_Month = stoi(keyinfo.modifyKeyword.substr(4, 2));
+			employeeinfo->birthday_Day = stoi(keyinfo.modifyKeyword.substr(6, 2));
 
-			birthMap.insert({ employeeinfo->birth , employeeNum });
-			birthYearMap.insert({ employeeinfo->birthYear , employeeNum });
-			birthMonthMap.insert({ employeeinfo->birthMonth , employeeNum });
-			birthDayMap.insert({ employeeinfo->birthDay , employeeNum });
+			birthMap.insert({ employeeinfo->birthday , employeeNum });
+			birthYearMap.insert({ employeeinfo->birthday_Year , employeeNum });
+			birthMonthMap.insert({ employeeinfo->birthday_Month , employeeNum });
+			birthDayMap.insert({ employeeinfo->birthday_Day , employeeNum });
 		}
 		else if (keyinfo.modifyKey == "certi") {
 			employeeinfo->certi = getCerti(keyinfo.modifyKeyword);

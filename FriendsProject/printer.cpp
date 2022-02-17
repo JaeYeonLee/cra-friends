@@ -27,7 +27,7 @@ string Printer::generateString(EmployeeInfo* data) {
 	addCommaData(dataString, data->name);
 	addCommaData(dataString, careerLevelString[static_cast<int>(data->cl)]);
 	addCommaData(dataString, data->phoneNum);
-	addCommaData(dataString, to_string(data->birth));
+	addCommaData(dataString, to_string(data->birthday));
 	addCommaData(dataString, certiString[static_cast<int>(data->certi)]);
 
 	return dataString;
