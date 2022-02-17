@@ -202,7 +202,7 @@ unordered_multimap<string, int>* DataManager::getStringHashMap(SearchKey key_typ
 	}
 }
 
-const list<EmployeeInfo*> DataManager::GetResult(KeyInfo keyinfo) {
+map<int, EmployeeInfo*> DataManager::GetResult(KeyInfo keyinfo) {
 	SearchKey key_type = getSearchKey(keyinfo.searchKey);
 	DataType data_type = getDataType(key_type);
 	switch (data_type)
@@ -335,19 +335,19 @@ void DataManager::editHashMap(CommandType cmd, KeyInfo keyinfo) {
 	}
 }
 bool DataManager::delEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
-	const list<EmployeeInfo*> search_result = GetResult(keyinfo);
+	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
 	printer->setResultData(CommandType::DEL, &search_result, optioninfo.enablePrint);
 	editHashMap(CommandType::DEL, keyinfo);
 	return true;
 }
 bool DataManager::modEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
-	const list<EmployeeInfo*> search_result = GetResult(keyinfo);
+	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
 	printer->setResultData(CommandType::MOD, &search_result, optioninfo.enablePrint);
 	editHashMap(CommandType::MOD, keyinfo);
 	return true;
 }
 bool DataManager::schEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
-	const list<EmployeeInfo*> search_result = GetResult(keyinfo);
+	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
 	printer->setResultData(CommandType::SCH, &search_result, optioninfo.enablePrint);
 	return true;
 }
