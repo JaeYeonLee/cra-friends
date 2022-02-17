@@ -2,12 +2,6 @@
 
 using namespace std;
 
-TEST(employeeManagementTest, test) {
-	EmployeeManagement* em = new EmployeeManagement();
-
-	em->testEM();
-}
-
 TEST(employeeManagementTest, open_file) {
 	EmployeeManagement* em = new EmployeeManagement();
 
