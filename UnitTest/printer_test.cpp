@@ -1,12 +1,8 @@
 #include "pch.h"
-#include "../FriendsProject/dataManager.h"
-#include "../FriendsProject/printer.cpp"
 #include <iostream>
 
 Printer printer;
 DataManager* data_manager;
-
-extern void input_test_data(DataManager* data_manager);
 
 TEST(PrintTest, StringFunctionTestwithInvalidData) {
 	EXPECT_EQ(-1, printer.setResultData(CommandType::ADD, nullptr, Option::NONE));

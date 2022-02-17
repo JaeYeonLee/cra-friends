@@ -139,10 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="commandParser.cpp" />
     <ClCompile Include="dataManager.cpp" />
-    <ClCompile Include="del.cpp" />
     <ClCompile Include="employeeInfo.cpp" />
     <ClCompile Include="employeeManagement.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="printer.cpp" />
     <ClCompile Include="search.cpp" />
   </ItemGroup>

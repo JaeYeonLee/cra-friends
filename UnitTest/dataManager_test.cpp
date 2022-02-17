@@ -1,7 +1,4 @@
 #include "pch.h"
-#include "../FriendsProject/dataManager.h"
-#include "../FriendsProject/dataManager.cpp"
-
 
 TEST(dataManagerTest, employeeNumMapTest) {
 

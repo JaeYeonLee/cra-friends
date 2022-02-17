@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include <iostream>
 #include "CommandParser.h"
 
 #define MAX_PRINT 5
