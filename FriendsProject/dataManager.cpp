@@ -106,3 +106,58 @@ CERTI getCerti(string certiString) {
 	if (certiString == "EX") return CERTI::EX;
 	return CERTI::NONE;
 }
+
+CareerLevel getCL(string clString) {
+	if (clString.size() == 3 && clString.substr(0, 2) == "CL") {
+		int level = stoi(clString.substr(2, 1)) - 1;
+		return CAST_CL(level);
+	}
+}
+
+int schEmployee_temp(KeyInfo keyinfo, OptionInfo optionInfo) {
+	list<EmployeeInfo*>* searchResult = nullptr;
+
+	switch (CAST_INT(keyTable[keyinfo.searchKey])) {
+	case CAST_INT(SearchKey::EMPLOYEENUM):
+		searchResult = searchEngine->search(stoi(keyinfo.searchKeyword), employeeNumMap);
+		break;
+	case CAST_INT(SearchKey::NAME):
+		searchResult = searchEngine->search(keyinfo.searchKeyword, nameMap);
+		break;
+	case CAST_INT(SearchKey::GIVENNAME):
+		searchResult = searchEngine->search(keyinfo.searchKeyword, givenNameMap);
+		break;
+	case CAST_INT(SearchKey::FAMILYNAME):
+		searchResult = searchEngine->search(keyinfo.searchKeyword, familyNameMap);
+		break;
+	case CAST_INT(SearchKey::CL):
+		searchResult = searchEngine->search(getCL(keyinfo.searchKeyword), clMap);
+		break;
+	case CAST_INT(SearchKey::PHONENUM):
+		searchResult = searchEngine->search(keyinfo.searchKeyword, phoneNumMap);
+		break;
+	case CAST_INT(SearchKey::PHONENUMMID):
+		searchResult = searchEngine->search(stoi(keyinfo.searchKeyword), phoneNumMidMap);
+		break;
+	case CAST_INT(SearchKey::PHONENUMEND):
+		searchResult = searchEngine->search(stoi(keyinfo.searchKeyword), phoneNumEndMap);
+		break;
+	case CAST_INT(SearchKey::BIRTH):
+		searchResult = searchEngine->search(stoi(keyinfo.searchKeyword), birthMap);
+		break;
+	case CAST_INT(SearchKey::BIRTHYEAR):
+		searchResult = searchEngine->search(stoi(keyinfo.searchKeyword), birthYearMap);
+		break;
+	case CAST_INT(SearchKey::BIRTHMOHTH):
+		searchResult = searchEngine->search(stoi(keyinfo.searchKeyword), birthMonthMap);
+		break;
+	case CAST_INT(SearchKey::BIRTHDAY):
+		searchResult = searchEngine->search(stoi(keyinfo.searchKeyword), birthDayMap);
+		break;
+	case CAST_INT(SearchKey::CERTI):
+		searchResult = searchEngine->search(CAST_CERTI(getCerti(keyinfo.searchKeyword)), certiMap);
+		break;
+}
+
+	return printer->setResultData(CommandType::SCH, searchResult, optionInfo.enablePrint);
+}
