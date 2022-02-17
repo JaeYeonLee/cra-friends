@@ -95,3 +95,10 @@ int EmployeeManagement::printResult() {
 		printer.printResult();
 	return 0;
 }
+
+string EmployeeManagement::debugResult() {
+	if (printer.hasValidValue(commandType, optionInfo->enablePrint))
+		return printer.getResultString();
+	else
+		return "";
+}
