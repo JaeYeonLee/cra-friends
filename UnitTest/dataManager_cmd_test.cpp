@@ -48,10 +48,12 @@ TEST(dataManagerTest, DelEmployeeTest_Name_Full) {
 
 	it = data_manager->nameMap.find("DONGKIL KIM");
 	EXPECT_FALSE(it == data_manager->nameMap.end());
+
 }
 TEST(dataManagerTest, DelEmployeeTest_Name_Given) {
 	DataManager* data_manager = new DataManager();
 	input_test_data(data_manager);
+
 
 	EXPECT_TRUE(data_manager->delEmployee({ "name", "KILDONG" }, { Option::NONE, Option::FIRST_YEAR }));
 
@@ -60,6 +62,7 @@ TEST(dataManagerTest, DelEmployeeTest_Name_Given) {
 
 	it = data_manager->givenNameMap.find("DONGKIL");
 	EXPECT_FALSE(it == data_manager->givenNameMap.end());
+
 }
 TEST(dataManagerTest, DelEmployeeTest_Name_Family) {
 	DataManager* data_manager = new DataManager();
@@ -72,6 +75,7 @@ TEST(dataManagerTest, DelEmployeeTest_Name_Family) {
 
 	it = data_manager->familyNameMap.find("KIM");
 	EXPECT_FALSE(it == data_manager->familyNameMap.end());
+
 }
 TEST(dataManagerTest, DelEmployeeTest_Cl) {
 	DataManager* data_manager = new DataManager();
@@ -84,6 +88,7 @@ TEST(dataManagerTest, DelEmployeeTest_Cl) {
 
 	it = data_manager->clMap.find(CareerLevel::CL2);
 	EXPECT_FALSE(it == data_manager->clMap.end());
+
 }
 TEST(dataManagerTest, DelEmployeeTest_PhoneNum) {
 	DataManager* data_manager = new DataManager();
@@ -96,10 +101,12 @@ TEST(dataManagerTest, DelEmployeeTest_PhoneNum) {
 
 	it = data_manager->phoneNumMap.find("010-8765-4321");
 	EXPECT_FALSE(it == data_manager->phoneNumMap.end());
+
 }
 TEST(dataManagerTest, DelEmployeeTest_PhoneNumMid) {
 	DataManager* data_manager = new DataManager();
 	input_test_data(data_manager);
+
 
 	EXPECT_TRUE(data_manager->delEmployee({ "phoneNum", "1234" }, { Option::NONE, Option::MIDDLE_MONTH }));
 
@@ -108,10 +115,12 @@ TEST(dataManagerTest, DelEmployeeTest_PhoneNumMid) {
 
 	it = data_manager->phoneNumMidMap.find(8765);
 	EXPECT_FALSE(it == data_manager->phoneNumMidMap.end());
+
 }
 TEST(dataManagerTest, DelEmployeeTest_PhoneNumEnd) {
 	DataManager* data_manager = new DataManager();
 	input_test_data(data_manager);
+
 
 	EXPECT_TRUE(data_manager->delEmployee({ "phoneNum", "5678" }, { Option::NONE, Option::LAST_DAY }));
 
@@ -120,6 +129,7 @@ TEST(dataManagerTest, DelEmployeeTest_PhoneNumEnd) {
 
 	it = data_manager->phoneNumEndMap.find(4321);
 	EXPECT_FALSE(it == data_manager->phoneNumEndMap.end());
+
 }
 TEST(dataManagerTest, DelEmployeeTest_Birth) {
 	DataManager* data_manager = new DataManager();
@@ -136,6 +146,7 @@ TEST(dataManagerTest, DelEmployeeTest_Birth) {
 TEST(dataManagerTest, DelEmployeeTest_BirthYear) {
 	DataManager* data_manager = new DataManager();
 	input_test_data(data_manager);
+
 
 	EXPECT_TRUE(data_manager->delEmployee({ "birthday", "1999" }, { Option::NONE, Option::FIRST_YEAR }));
 
@@ -198,6 +209,7 @@ TEST(dataManagerTest, SchEmployeeTest_Name_Full) {
 	EXPECT_TRUE(data_manager->schEmployee({ "name", "KILDONG HONG" }, { Option::NONE, Option::NONE }));
 	EXPECT_TRUE(data_manager->schEmployee({ "name", "DONGKIL KIM" }, { Option::NONE, Option::NONE }));
 	EXPECT_TRUE(data_manager->schEmployee({ "name", "AAAAAAA AAAA" }, { Option::NONE, Option::NONE }));
+
 }
 TEST(dataManagerTest, SchEmployeeTest_Cl) {
 	DataManager* data_manager = new DataManager();
@@ -206,6 +218,7 @@ TEST(dataManagerTest, SchEmployeeTest_Cl) {
 	EXPECT_TRUE(data_manager->schEmployee({ "cl", "CL1" }, { Option::NONE, Option::NONE }));
 	EXPECT_TRUE(data_manager->schEmployee({ "cl", "CL2" }, { Option::NONE, Option::NONE }));
 	EXPECT_TRUE(data_manager->schEmployee({ "cl", "CL3" }, { Option::NONE, Option::NONE }));
+
 }
 TEST(dataManagerTest, SchEmployeeTest_Phone) {
 	DataManager* data_manager = new DataManager();
@@ -214,6 +227,7 @@ TEST(dataManagerTest, SchEmployeeTest_Phone) {
 	EXPECT_TRUE(data_manager->schEmployee({ "phoneNum", "010-1234-5678" }, { Option::NONE, Option::NONE }));
 	EXPECT_TRUE(data_manager->schEmployee({ "phoneNum", "010-8765-4321" }, { Option::NONE, Option::NONE }));
 	EXPECT_TRUE(data_manager->schEmployee({ "phoneNum", "010-0000-0000" }, { Option::NONE, Option::NONE }));
+
 }
 TEST(dataManagerTest, SchEmployeeTest_Birth) {
 	DataManager* data_manager = new DataManager();
@@ -222,6 +236,7 @@ TEST(dataManagerTest, SchEmployeeTest_Birth) {
 	EXPECT_TRUE(data_manager->schEmployee({ "birthday", "19991231" }, { Option::NONE, Option::NONE }));
 	EXPECT_TRUE(data_manager->schEmployee({ "birthday", "20000101" }, { Option::NONE, Option::NONE }));
 	EXPECT_TRUE(data_manager->schEmployee({ "birthday", "20010615" }, { Option::NONE, Option::NONE }));
+
 }
 TEST(dataManagerTest, SchEmployeeTest_Certi) {
 	DataManager* data_manager = new DataManager();
@@ -230,6 +245,7 @@ TEST(dataManagerTest, SchEmployeeTest_Certi) {
 	EXPECT_TRUE(data_manager->schEmployee({ "certi", "ADV" }, { Option::NONE, Option::NONE }));
 	EXPECT_TRUE(data_manager->schEmployee({ "certi", "PRO" }, { Option::NONE, Option::NONE }));
 	EXPECT_TRUE(data_manager->schEmployee({ "certi", "EX" }, { Option::NONE, Option::NONE }));
+
 }
 
 

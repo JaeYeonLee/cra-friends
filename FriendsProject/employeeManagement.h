@@ -98,11 +98,13 @@ public:
 	}
 
 	int printResult() {
-
+		if (printer.hasValidValue(commandType, optionInfo->enablePrint))
+			printer.printResult();
 		return 0;
 	}
 
-	DataManager* dm = new DataManager();
+	Printer printer;
+	DataManager* dm = new DataManager(&printer);
 	CommandType commandType;
 	EmployeeInfo* addInfo;
 	KeyInfo* keyInfo;
