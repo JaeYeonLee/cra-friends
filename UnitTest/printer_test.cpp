@@ -15,7 +15,7 @@ TEST(PrintTest, StringFunctionTestwithInvalidData) {
 }
 
 TEST(PrintTest, StringFunctionTestwithValidData) {
-	data_manager = new DataManager();
+	data_manager = new DataManager(&printer);
 	input_test_data(data_manager);
 
 	map<int, EmployeeInfo*> testList;
@@ -38,19 +38,18 @@ TEST(PrintTest, StringFunctionTestwithValidData) {
 	EXPECT_EQ(3, printer.setResultData(CommandType::SCH, &testList, Option::PRINT));
 	EXPECT_EQ(printResult, printer.getResultString());
 }
+
 TEST(PrintTest, DELwithoutOption) {
-	data_manager = new DataManager();
-	SearchEngine* search_engine = new SearchEngine();
+	data_manager = new DataManager(&printer);
 	input_test_data(data_manager);
 	
-	map<int, EmployeeInfo*>* result = nullptr;
-	result = &data_manager->GetResult({ "employeeNum", "00000000" });
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "employeeNum", "00000000" }); 
 
 	string resultString = "DEL,1\n";
 	cout << resultString;
-	printer.setResultData(CommandType::DEL, result, Option::NONE);
+	printer.setResultData(CommandType::DEL, &result, Option::NONE);
 
-	if (result != nullptr)
+	if (result.size() != 0)
 		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
@@ -62,15 +61,14 @@ TEST(PrintTest, DELwithOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	map<int, EmployeeInfo*>* result = nullptr;
-	result = &data_manager->GetResult({ "employeeNum", "00000000" });
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "employeeNum", "00000000" });
 
 	string resultString = "DEL,00000000,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\n";
 	cout << resultString;
 
-	printer.setResultData(CommandType::DEL, result, Option::PRINT);
+	printer.setResultData(CommandType::DEL, &result, Option::PRINT);
 
-	if (result != nullptr)
+	if (result.size() != 0)
 		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
@@ -82,36 +80,28 @@ TEST(PrintTest, DELwithOptionNoResult) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	map<int, EmployeeInfo*>* result = nullptr;
-	result = &data_manager->GetResult({ "employeeNum", "99999999" });
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "employeeNum", "99999999" });
 
 	string resultString = "DEL,NONE\n";
 	cout << resultString;
 
-	printer.setResultData(CommandType::DEL, result, Option::PRINT);
+	printer.setResultData(CommandType::DEL, &result, Option::PRINT);
 
-	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.getResultString());
-	else {
-		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo\n";
-	}
+	EXPECT_EQ(resultString, printer.getResultString());
 }
 
 TEST(PrintTest, MODwithoutOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	map<int, EmployeeInfo*>* result = nullptr;
-	result = &data_manager->GetResult({ "cl", "CL1" });
-	//result =  data_manager->schEmployee({ "cl", "1" }); 
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "cl", "CL1" }); 
 
 	string resultString = "MOD,3\n";
 	cout << resultString;
 
-	printer.setResultData(CommandType::MOD, result, Option::NONE);
+	printer.setResultData(CommandType::MOD, &result, Option::NONE);
 
-	if (result != nullptr)
+	if (result.size() != 0)
 		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
@@ -123,16 +113,14 @@ TEST(PrintTest, MODwithOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	map<int, EmployeeInfo*>* result = nullptr;
-	result = &data_manager->GetResult({ "cl", "CL1" });
-	//result =  data_manager->schEmployee({ "cl", "1" }); 
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "cl", "CL1" }); 
 
 	string resultString = "MOD,00000000,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\nMOD,00000002,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\nMOD,00000004,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\n";
 	cout << resultString;
 
-	printer.setResultData(CommandType::MOD, result, Option::PRINT);
+	printer.setResultData(CommandType::MOD, &result, Option::PRINT);
 
-	if (result != nullptr)
+	if (result.size() != 0)
 		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
@@ -144,35 +132,28 @@ TEST(PrintTest, MODwithOptionNoResult) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	map<int, EmployeeInfo*>* result = nullptr;
-	result = &data_manager->GetResult({ "cl", "CL4" });
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "cl", "CL4" }); 
 
 	string resultString = "MOD,NONE\n";
 	cout << resultString;
 
-	printer.setResultData(CommandType::MOD, result, Option::PRINT);
+	printer.setResultData(CommandType::MOD, &result, Option::PRINT);
 
-	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.getResultString());
-	else {
-		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo\n";
-	}
+	EXPECT_EQ(resultString, printer.getResultString());
 }
 
 TEST(PrintTest, SCHwithoutOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	map<int, EmployeeInfo*>* result = nullptr;
-	result = &data_manager->GetResult({ "name_Last", "KIM" });
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "name_Last", "KIM" }); 
 
 	string resultString = "SCH,2\n";
 	cout << resultString;
 
-	printer.setResultData(CommandType::SCH, result, Option::NONE);
+	printer.setResultData(CommandType::SCH, &result, Option::NONE);
 
-	if (result != nullptr)
+	if (result.size() != 0)
 		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
@@ -184,15 +165,14 @@ TEST(PrintTest, SCHwithOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	map<int, EmployeeInfo*>* result = nullptr;
-	result = &data_manager->GetResult({ "name_Last", "KIM" });
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "name_Last", "KIM" }); 
 
-	string resultString = "SCH,00000001,DONGKIL KIM,CL2,010-8765-4321,20000101,ADV\nSCH,00000001,DONGKIL KIM,CL2,010-8765-4321,20000101,ADV\n";
+	string resultString = "SCH,00000001,DONGKIL KIM,CL2,010-8765-4321,20000101,PRO\nSCH,00000003,DONGKIL KIM,CL2,010-8765-4321,20000101,PRO\n";
 	cout << resultString;
 
-	printer.setResultData(CommandType::SCH, result, Option::PRINT);
+	printer.setResultData(CommandType::SCH, &result, Option::PRINT);
 
-	if (result != nullptr)
+	if (result.size() != 0)
 		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
@@ -204,18 +184,12 @@ TEST(PrintTest, SCHwithoutOptionNoResult) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	map<int, EmployeeInfo*>* result = nullptr;
-	result = &data_manager->GetResult({ "name_Last", "LEE" });
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "name_Last", "LEE" }); 
 
 	string resultString = "SCH,NONE\n";
 	cout << resultString;
 
-	printer.setResultData(CommandType::SCH, result, Option::NONE);
+	printer.setResultData(CommandType::SCH, &result, Option::NONE);
 
-	if (result != nullptr)
-		EXPECT_EQ(resultString, printer.getResultString());
-	else {
-		EXPECT_TRUE(false);
-		cout << "failed to get employeeInfo\n";
-	}
+	EXPECT_EQ(resultString, printer.getResultString());
 }
