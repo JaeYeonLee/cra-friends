@@ -6,7 +6,7 @@ TEST(dataManagerSizeTest, employeeNumMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		int ret = data_manager.addEmployee({ i, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211});  //사원번호가 i인 사람 생성
+		int ret = data_manager.addEmployee({ i, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211});
 	};  
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
@@ -23,7 +23,7 @@ TEST(dataManagerSizeTest, givenNameMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		int ret = data_manager.addEmployee({ i, to_string(i), "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //givenname이 i인 사람 생성
+		int ret = data_manager.addEmployee({ i, to_string(i), "JHOP", static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++) 
@@ -40,7 +40,7 @@ TEST(dataManagerSizeTest, familyNameMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		int ret = data_manager.addEmployee({ i, "VXIHXOTH", to_string(i), static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //familyname이 i인 사람 생성
+		int ret = data_manager.addEmployee({ i, "VXIHXOTH", to_string(i), static_cast<CareerLevel>(3), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
@@ -57,7 +57,7 @@ TEST(dataManagerSizeTest, clMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		int ret = data_manager.addEmployee({ i, "VXIHXOTH", "JHOP", static_cast<CareerLevel>((i % 3) + 1), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //cl이 i%3+1인 사람 생성
+		int ret = data_manager.addEmployee({ i, "VXIHXOTH", "JHOP", static_cast<CareerLevel>((i % 3) + 1), 3112, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
@@ -74,7 +74,7 @@ TEST(dataManagerSizeTest, phoneNumMidMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		int ret = data_manager.addEmployee({ i, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), i, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //사원번호가 i인 사람 생성
+		int ret = data_manager.addEmployee({ i, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), i, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });
 	};
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
