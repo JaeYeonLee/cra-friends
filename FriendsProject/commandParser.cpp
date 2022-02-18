@@ -1,5 +1,5 @@
 #include <iostream>
-#include "CommandParser.h"
+#include "commandParser.h"
 
 using namespace std;
 
