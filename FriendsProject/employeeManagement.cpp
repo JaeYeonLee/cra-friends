@@ -46,6 +46,17 @@ int main(int argc, char* argv[]) {
 		result = em->printResult();
 		if (result < 0) continue;
 	}
-
+	cout <<(em->dm->clMap[static_cast<CareerLevel>(3)].top()->name) <<endl;
+	em->dm->clMap[static_cast<CareerLevel>(3)].pop();
+	cout << (em->dm->clMap[static_cast<CareerLevel>(3)].top()->name) << endl;
+	em->dm->clMap[static_cast<CareerLevel>(3)].pop();
+	cout << (em->dm->clMap[static_cast<CareerLevel>(3)].top()->name) << endl;
+	em->dm->clMap[static_cast<CareerLevel>(3)].pop();
+	cout << (em->dm->clMap[static_cast<CareerLevel>(3)].top()->name) << endl;
+	em->dm->clMap[static_cast<CareerLevel>(3)].pop();
+	cout << (em->dm->clMap[static_cast<CareerLevel>(3)].top()->name) << endl;
+	em->dm->clMap[static_cast<CareerLevel>(3)].pop();
+	cout << (em->dm->clMap[static_cast<CareerLevel>(3)].top()->name) << endl;
+	em->dm->clMap[static_cast<CareerLevel>(3)].pop();
 	return 0;
 }
