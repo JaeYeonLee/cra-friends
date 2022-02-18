@@ -11,8 +11,9 @@ TEST(dataManagerTest, employeeNumMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		auto iter = data_manager.employeeNumMap.find(i);
-		EXPECT_NE(iter, data_manager.employeeNumMap.end());
+		auto it = data_manager.getIntHashMap(SearchKey::EMPLOYEENUM);
+		auto iter = it->find(i);
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -27,8 +28,9 @@ TEST(dataManagerTest, givenNameMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++) 
 	{
-		auto iter = data_manager.NameFisrtMap.find(to_string(i));
-		EXPECT_NE(iter, data_manager.NameFisrtMap.end());
+		auto it = data_manager.getStringHashMap(SearchKey::NAME_FIRST);
+		auto iter = it->find(to_string(i));
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -43,8 +45,9 @@ TEST(dataManagerTest, familyNameMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		auto iter = data_manager.NameLastMap.find(to_string(i));
-		EXPECT_NE(iter, data_manager.NameLastMap.end());
+		auto it = data_manager.getStringHashMap(SearchKey::NAME_LAST);
+		auto iter = it->find(to_string(i));
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -59,8 +62,9 @@ TEST(dataManagerTest, clMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		auto iter = data_manager.clMap.find(static_cast<CareerLevel>(i % 3 + 1));
-		EXPECT_NE(iter, data_manager.clMap.end());
+		auto it = data_manager.getClHashMap();
+		auto iter = it->find(static_cast<CareerLevel>(i % 3 + 1));
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -75,8 +79,9 @@ TEST(dataManagerTest, phoneNumMidMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		auto iter = data_manager.phoneNumMidMap.find(i);
-		EXPECT_NE(iter, data_manager.phoneNumMidMap.end());
+		auto it = data_manager.getIntHashMap(SearchKey::PHONENUM_MID);
+		auto iter = it->find(i);
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -91,8 +96,9 @@ TEST(dataManagerTest, phoneNumEndMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++) 
 	{
-		auto iter = data_manager.phoneNumEndMap.find(i);
-		EXPECT_NE(iter, data_manager.phoneNumEndMap.end());
+		auto it = data_manager.getIntHashMap(SearchKey::PHONENUM_END);
+		auto iter = it->find(i);
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -108,8 +114,9 @@ TEST(dataManagerTest, birthYearMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		auto iter = data_manager.birthYearMap.find(i);
-		EXPECT_NE(iter, data_manager.birthYearMap.end());
+		auto it = data_manager.getIntHashMap(SearchKey::BIRTH_YEAR);
+		auto iter = it->find(i);
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -125,8 +132,9 @@ TEST(dataManagerTest, birthMonthMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		auto iter = data_manager.birthMonthMap.find(i);
-		EXPECT_NE(iter, data_manager.birthMonthMap.end());
+		auto it = data_manager.getIntHashMap(SearchKey::BIRTH_MOHTH);
+		auto iter = it->find(i);
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -141,8 +149,9 @@ TEST(dataManagerTest, birthDayMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++) 
 	{
-		auto iter = data_manager.birthDayMap.find(i);
-		EXPECT_NE(iter, data_manager.birthDayMap.end());
+		auto it = data_manager.getIntHashMap(SearchKey::BIRTH_DAY);
+		auto iter = it->find(i);
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -157,8 +166,9 @@ TEST(dataManagerTest,certiMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++) 
 	{
-		auto iter = data_manager.certiMap.find(static_cast<CERTI>(i % 4));
-		EXPECT_NE(iter, data_manager.certiMap.end());
+		auto it = data_manager.getCertiHashMap();
+		auto iter = it->find(static_cast<CERTI>(i % 4));
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -173,8 +183,9 @@ TEST(dataManagerTest, nameMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		auto iter = data_manager.nameMap.find(to_string(i));
-		EXPECT_NE(iter, data_manager.nameMap.end());
+		auto it = data_manager.getStringHashMap(SearchKey::NAME);
+		auto iter = it->find(to_string(i));
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -189,8 +200,9 @@ TEST(dataManagerTest, phoneNumMap) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		auto iter = data_manager.phoneNumMap.find(to_string(i));
-		EXPECT_NE(iter, data_manager.phoneNumMap.end());
+		auto it = data_manager.getStringHashMap(SearchKey::PHONENUM);
+		auto iter = it->find(to_string(i));
+		EXPECT_NE(iter, it->end());
 	}
 }
 
@@ -205,8 +217,9 @@ TEST(dataManagerTest, birthMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		auto iter = data_manager.birthMap.find(i);
-		EXPECT_NE(iter, data_manager.birthMap.end());
+		auto it = data_manager.getIntHashMap(SearchKey::BIRTH);
+		auto iter = it->find(i);
+		EXPECT_NE(iter, it->end());
 	}
 }
 

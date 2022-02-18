@@ -18,8 +18,8 @@ TEST(PrintTest, StringFunctionTestwithValidData) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	list<EmployeeInfo*> testList;
-	testList.push_back(&data_manager->employeePool[0]);
+	map<int, EmployeeInfo*> testList;
+	testList.insert({ 0 + EMPLOYEE_NUM_OFFSET, &data_manager->employeePool[0] });
 	
 	EXPECT_EQ(1, printer.setResultData(CommandType::DEL, &testList, Option::NONE));
 	EXPECT_EQ("DEL,1\n", printer.getResultString());
@@ -28,8 +28,8 @@ TEST(PrintTest, StringFunctionTestwithValidData) {
 	EXPECT_EQ(1, printer.setResultData(CommandType::DEL, &testList, Option::PRINT));
 	EXPECT_EQ(printResult, printer.getResultString());
 
-	testList.push_back(&data_manager->employeePool[1]);
-	testList.push_back(&data_manager->employeePool[2]);
+	testList.insert({ 1 + EMPLOYEE_NUM_OFFSET, &data_manager->employeePool[1] });
+	testList.insert({ 2 + EMPLOYEE_NUM_OFFSET, &data_manager->employeePool[2] });
 
 	EXPECT_EQ(3, printer.setResultData(CommandType::SCH, &testList, Option::NONE));
 	EXPECT_EQ("SCH,3\n", printer.getResultString());
@@ -40,10 +40,11 @@ TEST(PrintTest, StringFunctionTestwithValidData) {
 }
 TEST(PrintTest, DELwithoutOption) {
 	data_manager = new DataManager();
+	SearchEngine* search_engine = new SearchEngine();
 	input_test_data(data_manager);
 	
-	list<EmployeeInfo*>* result = nullptr;
-	//result =  data_manager->schEmployee({ "employeeNum", "00000000" }); 
+	map<int, EmployeeInfo*>* result = nullptr;
+	result = &data_manager->GetResult({ "employeeNum", "00000000" });
 
 	string resultString = "DEL,1\n";
 	cout << resultString;
@@ -61,8 +62,8 @@ TEST(PrintTest, DELwithOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	list<EmployeeInfo*>* result = nullptr;
-	//result =  data_manager->schEmployee({ "employeeNum", "00000000" }); 
+	map<int, EmployeeInfo*>* result = nullptr;
+	result = &data_manager->GetResult({ "employeeNum", "00000000" });
 
 	string resultString = "DEL,00000000,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\n";
 	cout << resultString;
@@ -81,8 +82,8 @@ TEST(PrintTest, DELwithOptionNoResult) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	list<EmployeeInfo*>* result = nullptr;
-	//result =  data_manager->schEmployee({ "employeeNum", "99999999" }); 
+	map<int, EmployeeInfo*>* result = nullptr;
+	result = &data_manager->GetResult({ "employeeNum", "99999999" });
 
 	string resultString = "DEL,NONE\n";
 	cout << resultString;
@@ -101,7 +102,8 @@ TEST(PrintTest, MODwithoutOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	list<EmployeeInfo*>* result = nullptr;
+	map<int, EmployeeInfo*>* result = nullptr;
+	result = &data_manager->GetResult({ "cl", "CL1" });
 	//result =  data_manager->schEmployee({ "cl", "1" }); 
 
 	string resultString = "MOD,3\n";
@@ -121,7 +123,8 @@ TEST(PrintTest, MODwithOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	list<EmployeeInfo*>* result = nullptr;
+	map<int, EmployeeInfo*>* result = nullptr;
+	result = &data_manager->GetResult({ "cl", "CL1" });
 	//result =  data_manager->schEmployee({ "cl", "1" }); 
 
 	string resultString = "MOD,00000000,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\nMOD,00000002,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\nMOD,00000004,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\n";
@@ -141,8 +144,8 @@ TEST(PrintTest, MODwithOptionNoResult) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	list<EmployeeInfo*>* result = nullptr;
-	//result =  data_manager->schEmployee({ "cl", "4" }); 
+	map<int, EmployeeInfo*>* result = nullptr;
+	result = &data_manager->GetResult({ "cl", "CL4" });
 
 	string resultString = "MOD,NONE\n";
 	cout << resultString;
@@ -161,8 +164,8 @@ TEST(PrintTest, SCHwithoutOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	list<EmployeeInfo*>* result = nullptr;
-	//result =  data_manager->schEmployee({ "familyname", "KIM" }); 
+	map<int, EmployeeInfo*>* result = nullptr;
+	result = &data_manager->GetResult({ "name_Last", "KIM" });
 
 	string resultString = "SCH,2\n";
 	cout << resultString;
@@ -181,8 +184,8 @@ TEST(PrintTest, SCHwithOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	list<EmployeeInfo*>* result = nullptr;
-	//result =  data_manager->schEmployee({ "familyname", "KIM" }); 
+	map<int, EmployeeInfo*>* result = nullptr;
+	result = &data_manager->GetResult({ "name_Last", "KIM" });
 
 	string resultString = "SCH,00000001,DONGKIL KIM,CL2,010-8765-4321,20000101,ADV\nSCH,00000001,DONGKIL KIM,CL2,010-8765-4321,20000101,ADV\n";
 	cout << resultString;
@@ -201,8 +204,8 @@ TEST(PrintTest, SCHwithoutOptionNoResult) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	list<EmployeeInfo*>* result = nullptr;
-	//result =  data_manager->schEmployee({ "familyname", "LEE" }); 
+	map<int, EmployeeInfo*>* result = nullptr;
+	result = &data_manager->GetResult({ "name_Last", "LEE" });
 
 	string resultString = "SCH,NONE\n";
 	cout << resultString;
