@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "employeeInfo.h"
-#include "CommandParser.h"
+#include "commandParser.h"
 #include "dataManager.h"
 
 using namespace std;

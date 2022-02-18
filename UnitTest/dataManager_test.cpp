@@ -70,7 +70,6 @@ TEST(dataManagerTest, phoneNumMidMapTest) {
 
 	for (int i = 0; i < MAX_EMPLOYEE; i++)
 	{
-		int ret = data_manager.addEmployee({ 15123099, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), i, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //사원번호가 i인 사람 생성
 		int ret = data_manager.addEmployee({ i, "VXIHXOTH", "JHOP", static_cast<CareerLevel>(3), i, 2609, 77, 12, 11, CERTI::ADV, "VXIHXOTH JHOP", "010-3112-2609", 771211 });  //사원번호가 i인 사람 생성
 	};
 
