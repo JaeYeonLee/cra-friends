@@ -4,6 +4,22 @@
 
 using namespace std;
 
+enum class CommandType {
+	ADD = 0,
+	MOD = 1,
+	SCH = 2,
+	DEL = 3,
+	INVALID = 4,
+};
+
+enum class Option {
+	NONE = 0,
+	FIRST_YEAR = 1,
+	MIDDLE_MONTH = 2,
+	LAST_DAY = 3,
+	PRINT = 4,
+};
+
 enum class CERTI {
 	NONE = 0,
 	ADV,

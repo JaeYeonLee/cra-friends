@@ -19,7 +19,9 @@ DataManager::DataManager(Printer *printer) {
 	searchEngine = new SearchEngine();
 	initSearchKeyValues();
 }
+
 int DataManager::addEmployee(EmployeeInfo employee) {
+
 	employeePool[employeeCnt] = employee;
 
 	int employeeNumber = employee.employeeNum;
@@ -284,6 +286,7 @@ void DataManager::editHashMap(CommandType cmd, KeyInfo keyInfo) {
 		break;
 	}
 }
+
 int DataManager::delEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
 	if (printer->setResultData(CommandType::DEL, &search_result, optioninfo.enablePrint) < 0)
@@ -293,6 +296,7 @@ int DataManager::delEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 
 	return 0;
 }
+
 int DataManager::modEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
 	if (printer->setResultData(CommandType::MOD, &search_result, optioninfo.enablePrint) < 0)
@@ -302,6 +306,7 @@ int DataManager::modEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 
 	return 0;
 }
+
 int DataManager::schEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
 	if (printer->setResultData(CommandType::SCH, &search_result, optioninfo.enablePrint) < 0)

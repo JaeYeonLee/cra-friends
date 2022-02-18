@@ -9,10 +9,11 @@ using namespace std;
 class EmployeeManagement {
 public:
 	int openFile(string inputfile, string outputfile);
+	void closeFile();
 	int loadData();
 	int prepareCommand(int lineIndex);
 	int runCommand();
-	int printResult();
+	void printResult();
 	string debugResult();
 
 	vector<string> readLine;

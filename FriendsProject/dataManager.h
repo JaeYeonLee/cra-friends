@@ -50,6 +50,7 @@ public:
 	DataManager();
 	DataManager(Printer* printer);
 
+
 	void initSearchKeyValues();
 	void initHashMap();
 	int addEmployee(EmployeeInfo employee);
