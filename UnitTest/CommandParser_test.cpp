@@ -178,9 +178,10 @@ TEST(CommandParserTest, parse_addmodule) {
 	dm->addEmployee(*addInfo);
 
 	// ADD, , , ,15123099,VXIHXOTH JHOP,CL3,010-3112-2609,19771211,ADV
-	auto it = dm->employeeNumMap.find(15123099);
-	ASSERT_TRUE(it != dm->employeeNumMap.end());
-	EmployeeInfo* employee = dm->employeeInfoMap.find(it->second)->second;
+	auto iter = dm->getIntHashMap(SearchKey::EMPLOYEENUM);
+	auto it = iter->find(15123099);
+	ASSERT_TRUE(it != iter->end());
+	EmployeeInfo* employee = &dm->employeePool[0];
 	
 	EXPECT_EQ(employee->employeeNum, 15123099);
 	EXPECT_EQ(employee->name_First, "VXIHXOTH");

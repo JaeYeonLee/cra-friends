@@ -4,80 +4,51 @@
 using namespace std;
 EmployeeInfo DataManager::employeePool[MAX_EMPLOYEE];
 
+DataManager::DataManager() {
+	employeeCnt = 0;
+	initHashMap();
 
-void intmapAdd(unordered_map<int, list<EmployeeInfo*>>& hash, int id, int cnt)
-{
-	auto iter_string = hash.find(id);
-	if (iter_string == hash.end())
-		hash.insert({ id,	list<EmployeeInfo*> { &(DataManager::employeePool[cnt])} });
-	else
-		hash[id].push_back(&(DataManager::employeePool[cnt]));
-
+	searchEngine = new SearchEngine();
+	initSearchKeyValues();
 }
+DataManager::DataManager(Printer *printer) {
+	employeeCnt = 0;
+	initHashMap();
 
-void stringmapAdd(unordered_map<string, list<EmployeeInfo*>>& hash, string id, int cnt)
-{
-	auto iter_string = hash.find(id);
-	if (iter_string == hash.end())
-		hash.insert({ id,	list<EmployeeInfo*> { &(DataManager::employeePool[cnt])} });
-	else
-		hash[id].push_back(&(DataManager::employeePool[cnt]));
-
+	this->printer = printer;
+	searchEngine = new SearchEngine();
+	initSearchKeyValues();
 }
-
-void certimapAdd(unordered_map<CERTI, list<EmployeeInfo*>>& hash, CERTI id, int cnt)
-{
-	auto iter_string = hash.find(id);
-	if (iter_string == hash.end())
-		hash.insert({ id,	list<EmployeeInfo*> { &(DataManager::employeePool[cnt])} });
-	else
-		hash[id].push_back(&(DataManager::employeePool[cnt]));
-
-}
-
-void carriergmapAdd(unordered_map<CareerLevel, list<EmployeeInfo*>>& hash, CareerLevel id, int cnt)
-{
-	auto iter = hash.find(id);
-	if (iter == hash.end())
-		hash.insert({ id,	list<EmployeeInfo*> { &(DataManager::employeePool[cnt])} });
-	else
-		hash[id].push_back(&(DataManager::employeePool[cnt]));
-
-}
-
-
-
-bool DataManager::addEmployee(EmployeeInfo employee) {
-
+int DataManager::addEmployee(EmployeeInfo employee) {
 	employeePool[employeeCnt] = employee;
-	int employeenumber = employee.employeeNum;
-	if (employee.employeeNum >= 0 && employee.employeeNum < 22000000) {
-		employeenumber = employee.employeeNum + 100000000;
+
+	int employeeNumber = employee.employeeNum;
+	if (employee.employeeNum >= EMPLOYEE_NUM_00 && employee.employeeNum < EMPLOYEE_NUM_MAX) {
+		employeeNumber = employee.employeeNum + EMPLOYEE_NUM_OFFSET;
 	}
 
-	auto iter = employeeInfoMap.find(employeenumber);
+	auto iter = employeeInfoMap.find(employeeNumber);
 	if (iter != employeeInfoMap.end()) {
-		return false;
+		return -1;
 	}
 
-	employeeInfoMap.insert({ employeenumber, &employeePool[employeeCnt] });
-
-	employeeNumMap.insert({ employee.employeeNum, employeenumber });
-	NameFisrtMap.insert({ employee.name_First, employeenumber });
-	NameLastMap.insert({ employee.name_Last, employeenumber });
-	nameMap.insert({ employee.name, employeenumber });
-	clMap.insert({ employee.cl , employeenumber });
-	phoneNumMidMap.insert({ employee.phoneNum_Mid, employeenumber });
-	phoneNumEndMap.insert({ employee.phoneNum_End, employeenumber });
-	phoneNumMap.insert({ employee.phoneNum, employeenumber });
-	birthYearMap.insert({ employee.birthday_Year, employeenumber });
-	birthMonthMap.insert({ employee.birthday_Month, employeenumber });
-	birthDayMap.insert({ employee.birthday_Day, employeenumber });
-	birthMap.insert({ employee.birthday, employeenumber });
-	certiMap.insert({ employee.certi, employeenumber });
+	employeeInfoMap.insert({ employeeNumber, &employeePool[employeeCnt] });
+	employeeNumMap.insert({ employee.employeeNum, employeeNumber });
+	nameFisrtMap.insert({ employee.name_First, employeeNumber });
+	nameLastMap.insert({ employee.name_Last, employeeNumber });
+	nameMap.insert({ employee.name, employeeNumber });
+	clMap.insert({ employee.cl , employeeNumber });
+	phoneNumMidMap.insert({ employee.phoneNum_Mid, employeeNumber });
+	phoneNumEndMap.insert({ employee.phoneNum_End, employeeNumber });
+	phoneNumMap.insert({ employee.phoneNum, employeeNumber });
+	birthYearMap.insert({ employee.birthday_Year, employeeNumber });
+	birthMonthMap.insert({ employee.birthday_Month, employeeNumber });
+	birthDayMap.insert({ employee.birthday_Day, employeeNumber });
+	birthMap.insert({ employee.birthday, employeeNumber });
+	certiMap.insert({ employee.certi, employeeNumber });
 
 	employeeCnt++;
-	return true;
+	return 0;
 }
 
 SearchKey DataManager::getSearchKey(string key) {
@@ -103,27 +74,48 @@ void DataManager::initSearchKeyValues() {
 	keyTable.insert({ "birthday_Day", SearchKey::BIRTH_DAY });
 	keyTable.insert({ "certi", SearchKey::CERTI });
 }
-
-#define CAST_INT(x) static_cast<int>( x )
-#define CAST_CL(x) static_cast<CareerLevel>( x )
-#define CAST_CERTI(x) static_cast<CERTI>( x )
-
+void DataManager::initHashMap() {
+	employeeNumMap.clear();
+	employeeNumMap.reserve(MAX_EMPLOYEE);
+	nameFisrtMap.clear();
+	nameFisrtMap.reserve(MAX_EMPLOYEE);
+	nameLastMap.clear();
+	nameLastMap.reserve(MAX_EMPLOYEE);
+	nameMap.clear();
+	nameMap.reserve(MAX_EMPLOYEE);
+	clMap.clear();
+	clMap.reserve(MAX_EMPLOYEE);
+	phoneNumMidMap.clear();
+	phoneNumMidMap.reserve(MAX_EMPLOYEE);
+	phoneNumEndMap.clear();
+	phoneNumEndMap.reserve(MAX_EMPLOYEE);
+	phoneNumMap.clear();
+	phoneNumMap.reserve(MAX_EMPLOYEE);
+	birthYearMap.clear();
+	birthYearMap.reserve(MAX_EMPLOYEE);
+	birthMonthMap.clear();
+	birthMonthMap.reserve(MAX_EMPLOYEE);
+	birthDayMap.clear();
+	birthDayMap.reserve(MAX_EMPLOYEE);
+	birthMap.clear();
+	birthMap.reserve(MAX_EMPLOYEE);
+	certiMap.clear();
+	certiMap.reserve(MAX_EMPLOYEE);
+}
 CareerLevel DataManager::getCL(string key) {
 	if (key == "CL1") return CareerLevel::CL1;
 	else if (key == "CL2") return CareerLevel::CL2;
 	else if (key == "CL3") return CareerLevel::CL3;
 	else if (key == "CL4") return CareerLevel::CL4;
 }
-
 CERTI DataManager::getCerti(string key) {
 	if (key == "ADV") return CERTI::ADV;
 	else if (key == "PRO") return CERTI::PRO;
 	else if (key == "EX") return CERTI::EX;
-	else return CERTI::NONE;
+	return CERTI::NONE;
 }
-
-DataType DataManager::getDataType(SearchKey key_type) {
-	switch (key_type)
+DataType DataManager::getDataType(SearchKey keyType) {
+	switch (keyType)
 	{
 	case SearchKey::EMPLOYEENUM:
 	case SearchKey::PHONENUM_MID:
@@ -133,237 +125,187 @@ DataType DataManager::getDataType(SearchKey key_type) {
 	case SearchKey::BIRTH_MOHTH:
 	case SearchKey::BIRTH_DAY:
 		return DataType::INT;
-		break;
 	case SearchKey::NAME:
 	case SearchKey::NAME_FIRST:
 	case SearchKey::NAME_LAST:
 	case SearchKey::PHONENUM:
 		return DataType::STRING;
-		break;
 	case SearchKey::CL:
 		return DataType::CL;
-		break;
 	case SearchKey::CERTI:
 		return DataType::CERTI;
-		break;
 	case SearchKey::ERROR:
 		return DataType::ERROR;
-		break;
 	}
 }
-
-unordered_multimap<int, int>* DataManager::getIntHashMap(SearchKey key_type) {
-	switch (key_type)
+unordered_map<int, EmployeeInfo*>* DataManager::getEmployeeInfoMap() {
+	return &employeeInfoMap;
+}
+unordered_multimap<int, int>* DataManager::getIntHashMap(SearchKey keyType) {
+	switch (keyType)
 	{
 	case SearchKey::EMPLOYEENUM:
 		return &employeeNumMap;
-		break;
 	case SearchKey::PHONENUM_MID:
 		return &phoneNumMidMap;
-		break;
 	case SearchKey::PHONENUM_END:
 		return &phoneNumEndMap;
-		break;
 	case SearchKey::BIRTH:
 		return &birthMap;
-		break;
 	case SearchKey::BIRTH_YEAR:
 		return &birthYearMap;
-		break;
 	case SearchKey::BIRTH_MOHTH:
 		return &birthMonthMap;
-		break;
 	case SearchKey::BIRTH_DAY:
 		return &birthDayMap;
-		break;
 	default:
 		return nullptr;
-		break;
 	}
 }
-unordered_multimap<string, int>* DataManager::getStringHashMap(SearchKey key_type) {
-	switch (key_type)
+unordered_multimap<string, int>* DataManager::getStringHashMap(SearchKey keyType) {
+	switch (keyType)
 	{
 	case SearchKey::NAME:
 		return &nameMap;
-		break;
 	case SearchKey::NAME_FIRST:
-		return &NameFisrtMap;
-		break;
+		return &nameFisrtMap;
 	case SearchKey::NAME_LAST:
-		return &NameLastMap;
-		break;
+		return &nameLastMap;
 	case SearchKey::PHONENUM:
 		return &phoneNumMap;
-		break;
 	default:
 		return nullptr;
-		break;
+	}
+}
+unordered_multimap<CareerLevel, int>* DataManager::getClHashMap() {
+	return &clMap;
+}
+unordered_multimap<CERTI, int>* DataManager::getCertiHashMap() {
+	return &certiMap;
+}
+
+map<int, EmployeeInfo*> DataManager::GetResult(KeyInfo keyInfo) {
+	SearchKey keyType = getSearchKey(keyInfo.searchKey);
+	DataType dataType = getDataType(keyType);
+	switch (dataType)
+	{
+	case DataType::INT:
+		return searchEngine->search(stoi(keyInfo.searchKeyword), getIntHashMap(keyType), employeeInfoMap, keyType);
+	case DataType::STRING:
+		return searchEngine->search(keyInfo.searchKeyword, getStringHashMap(keyType), employeeInfoMap, keyType);
+	case DataType::CL:
+		return searchEngine->search(getCL(keyInfo.searchKeyword), &clMap, employeeInfoMap);
+	case DataType::CERTI:
+		return searchEngine->search(getCerti(keyInfo.searchKeyword), &certiMap, employeeInfoMap);
 	}
 }
 
-map<int, EmployeeInfo*> DataManager::GetResult(KeyInfo keyinfo) {
-	SearchKey key_type = getSearchKey(keyinfo.searchKey);
-	DataType data_type = getDataType(key_type);
-	switch (data_type)
-	{
-	case DataType::INT:
-		return search_engine->search(stoi(keyinfo.searchKeyword), getIntHashMap(key_type), employeeInfoMap, key_type);
-	case DataType::STRING:
-		return search_engine->search(keyinfo.searchKeyword, getStringHashMap(key_type), employeeInfoMap, key_type);
-	case DataType::CL:
-		return search_engine->search(getCL(keyinfo.searchKeyword), &clMap, employeeInfoMap);
-	case DataType::CERTI:
-		return search_engine->search(getCerti(keyinfo.searchKeyword), &certiMap, employeeInfoMap);
-	}
+template <class T>
+void DataManager::insertHashMap(T& targetKeyword, const T& modifyKeyword, const int& employeeNum, unordered_multimap<T, int>& hashMap) {
+	if (targetKeyword != modifyKeyword)
+		hashMap.insert({ modifyKeyword, employeeNum });
+	targetKeyword = modifyKeyword;
 }
-void DataManager::modifyEmployeeInfo(EmployeeInfo* employeeinfo, KeyInfo keyinfo, int employeeNum) {
-	SearchKey key_type = getSearchKey(keyinfo.modifyKey);
+
+void DataManager::modifyEmployeeInfo(EmployeeInfo* employeeInfo, KeyInfo keyInfo, int employeeNum) {
+	SearchKey keyType = getSearchKey(keyInfo.modifyKey);
 	int idx1 = 0, idx2 = 0;
-	switch (key_type)
+	switch (keyType)
 	{
-	case SearchKey::EMPLOYEENUM:
-		break;
 	case SearchKey::NAME:
-		employeeinfo->name = keyinfo.modifyKeyword;
-		idx1 = keyinfo.modifyKeyword.find(' ');
-		employeeinfo->name_First = keyinfo.modifyKeyword.substr(0, idx1);
-		employeeinfo->name_Last = keyinfo.modifyKeyword.substr(idx1 + 1);
-		nameMap.insert({ employeeinfo->name, employeeNum });
-		NameFisrtMap.insert({ employeeinfo->name_First, employeeNum });
-		NameLastMap.insert({ employeeinfo->name_Last, employeeNum });
+		idx1 = keyInfo.modifyKeyword.find(' ');
+		insertHashMap(employeeInfo->name, keyInfo.modifyKeyword, employeeNum, nameMap);
+		insertHashMap(employeeInfo->name_First, keyInfo.modifyKeyword.substr(0, idx1), employeeNum, nameFisrtMap);
+		insertHashMap(employeeInfo->name_Last, keyInfo.modifyKeyword.substr(idx1 + 1), employeeNum, nameLastMap);
 		break;
 	case SearchKey::CL:
-		employeeinfo->cl = getCL(keyinfo.modifyKeyword);
-		clMap.insert({ employeeinfo->cl, employeeNum });
+		insertHashMap(employeeInfo->cl, getCL(keyInfo.modifyKeyword), employeeNum, clMap);
 		break;
 	case SearchKey::PHONENUM:
-		employeeinfo->phoneNum = keyinfo.modifyKeyword;
-		idx1 = keyinfo.modifyKeyword.find('-', 0);
-		idx2 = keyinfo.modifyKeyword.find('-', idx1 + 1);
-		employeeinfo->phoneNum_Mid = stoi(keyinfo.modifyKeyword.substr(idx1 + 1, idx2 - idx1));
-		employeeinfo->phoneNum_End = stoi(keyinfo.modifyKeyword.substr(idx2 + 1));
-		phoneNumMap.insert({ employeeinfo->phoneNum, employeeNum });
-		phoneNumMidMap.insert({ employeeinfo->phoneNum_Mid, employeeNum });
-		phoneNumEndMap.insert({ employeeinfo->phoneNum_End, employeeNum });
+		idx1 = keyInfo.modifyKeyword.find('-', 0);
+		idx2 = keyInfo.modifyKeyword.find('-', idx1 + 1);
+		insertHashMap(employeeInfo->phoneNum, keyInfo.modifyKeyword, employeeNum, phoneNumMap);
+		insertHashMap(employeeInfo->phoneNum_Mid, stoi(keyInfo.modifyKeyword.substr(idx1 + 1, idx2 - idx1)), employeeNum, phoneNumMidMap);
+		insertHashMap(employeeInfo->phoneNum_End, stoi(keyInfo.modifyKeyword.substr(idx2 + 1)), employeeNum, phoneNumEndMap);
 		break;
 	case SearchKey::BIRTH:
-		employeeinfo->birthday = stoi(keyinfo.modifyKeyword);
-		employeeinfo->birthday_Year = stoi(keyinfo.modifyKeyword.substr(0, 4));
-		employeeinfo->birthday_Month = stoi(keyinfo.modifyKeyword.substr(4, 2));
-		employeeinfo->birthday_Day = stoi(keyinfo.modifyKeyword.substr(6, 2));
-		birthMap.insert({ employeeinfo->birthday , employeeNum });
-		birthYearMap.insert({ employeeinfo->birthday_Year , employeeNum });
-		birthMonthMap.insert({ employeeinfo->birthday_Month , employeeNum });
-		birthDayMap.insert({ employeeinfo->birthday_Day , employeeNum });
+		insertHashMap(employeeInfo->birthday, stoi(keyInfo.modifyKeyword), employeeNum, birthMap);
+		insertHashMap(employeeInfo->birthday_Year, stoi(keyInfo.modifyKeyword.substr(0, 4)), employeeNum, birthYearMap);
+		insertHashMap(employeeInfo->birthday_Month, stoi(keyInfo.modifyKeyword.substr(4, 2)), employeeNum, birthMonthMap);
+		insertHashMap(employeeInfo->birthday_Day, stoi(keyInfo.modifyKeyword.substr(6, 2)), employeeNum, birthDayMap);
 		break;
 	case SearchKey::CERTI:
-		employeeinfo->certi = getCerti(keyinfo.modifyKeyword);
-		certiMap.insert({ employeeinfo->certi , employeeNum });
-		break;
-	case SearchKey::ERROR:
+		insertHashMap(employeeInfo->certi, getCerti(keyInfo.modifyKeyword), employeeNum, certiMap);
 		break;
 	default:
 		break;
 	}
 }
-void DataManager::editHashMap(CommandType cmd, KeyInfo keyinfo) {
-	SearchKey key_type = getSearchKey(keyinfo.searchKey);
-	switch (getDataType(key_type))
+
+template <class T>
+void DataManager::searchHashMap(T searchKeyword, unordered_multimap<T, int>* hashMap, CommandType cmd, KeyInfo keyInfo) {
+	auto keywordRange = hashMap->equal_range(searchKeyword);
+	for (auto keyEmployeeNum = keywordRange.first; keyEmployeeNum != keywordRange.second; keyEmployeeNum++) {
+		auto employeeInfo = employeeInfoMap.find(keyEmployeeNum->second);
+		if (employeeInfo != employeeInfoMap.end()) {
+			if (cmd == CommandType::DEL)
+			{
+				employeeInfo->second->isDelete = true;
+				employeeInfoMap.erase(keyEmployeeNum->second);
+			}
+			else if (cmd == CommandType::MOD) modifyEmployeeInfo(employeeInfo->second, keyInfo, keyEmployeeNum->second);
+		}
+	}
+	if (cmd == CommandType::DEL)
+		hashMap->erase(searchKeyword);
+}
+
+void DataManager::editHashMap(CommandType cmd, KeyInfo keyInfo) {
+	SearchKey keyType = getSearchKey(keyInfo.searchKey);
+
+	unordered_multimap<int, int>* selectIntHash;
+	unordered_multimap<string, int>* selectStringHash;
+
+	switch (getDataType(keyType))
 	{
 	case DataType::INT:
-		select_hash_int = getIntHashMap(key_type);
-		{
-			auto range = select_hash_int->equal_range(stoi(keyinfo.searchKeyword));
-			for (auto it = range.first; it != range.second; it++) {
-				auto iter = employeeInfoMap.find(it->second);
-				if (iter != employeeInfoMap.end()) {
-					if (cmd == CommandType::DEL)
-					{
-						iter->second->isDelete = true;
-						//employeeInfoMap.erase(it->second);
-
-					}
-					else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
-				}
-			}
-			if (cmd == CommandType::DEL)
-				select_hash_int->erase(stoi(keyinfo.searchKeyword));
-		}
+		selectIntHash = getIntHashMap(keyType);
+		searchHashMap(stoi(keyInfo.searchKeyword), selectIntHash, cmd, keyInfo);
 		break;
 	case DataType::STRING:
-		select_hash_string = getStringHashMap(key_type);
-		{
-			auto range = select_hash_string->equal_range(keyinfo.searchKeyword);
-			for (auto it = range.first; it != range.second; it++) {
-				auto iter = employeeInfoMap.find(it->second);
-				if (iter != employeeInfoMap.end()) {
-					if (cmd == CommandType::DEL)
-					{
-						iter->second->isDelete = true;
-
-					}
-					else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
-				}
-			}
-			if (cmd == CommandType::DEL)
-				select_hash_string->erase(keyinfo.searchKeyword);
-		}
+		selectStringHash = getStringHashMap(keyType);
+		searchHashMap(keyInfo.searchKeyword, selectStringHash, cmd, keyInfo);
 		break;
 	case DataType::CL:
-	{
-		auto range = clMap.equal_range(getCL(keyinfo.searchKeyword));
-		for (auto it = range.first; it != range.second; it++) {
-			auto iter = employeeInfoMap.find(it->second);
-			if (iter != employeeInfoMap.end()) {
-				if (cmd == CommandType::DEL)
-				{
-					iter->second->isDelete = true;
-
-				}
-				else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
-			}
-		}
-		if (cmd == CommandType::DEL)
-			clMap.erase(getCL(keyinfo.searchKeyword));
-	}
-	break;
+		searchHashMap(getCL(keyInfo.searchKeyword), &clMap, cmd, keyInfo);
+		break;
 	case DataType::CERTI:
-	{
-		auto range = certiMap.equal_range(getCerti(keyinfo.searchKeyword));
-		for (auto it = range.first; it != range.second; it++) {
-			auto iter = employeeInfoMap.find(it->second);
-			if (iter != employeeInfoMap.end()) {
-				if (cmd == CommandType::DEL)
-				{
-						iter->second->isDelete = true;
-
-				}
-				else if (cmd == CommandType::MOD) modifyEmployeeInfo(iter->second, keyinfo, it->second);
-			}
-		}
-		if (cmd == CommandType::DEL)
-			certiMap.erase(getCerti(keyinfo.searchKeyword));
-	}
-	break;
-	default:
+		searchHashMap(getCerti(keyInfo.searchKeyword), &certiMap, cmd, keyInfo);
 		break;
 	}
 }
-bool DataManager::delEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
+int DataManager::delEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
-	printer->setResultData(CommandType::DEL, &search_result, optioninfo.enablePrint);
+	if (printer->setResultData(CommandType::DEL, &search_result, optioninfo.enablePrint) < 0)
+		return -1;
+
 	editHashMap(CommandType::DEL, keyinfo);
-	return true;
+
+	return 0;
 }
-bool DataManager::modEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
+int DataManager::modEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
-	printer->setResultData(CommandType::MOD, &search_result, optioninfo.enablePrint);
+	if (printer->setResultData(CommandType::MOD, &search_result, optioninfo.enablePrint) < 0)
+		return -1;
+
 	editHashMap(CommandType::MOD, keyinfo);
-	return true;
+
+	return 0;
 }
-bool DataManager::schEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
+int DataManager::schEmployee(KeyInfo keyinfo, OptionInfo optioninfo) {
 	map<int, EmployeeInfo*> search_result = GetResult(keyinfo);
-	printer->setResultData(CommandType::SCH, &search_result, optioninfo.enablePrint);
-	return true;
+	if (printer->setResultData(CommandType::SCH, &search_result, optioninfo.enablePrint) < 0)
+		return -1;
+
+	return 0;
 }
