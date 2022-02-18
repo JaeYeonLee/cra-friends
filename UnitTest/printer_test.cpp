@@ -94,7 +94,7 @@ TEST(PrintTest, MODwithoutOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	map<int, EmployeeInfo*> result = data_manager->GetResult({ "cl", "1" }); 
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "cl", "CL1" }); 
 
 	string resultString = "MOD,3\n";
 	cout << resultString;
@@ -113,7 +113,7 @@ TEST(PrintTest, MODwithOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	map<int, EmployeeInfo*> result = data_manager->GetResult({ "cl", "1" }); 
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "cl", "CL1" }); 
 
 	string resultString = "MOD,00000000,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\nMOD,00000002,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\nMOD,00000004,KILDONG HONG,CL1,010-1234-5678,19991231,ADV\n";
 	cout << resultString;
