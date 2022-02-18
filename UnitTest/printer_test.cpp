@@ -19,7 +19,7 @@ TEST(PrintTest, StringFunctionTestwithValidData) {
 	input_test_data(data_manager);
 
 	map<int, EmployeeInfo*> testList;
-	testList.insert({ 100000000, &data_manager->employeePool[0] });
+	testList.insert({ 0 + EMPLOYEE_NUM_OFFSET, &data_manager->employeePool[0] });
 	
 	EXPECT_EQ(1, printer.setResultData(CommandType::DEL, &testList, Option::NONE));
 	EXPECT_EQ("DEL,1\n", printer.getResultString());
@@ -28,8 +28,8 @@ TEST(PrintTest, StringFunctionTestwithValidData) {
 	EXPECT_EQ(1, printer.setResultData(CommandType::DEL, &testList, Option::PRINT));
 	EXPECT_EQ(printResult, printer.getResultString());
 
-	testList.insert({ 100000001, &data_manager->employeePool[1] });
-	testList.insert({ 100000002, &data_manager->employeePool[2] });
+	testList.insert({ 1 + EMPLOYEE_NUM_OFFSET, &data_manager->employeePool[1] });
+	testList.insert({ 2 + EMPLOYEE_NUM_OFFSET, &data_manager->employeePool[2] });
 
 	EXPECT_EQ(3, printer.setResultData(CommandType::SCH, &testList, Option::NONE));
 	EXPECT_EQ("SCH,3\n", printer.getResultString());

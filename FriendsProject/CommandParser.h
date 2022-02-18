@@ -4,22 +4,6 @@
 
 using namespace std;
 
-enum class CommandType {
-	ADD = 0,
-	MOD = 1,
-	SCH = 2,
-	DEL = 3,
-	INVALID = 4,
-};
-
-enum class Option {
-	NONE = 0,
-	FIRST_YEAR = 1,
-	MIDDLE_MONTH = 2,
-	LAST_DAY = 3,
-	PRINT = 4,
-};
-
 struct KeyInfo {
 	string searchKey;
 	string searchKeyword;
@@ -35,7 +19,7 @@ struct OptionInfo {
 class CommandParser {
 public:
 	CommandType parseData(string readLine);
-	int parseOption(OptionInfo* option);
+	void parseOption(OptionInfo* option);
 	int parseAddCommand(EmployeeInfo* addInfo);
 	int parseModifyCommand(KeyInfo* keyInfo, OptionInfo* optionInfo);
 	int parseDeleteCommand(KeyInfo* keyInfo, OptionInfo* optionInfo);
@@ -44,13 +28,15 @@ public:
 private:
 	string getSearchKeyStr(string key, OptionInfo* optionInfo);
 	vector<string> split(string text, char div);
+	string removeLineFeedChar(string lastline);
 
 	const string searchOptionKeyStr[3][4] = {
 		{"name","name_First","name","name_Last"},
 		{"phoneNum","phoneNum","phoneNum_Mid","phoneNum_End"},
 		{"birthday","birthday_Year","birthday_Month","birthday_Day"}
 	};
+
+	const int requiredParamCount[4] = { 10,8,6,6 };
 	CommandType commandType;
-	FILE* fin;
 	vector<string> parseLine;
 };

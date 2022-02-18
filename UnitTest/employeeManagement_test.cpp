@@ -38,15 +38,16 @@ TEST(employeeManagementTest, run_command) {
 vector<string> split(string text, char div) {
 	vector<string> result;
 	text.push_back(div);
-	int a = 0, b = 0;
+
+	int startpos = 0;
+	int findpos = 0;
+
 	while (1) {
-		b = (int)text.find(div, a);
-		if (b == -1) break;
+		findpos = (int)text.find(div, startpos);
+		if (findpos == -1) break;
 
-		string temp = text.substr(a, b - a);
-		result.push_back(temp);
-
-		a = b + 1;
+		result.push_back(text.substr(startpos, ((size_t)findpos - startpos)));
+		startpos = findpos + 1;
 	}
 
 	return result;

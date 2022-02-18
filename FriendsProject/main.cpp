@@ -29,17 +29,15 @@ int main(int argc, char* argv[]) {
 	int data_size = em->loadData();
 	if (data_size < 0) return -1;
 
-	int result = 0;
 	for (int i = 0; i < data_size; i++) {
-		result = em->prepareCommand(i);
-		if (result < 0) continue;
+		if (em->prepareCommand(i) < 0) continue;
 
-		result = em->runCommand();
-		if (result < 0) continue;
+		if (em->runCommand() < 0) continue;
 
-		result = em->printResult();
-		if (result < 0) continue;
+		em->printResult();
 	}
+
+	em->closeFile();
 
 	return 0;
 }
