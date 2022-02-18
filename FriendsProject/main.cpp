@@ -37,5 +37,7 @@ int main(int argc, char* argv[]) {
 		em->printResult();
 	}
 
+	em->closeFile();
+
 	return 0;
 }
