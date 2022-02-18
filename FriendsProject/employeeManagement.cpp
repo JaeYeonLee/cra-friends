@@ -29,6 +29,14 @@ int EmployeeManagement::openFile(string inputfile, string outputfile) {
 	return 0;
 }
 
+void EmployeeManagement::closeFile() {
+	fflush(stdout);
+	if (nullptr != fin) fclose(fin);
+	if (nullptr != fout) fclose(fout);
+	fin = nullptr;
+	fout = nullptr;
+}
+
 int EmployeeManagement::loadData() {
 	if (nullptr == fin)
 		return -1;
