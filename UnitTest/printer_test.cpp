@@ -1,7 +1,4 @@
 #include "pch.h"
-#include "../FriendsProject/printer.cpp"
-#include "../FriendsProject/dataManager.h"
-#include "../FriendsProject/search.h"
 #include <iostream>
 
 //Printer printer;

@@ -21,9 +21,6 @@
     <ClCompile Include="employeeInfo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="del.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="search.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -31,6 +28,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="printer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="commandParser.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="input_20_20.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="output_20_20.txt">
       <Filter>리소스 파일</Filter>
     </Text>
   </ItemGroup>

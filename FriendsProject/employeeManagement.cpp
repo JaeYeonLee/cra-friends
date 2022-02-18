@@ -1,50 +1,29 @@
-#pragma once
-
 #include <iostream>
-#include "employeeInfo.h"
 #include "employeeManagement.h"
-#include "CommandParser.h"
 
 using namespace std;
 
-int main(int argc, char* argv[]) {
-	string input_filename = "../FriendsProject/input_20_20.txt";
-	string output_filename = "";
+#define MAX_READ_BUFFER_SIZE	(512)
 
-	if (1 != argc) {
-		if (argc == 3) {
-			input_filename = argv[1];
-			output_filename = argv[2];
-		}
-		else {
-			cout << "Wrong argument." << endl;
-			cout << "usage: FriendProject.exe inputfile.txt outputfile.txt" << endl;
-			return -1;
-
-		}
-	}
-
-	EmployeeManagement* em = new EmployeeManagement();
-	if (em->openFile(input_filename, output_filename) < 0) {
-		cout << "Fail to open file. (filename=" << input_filename << ", " << output_filename << ")" << endl;
+int EmployeeManagement::openFile(string inputfile, string outputfile) {
+	if (inputfile.empty())
 		return -1;
+
+	fin = nullptr;
+	fin = new FILE();
+	freopen_s(&fin, inputfile.c_str(), "r", stdin);
+	if (nullptr == fin)
+		return -1;
+
+	if (!outputfile.empty()) {
+		fout = nullptr;
+		fout = new FILE();
+		freopen_s(&fout, outputfile.c_str(), "w", stdout);
+		if (nullptr == fout)
+			return -1;
 	}
-
-	int data_size = em->loadData();
-	if (data_size < 0) return -1;
-
-	cout << "data_size = " << data_size << endl;
-
-	int result = 0;
-	for (int i = 0; i < data_size; i++) {
-		result = em->prepareCommand(i);
-		if (result < 0) continue;
-
-		result = em->runCommand();
-		if (result < 0) continue;
-
-		result = em->printResult();
-		if (result < 0) continue;
+	else {
+		cout << "debug output mode" << endl;
 	}
 	cout <<(em->dm->clMap[static_cast<CareerLevel>(3)].top()->name) <<endl;
 	em->dm->clMap[static_cast<CareerLevel>(3)].pop();
@@ -59,4 +38,78 @@ int main(int argc, char* argv[]) {
 	cout << (em->dm->clMap[static_cast<CareerLevel>(3)].top()->name) << endl;
 	em->dm->clMap[static_cast<CareerLevel>(3)].pop();
 	return 0;
+}
+
+void EmployeeManagement::closeFile() {
+	fflush(stdout);
+	if (nullptr != fin) fclose(fin);
+	if (nullptr != fout) fclose(fout);
+	fin = nullptr;
+	fout = nullptr;
+}
+
+int EmployeeManagement::loadData() {
+	if (nullptr == fin)
+		return -1;
+
+	char readBuffer[MAX_READ_BUFFER_SIZE];
+	while (!(feof(fin))) {
+		fgets(readBuffer, MAX_READ_BUFFER_SIZE, fin);
+		if (readBuffer[0] != '\0')
+			readLine.push_back(readBuffer);
+
+		readBuffer[0] = '\0';
+	}
+
+	return (int)readLine.size();
+}
+
+int EmployeeManagement::prepareCommand(int lineIndex) {
+	CommandParser* cp = new CommandParser();
+	addInfo = new EmployeeInfo();
+	keyInfo = new KeyInfo();
+	optionInfo = new OptionInfo();
+
+	commandType = cp->parseData(readLine[lineIndex]);
+	cp->parseOption(optionInfo);
+
+	switch (commandType) {
+	case CommandType::ADD:
+		return cp->parseAddCommand(addInfo);
+	case CommandType::MOD:
+		return cp->parseModifyCommand(keyInfo, optionInfo);
+	case CommandType::SCH:
+		return cp->parseSearchCommand(keyInfo, optionInfo);
+	case CommandType::DEL:
+		return cp->parseDeleteCommand(keyInfo, optionInfo);
+	default:
+		return -1;
+	}
+}
+
+int EmployeeManagement::runCommand() {
+	switch (commandType) {
+	case CommandType::ADD:
+		return dm->addEmployee(*addInfo);
+	case CommandType::MOD:
+		return dm->modEmployee(*keyInfo, *optionInfo);
+	case CommandType::SCH:
+		return dm->schEmployee(*keyInfo, *optionInfo);
+	case CommandType::DEL:
+		return dm->delEmployee(*keyInfo, *optionInfo);
+	default:
+		return -1;
+	}
+}
+
+void EmployeeManagement::printResult() {
+	if (printer.hasValidValue(commandType, optionInfo->enablePrint))
+		printer.printResult();
+}
+
+string EmployeeManagement::debugResult() {
+	if (printer.hasValidValue(commandType, optionInfo->enablePrint))
+		return printer.getResultString();
+	else
+		return "";
 }

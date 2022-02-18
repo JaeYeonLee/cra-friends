@@ -4,6 +4,22 @@
 
 using namespace std;
 
+enum class CommandType {
+	ADD = 0,
+	MOD = 1,
+	SCH = 2,
+	DEL = 3,
+	INVALID = 4,
+};
+
+enum class Option {
+	NONE = 0,
+	FIRST_YEAR = 1,
+	MIDDLE_MONTH = 2,
+	LAST_DAY = 3,
+	PRINT = 4,
+};
+
 enum class CERTI {
 	NONE = 0,
 	ADV,
@@ -18,19 +34,38 @@ enum class CareerLevel {
 	CL4,
 };
 
+enum class SearchKey {
+	EMPLOYEENUM = 0,
+	NAME,
+	NAME_FIRST,
+	NAME_LAST,
+	CL,
+	PHONENUM,
+	PHONENUM_MID,
+	PHONENUM_END,
+	BIRTH,
+	BIRTH_YEAR,
+	BIRTH_MOHTH,
+	BIRTH_DAY,
+	CERTI,
+	ERROR
+};
+
+
 class EmployeeInfo {
 public:
 	int employeeNum;
-	string givenName;
-	string familyName;
+	string name_First;
+	string name_Last;
 	CareerLevel cl;
-	int phoneNumMid;
-	int phoneNumEnd;
-	int birthYear;
-	int birthMonth;
-	int birthDay;
+	int phoneNum_Mid;
+	int phoneNum_End;
+	int birthday_Year;
+	int birthday_Month;
+	int birthday_Day;
 	CERTI certi;
 	string name;
 	string phoneNum;
-	int birth;
+	int birthday;
+	bool isDelete = false;
 };

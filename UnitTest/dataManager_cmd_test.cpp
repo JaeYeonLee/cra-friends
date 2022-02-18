@@ -1,6 +1,4 @@
 #include "pch.h"
-//#include "../FriendsProject/employeeInfo.h"
-#include "../FriendsProject/dataManager.h"
 
 //void input_test_data(DataManager* data_manager) { // test iuput data for cmd run
 //	data_manager->addEmployee({ 00000000, "KILDONG", "HONG", CareerLevel::CL1, 1234, 5678, 1999, 12, 31, CERTI::ADV, "KILDONG HONG", "010-1234-5678", 19991231 });
@@ -223,3 +221,20 @@
 //	EXPECT_EQ(0, data_manager->modEmployee({ "certi", "EX", "birthday", "20010615" }));
 //}
 
+TEST(dataManagerTest, Delname_Test) {
+	Printer* p = new Printer();
+	DataManager* data_manager = new DataManager(p);
+	input_test_data(data_manager);
+
+
+	EXPECT_EQ(0, data_manager->delEmployee({ "name_First", "KILDONG" }, { Option::NONE, Option::NONE }));
+	auto iter = data_manager->getIntHashMap(SearchKey::PHONENUM_MID);
+	auto it = iter->find(1234);
+	auto InfoMap = data_manager->getEmployeeInfoMap();
+	EXPECT_TRUE(InfoMap->end() == InfoMap->find(it->second));
+
+	EXPECT_EQ(0, data_manager->schEmployee({ "name", "KILDONG HONG" }, { Option::NONE, Option::NONE }));
+	iter = data_manager->getIntHashMap(SearchKey::PHONENUM_MID);
+	it = iter->find(8765);
+	EXPECT_FALSE(InfoMap->find(it->second)->second->isDelete);
+}

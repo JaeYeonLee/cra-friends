@@ -1,7 +1,4 @@
 #include "pch.h"
-#include "../FriendsProject/CommandParser.h"
-#include "../FriendsProject/employeeManagement.h"
-#include "../FriendsProject/dataManager.h"
 
 //TEST(CommandParserTest, parse_data) {
 //	EmployeeManagement* em = new EmployeeManagement();
