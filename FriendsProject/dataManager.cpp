@@ -109,6 +109,7 @@ CareerLevel DataManager::getCL(string key) {
 	else if (key == "CL2") return CareerLevel::CL2;
 	else if (key == "CL3") return CareerLevel::CL3;
 	else if (key == "CL4") return CareerLevel::CL4;
+	return CareerLevel::NONE;
 }
 CERTI DataManager::getCerti(string key) {
 	if (key == "ADV") return CERTI::ADV;
@@ -139,6 +140,7 @@ DataType DataManager::getDataType(SearchKey keyType) {
 	case SearchKey::ERROR:
 		return DataType::ERROR;
 	}
+	return DataType::ERROR;
 }
 unordered_map<int, EmployeeInfo*>* DataManager::getEmployeeInfoMap() {
 	return &employeeInfoMap;
@@ -211,7 +213,7 @@ void DataManager::insertHashMap(T& targetKeyword, const T& modifyKeyword, const 
 
 void DataManager::modifyEmployeeInfo(EmployeeInfo* employeeInfo, KeyInfo keyInfo, int employeeNum) {
 	SearchKey keyType = getSearchKey(keyInfo.modifyKey);
-	int idx1 = 0, idx2 = 0;
+	size_t idx1 = 0, idx2 = 0;
 	switch (keyType)
 	{
 	case SearchKey::NAME:
