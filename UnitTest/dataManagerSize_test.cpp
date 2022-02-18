@@ -1,6 +1,6 @@
 #include "pch.h"
 
-TEST(dataManagerTest, employeeNumMapTest) {
+TEST(dataManagerSizeTest, employeeNumMapTest) {
 
 	DataManager data_manager;
 
@@ -17,7 +17,7 @@ TEST(dataManagerTest, employeeNumMapTest) {
 	}
 }
 
-TEST(dataManagerTest, givenNameMapTest) {
+TEST(dataManagerSizeTest, givenNameMapTest) {
 
 	DataManager data_manager;
 
@@ -34,7 +34,7 @@ TEST(dataManagerTest, givenNameMapTest) {
 	}
 }
 
-TEST(dataManagerTest, familyNameMapTest) {
+TEST(dataManagerSizeTest, familyNameMapTest) {
 
 	DataManager data_manager;
 
@@ -51,7 +51,7 @@ TEST(dataManagerTest, familyNameMapTest) {
 	}
 }
 
-TEST(dataManagerTest, clMapTest) {
+TEST(dataManagerSizeTest, clMapTest) {
 
 	DataManager data_manager;
 
@@ -68,7 +68,7 @@ TEST(dataManagerTest, clMapTest) {
 	}
 }
 
-TEST(dataManagerTest, phoneNumMidMapTest) {
+TEST(dataManagerSizeTest, phoneNumMidMapTest) {
 
 	DataManager data_manager;
 
@@ -85,7 +85,7 @@ TEST(dataManagerTest, phoneNumMidMapTest) {
 	}
 }
 
-TEST(dataManagerTest, phoneNumEndMapTest) {
+TEST(dataManagerSizeTest, phoneNumEndMapTest) {
 
 	DataManager data_manager;
 
@@ -103,7 +103,7 @@ TEST(dataManagerTest, phoneNumEndMapTest) {
 }
 
 
-TEST(dataManagerTest, birthYearMapTest) {
+TEST(dataManagerSizeTest, birthYearMapTest) {
 
 	DataManager data_manager;
 
@@ -121,7 +121,7 @@ TEST(dataManagerTest, birthYearMapTest) {
 }
 
 
-TEST(dataManagerTest, birthMonthMapTest) {
+TEST(dataManagerSizeTest, birthMonthMapTest) {
 
 	DataManager data_manager;
 
@@ -138,7 +138,7 @@ TEST(dataManagerTest, birthMonthMapTest) {
 	}
 }
 
-TEST(dataManagerTest, birthDayMapTest) {
+TEST(dataManagerSizeTest, birthDayMapTest) {
 	
 	DataManager data_manager;
 
@@ -155,7 +155,7 @@ TEST(dataManagerTest, birthDayMapTest) {
 	}
 }
 
-TEST(dataManagerTest,certiMapTest) {
+TEST(dataManagerSizeTest,certiMapTest) {
 
 	DataManager data_manager;
 
@@ -172,7 +172,7 @@ TEST(dataManagerTest,certiMapTest) {
 	}
 }
 
-TEST(dataManagerTest, nameMapTest) {
+TEST(dataManagerSizeTest, nameMapTest) {
 
 	DataManager data_manager;
 
@@ -189,7 +189,7 @@ TEST(dataManagerTest, nameMapTest) {
 	}
 }
 
-TEST(dataManagerTest, phoneNumMap) {
+TEST(dataManagerSizeTest, phoneNumMap) {
 
 	DataManager data_manager;
 
@@ -206,7 +206,7 @@ TEST(dataManagerTest, phoneNumMap) {
 	}
 }
 
-TEST(dataManagerTest, birthMapTest) {
+TEST(dataManagerSizeTest, birthMapTest) {
 
 	DataManager data_manager;
 

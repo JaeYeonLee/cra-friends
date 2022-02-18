@@ -252,11 +252,7 @@ void DataManager::searchHashMap(T searchKeyword, unordered_multimap<T, int>* has
 	for (auto keyEmployeeNum = keywordRange.first; keyEmployeeNum != keywordRange.second; keyEmployeeNum++) {
 		auto employeeInfo = employeeInfoMap.find(keyEmployeeNum->second);
 		if (employeeInfo != employeeInfoMap.end()) {
-			if (cmd == CommandType::DEL)
-			{
-				employeeInfo->second->isDelete = true;
-				employeeInfoMap.erase(keyEmployeeNum->second);
-			}
+			if (cmd == CommandType::DEL) employeeInfo->second->isDelete = true;
 			else if (cmd == CommandType::MOD) modifyEmployeeInfo(employeeInfo->second, keyInfo, keyEmployeeNum->second);
 		}
 	}
