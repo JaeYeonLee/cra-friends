@@ -29,6 +29,14 @@ int EmployeeManagement::openFile(string inputfile, string outputfile) {
 	return 0;
 }
 
+void EmployeeManagement::closeFile() {
+	fflush(stdout);
+	if (nullptr != fin) fclose(fin);
+	if (nullptr != fout) fclose(fout);
+	fin = nullptr;
+	fout = nullptr;
+}
+
 int EmployeeManagement::loadData() {
 	if (nullptr == fin)
 		return -1;
@@ -69,31 +77,23 @@ int EmployeeManagement::prepareCommand(int lineIndex) {
 }
 
 int EmployeeManagement::runCommand() {
-	bool result;
 	switch (commandType) {
 	case CommandType::ADD:
-		result = dm->addEmployee(*addInfo);
-		break;
+		return dm->addEmployee(*addInfo);
 	case CommandType::MOD:
-		result = dm->modEmployee(*keyInfo, *optionInfo);
-		break;
+		return dm->modEmployee(*keyInfo, *optionInfo);
 	case CommandType::SCH:
-		result = dm->schEmployee(*keyInfo, *optionInfo);
-		break;
+		return dm->schEmployee(*keyInfo, *optionInfo);
 	case CommandType::DEL:
-		result = dm->delEmployee(*keyInfo, *optionInfo);
-		break;
+		return dm->delEmployee(*keyInfo, *optionInfo);
 	default:
-		result = true;
+		return -1;
 	}
-
-	return 0;
 }
 
-int EmployeeManagement::printResult() {
+void EmployeeManagement::printResult() {
 	if (printer.hasValidValue(commandType, optionInfo->enablePrint))
 		printer.printResult();
-	return 0;
 }
 
 string EmployeeManagement::debugResult() {

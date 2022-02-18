@@ -2,7 +2,7 @@
 #include <iostream>
 #include <list>
 #include <map>
-#include "CommandParser.h"
+#include "commandParser.h"
 
 using namespace std;
 

@@ -1,70 +1,96 @@
 #include <iostream>
-#include "CommandParser.h"
+#include "commandParser.h"
 
 using namespace std;
+
+#define CP_COMMAND_INDEX          (0)
+#define CP_OPTION1_INDEX          (1)
+#define CP_OPTION2_INDEX          (2)
+#define CP_OPTION3_INDEX          (3)
+#define CP_ADD_EMPLOYEENUM_INDEX  (4)
+#define CP_ADD_NAME_INDEX         (5)
+#define CP_ADD_CL_INDEX           (6)
+#define CP_ADD_PHONE_INDEX        (7)
+#define CP_ADD_BIRTH_INDEX        (8)
+#define CP_ADD_CERTI_INDEX        (9)
+
+#define CP_SEARCH_KEY_INDEX       (4)
+#define CP_SEARCH_KEYWORD_INDEX   (5)
+#define CP_MODIFY_KEY_INDEX       (6)
+#define CP_MODIFY_KEYWORD_INDEX   (7)
+
+#define CP_INVALID_EMPLOYEENUM    (100000000)
+#define CP_NAME_MAX_LENGTH        (15)
+#define CP_NAME_SPLIT_NUM         (2)
+#define CP_PHONE_MAX_LENGTH       (13)
+#define CP_PHONE_SPLIT_NUM        (3)
+#define CP_PHONE_FIRST_STR        "010"
+#define CP_BIRTH_MAX_LENGTH       (8)
 
 CommandType CommandParser::parseData(string readLine) {
 	parseLine = split(readLine, ',');
 
-	if (parseLine[0] == "ADD") commandType = CommandType::ADD;
-	else if (parseLine[0] == "MOD") commandType = CommandType::MOD;
-	else if (parseLine[0] == "SCH") commandType = CommandType::SCH;
-	else if (parseLine[0] == "DEL") commandType = CommandType::DEL;
+	if (parseLine[CP_COMMAND_INDEX] == "ADD") commandType = CommandType::ADD;
+	else if (parseLine[CP_COMMAND_INDEX] == "MOD") commandType = CommandType::MOD;
+	else if (parseLine[CP_COMMAND_INDEX] == "SCH") commandType = CommandType::SCH;
+	else if (parseLine[CP_COMMAND_INDEX] == "DEL") commandType = CommandType::DEL;
 	else commandType = CommandType::INVALID;
+
+	if(parseLine.size() != requiredParamCount[(int)commandType]) commandType = CommandType::INVALID;
 
 	return commandType;
 }
 
-int CommandParser::parseOption(OptionInfo* option) {
-	if (parseLine[1] == "-p")
+void CommandParser::parseOption(OptionInfo* option) {
+	if (parseLine[CP_OPTION1_INDEX] == "-p")
 		option->enablePrint = Option::PRINT;
 	else
 		option->enablePrint = Option::NONE;
 
-	if (parseLine[2] == "-f") option->searchOption = Option::FIRST_YEAR;
-	else if (parseLine[2] == "-l") option->searchOption = Option::LAST_DAY;
-	else if (parseLine[2] == "-m") option->searchOption = Option::MIDDLE_MONTH;
-	else if (parseLine[2] == "-y") option->searchOption = Option::FIRST_YEAR;
-	else if (parseLine[2] == "-m") option->searchOption = Option::MIDDLE_MONTH;
-	else if (parseLine[2] == "-d") option->searchOption = Option::LAST_DAY;
+	if (parseLine[CP_OPTION2_INDEX] == "-f") option->searchOption = Option::FIRST_YEAR;
+	else if (parseLine[CP_OPTION2_INDEX] == "-l") option->searchOption = Option::LAST_DAY;
+	else if (parseLine[CP_OPTION2_INDEX] == "-m") option->searchOption = Option::MIDDLE_MONTH;
+	else if (parseLine[CP_OPTION2_INDEX] == "-y") option->searchOption = Option::FIRST_YEAR;
+	else if (parseLine[CP_OPTION2_INDEX] == "-m") option->searchOption = Option::MIDDLE_MONTH;
+	else if (parseLine[CP_OPTION2_INDEX] == "-d") option->searchOption = Option::LAST_DAY;
 	else option->searchOption = Option::NONE;
-
-	return 0;
 }
 
 int CommandParser::parseAddCommand(EmployeeInfo* addInfo) {
-	if (commandType != CommandType::ADD)
-		return -1;
+	if (commandType != CommandType::ADD) return -1;
 
-	addInfo->employeeNum = atoi(parseLine[4].c_str());
+	addInfo->employeeNum = atoi(parseLine[CP_ADD_EMPLOYEENUM_INDEX].c_str());
+	if ((0 > addInfo->employeeNum) || (CP_INVALID_EMPLOYEENUM <= addInfo->employeeNum)) return -1;
 
-	vector<string> name_split = split(parseLine[5], ' ');
-	if (2 != name_split.size())
-		return -1;
+	if (CP_NAME_MAX_LENGTH < parseLine[CP_ADD_NAME_INDEX].length()) return -1;
+	addInfo->name = parseLine[CP_ADD_NAME_INDEX];
 
-	addInfo->name = parseLine[5];
+	vector<string> name_split = split(parseLine[CP_ADD_NAME_INDEX], ' ');
+	if (CP_NAME_SPLIT_NUM != name_split.size()) return -1;
 	addInfo->name_First = name_split[0];
 	addInfo->name_Last = name_split[1];
 
-	addInfo->cl = (CareerLevel)(atoi(parseLine[6].substr(2, 1).c_str()) - 1);
-	if ((addInfo->cl < CareerLevel::CL1) || (addInfo->cl > CareerLevel::CL4))
-		return -1;
+	addInfo->cl = (CareerLevel)(atoi(parseLine[CP_ADD_CL_INDEX].substr(2, 1).c_str()) - 1);
+	if ((addInfo->cl < CareerLevel::CL1) || (addInfo->cl > CareerLevel::CL4)) return -1;
 
-	vector<string> phone_split = split(parseLine[7], '-');
-	if (3 != phone_split.size())
-		return -1;
+	if (CP_PHONE_MAX_LENGTH != parseLine[CP_ADD_PHONE_INDEX].length()) return -1;
+	addInfo->phoneNum = parseLine[CP_ADD_PHONE_INDEX];
 
-	addInfo->phoneNum = parseLine[7];
+	vector<string> phone_split = split(parseLine[CP_ADD_PHONE_INDEX], '-');
+	if (CP_PHONE_SPLIT_NUM != phone_split.size()) return -1;
+	if (CP_PHONE_FIRST_STR != phone_split[0]) return -1;
 	addInfo->phoneNum_Mid = atoi(phone_split[1].c_str());
 	addInfo->phoneNum_End = atoi(phone_split[2].c_str());
 
-	// TODO: add birth invalid condition
-	addInfo->birthday = atoi(parseLine[8].c_str());
-	addInfo->birthday_Year = atoi(parseLine[8].substr(0, 4).c_str());
-	addInfo->birthday_Month = atoi(parseLine[8].substr(4, 2).c_str());
-	addInfo->birthday_Day = atoi(parseLine[8].substr(6, 2).c_str());
+	if (CP_BIRTH_MAX_LENGTH != parseLine[CP_ADD_BIRTH_INDEX].length()) return -1;
+	addInfo->birthday = atoi(parseLine[CP_ADD_BIRTH_INDEX].c_str());
+	addInfo->birthday_Year = atoi(parseLine[CP_ADD_BIRTH_INDEX].substr(0, 4).c_str());
+	addInfo->birthday_Month = atoi(parseLine[CP_ADD_BIRTH_INDEX].substr(4, 2).c_str());
+	if ((1 > addInfo->birthday_Month) || (12 < addInfo->birthday_Month)) return -1;
+	addInfo->birthday_Day = atoi(parseLine[CP_ADD_BIRTH_INDEX].substr(6, 2).c_str());
+	if ((1 > addInfo->birthday_Day) || (31 < addInfo->birthday_Day)) return -1;
 
-	string lastStr = parseLine[9].substr(0, (parseLine[9].length() - 1));
+	string lastStr = removeLineFeedChar(parseLine[CP_ADD_CERTI_INDEX]);
 	if (lastStr == "ADV") addInfo->certi = CERTI::ADV;
 	else if (lastStr == "PRO") addInfo->certi = CERTI::PRO;
 	else if (lastStr == "EX") addInfo->certi = CERTI::EX;
@@ -77,13 +103,11 @@ int CommandParser::parseModifyCommand(KeyInfo* keyInfo, OptionInfo* optionInfo) 
 	if (commandType != CommandType::MOD)
 		return -1;
 
+	keyInfo->searchKey = getSearchKeyStr(parseLine[CP_SEARCH_KEY_INDEX], optionInfo);
+	keyInfo->searchKeyword = parseLine[CP_SEARCH_KEYWORD_INDEX];
 
-	keyInfo->searchKey = getSearchKeyStr(parseLine[4], optionInfo);
-	keyInfo->searchKeyword = parseLine[5];
-	keyInfo->modifyKey = parseLine[6];
-
-	string lastStr = parseLine[7].substr(0, (parseLine[7].length() - 1));
-	keyInfo->modifyKeyword = lastStr;
+	keyInfo->modifyKey = parseLine[CP_MODIFY_KEY_INDEX];
+	keyInfo->modifyKeyword = removeLineFeedChar(parseLine[CP_MODIFY_KEYWORD_INDEX]);
 
 	return 0;
 }
@@ -92,10 +116,8 @@ int CommandParser::parseDeleteCommand(KeyInfo* keyInfo, OptionInfo* optionInfo) 
 	if (commandType != CommandType::DEL)
 		return -1;
 
-	keyInfo->searchKey = getSearchKeyStr(parseLine[4], optionInfo);
-
-	string lastStr = parseLine[5].substr(0, (parseLine[5].length() - 1));
-	keyInfo->searchKeyword = lastStr;
+	keyInfo->searchKey = getSearchKeyStr(parseLine[CP_SEARCH_KEY_INDEX], optionInfo);
+	keyInfo->searchKeyword = removeLineFeedChar(parseLine[CP_SEARCH_KEYWORD_INDEX]);
 
 	return 0;
 }
@@ -104,41 +126,43 @@ int CommandParser::parseSearchCommand(KeyInfo* keyInfo, OptionInfo* optionInfo) 
 	if (commandType != CommandType::SCH)
 		return -1;
 
-	keyInfo->searchKey = getSearchKeyStr(parseLine[4], optionInfo);
-
-	string lastStr = parseLine[5].substr(0, (parseLine[5].length() - 1));
-	keyInfo->searchKeyword = lastStr;
+	keyInfo->searchKey = getSearchKeyStr(parseLine[CP_SEARCH_KEY_INDEX], optionInfo);
+	keyInfo->searchKeyword = removeLineFeedChar(parseLine[CP_SEARCH_KEYWORD_INDEX]);
 
 	return 0;
 }
 
 string CommandParser::getSearchKeyStr(string key, OptionInfo* optionInfo) {
-	if ((optionInfo->searchOption < Option::NONE) || (optionInfo->searchOption >= Option::PRINT))
+	if ((optionInfo->searchOption <= Option::NONE) || (optionInfo->searchOption >= Option::PRINT))
 		return key;
 
-	string searchKeyStr = key;
 	if (key == "name")
-		searchKeyStr = searchOptionKeyStr[0][(int)optionInfo->searchOption];
+		return searchOptionKeyStr[0][(int)optionInfo->searchOption];
 	else if (key == "phoneNum")
-		searchKeyStr = searchOptionKeyStr[1][(int)optionInfo->searchOption];
+		return searchOptionKeyStr[1][(int)optionInfo->searchOption];
 	else if (key == "birthday")
-		searchKeyStr = searchOptionKeyStr[2][(int)optionInfo->searchOption];
+		return searchOptionKeyStr[2][(int)optionInfo->searchOption];
+	else
+		return key;
+}
 
-	return searchKeyStr;
+string CommandParser::removeLineFeedChar(string lastline) {
+	return lastline.substr(0, (lastline.length() - 1));
 }
 
 vector<string> CommandParser::split(string text, char div) {
 	vector<string> result;
 	text.push_back(div);
-	int a = 0, b = 0;
+
+	int startpos = 0;
+	int findpos = 0;
+
 	while (1) {
-		b = (int)text.find(div, a);
-		if (b == -1) break;
+		findpos = (int)text.find(div, startpos);
+		if (findpos == -1) break;
 
-		string temp = text.substr(a, b - a);
-		result.push_back(temp);
-
-		a = b + 1;
+		result.push_back(text.substr(startpos, ((size_t)findpos - startpos)));
+		startpos = findpos + 1;
 	}
 
 	return result;
