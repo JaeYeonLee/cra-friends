@@ -66,12 +66,12 @@ int Printer::setResultData(CommandType cmd, map<int, EmployeeInfo*>* dataList, O
 
 	if (option == Option::PRINT) {
 		generateFullString(dataList);
-		return dataList->size();
+		return (int)dataList->size();
 	}
 
 	if (option == Option::NONE) {
-		generateFullString(dataList->size());
-		return dataList->size();
+		generateFullString((int)dataList->size());
+		return (int)dataList->size();
 	}
 
 	return -1;
