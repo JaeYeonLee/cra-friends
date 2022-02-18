@@ -165,14 +165,14 @@ TEST(PrintTest, SCHwithOption) {
 	data_manager = new DataManager();
 	input_test_data(data_manager);
 
-	map<int, EmployeeInfo*>* result = &data_manager->GetResult({ "name_Last", "KIM" }); 
+	map<int, EmployeeInfo*> result = data_manager->GetResult({ "name_Last", "KIM" }); 
 
-	string resultString = "SCH,00000001,DONGKIL KIM,CL2,010-8765-4321,20000101,ADV\nSCH,00000001,DONGKIL KIM,CL2,010-8765-4321,20000101,ADV\n";
+	string resultString = "SCH,00000001,DONGKIL KIM,CL2,010-8765-4321,20000101,PRO\nSCH,00000003,DONGKIL KIM,CL2,010-8765-4321,20000101,PRO\n";
 	cout << resultString;
 
-	printer.setResultData(CommandType::SCH, result, Option::PRINT);
+	printer.setResultData(CommandType::SCH, &result, Option::PRINT);
 
-	if (result != nullptr && result->size() != 0)
+	if (result.size() != 0)
 		EXPECT_EQ(resultString, printer.getResultString());
 	else {
 		EXPECT_TRUE(false);
